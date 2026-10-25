@@ -1,819 +1,721 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="ca" class="h-full bg-slate-50">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Electrostàtica: Camp, Potencial i Treball - 2n Batxillerat</title>
+  <title>Electrostàtica: Camp, Potencial i Treball | 2n Batxillerat</title>
   
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <!-- SVG Favicon inline Data URI -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e1b4b'/><circle cx='50' cy='50' r='38' stroke='%236366f1' stroke-width='4' fill='none' stroke-dasharray='6 4'/><circle cx='50' cy='50' r='10' fill='%23f59e0b'/><path d='M50 12v16M50 72v16M12 50h16M72 50h16' stroke='%2338bdf8' stroke-width='5' stroke-linecap='round'/><circle cx='24' cy='24' r='8' fill='%23ef4444'/><circle cx='76' cy='76' r='8' fill='%233b82f6'/></svg>">
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
-  <!-- KaTeX CSS & JS -->
+  <!-- KaTeX CSS & JS via CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .katex-display {
-      margin: 0.5em 0 !important;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 0.2em 0;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    .katex-display { margin: 0.4em 0 !important; }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+<body class="min-h-full flex flex-col text-slate-800 bg-slate-50">
 
-  <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+  <!-- Header Bar -->
+  <header class="bg-slate-900 text-white shadow-md border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-lg text-white shadow-lg shadow-blue-500/20">
-          E
+        <div class="p-2.5 bg-indigo-600 rounded-xl shadow-md">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white tracking-wide">Electrostàtica: Camp, Potencial i Treball</h1>
-          <p class="text-xs text-slate-400">Física de 2n de Batxillerat • Mètode Vectorial i Solució Pas a Pas</p>
+          <h1 class="text-xl font-bold tracking-tight">Electrostàtica: Camp, Potencial i Treball</h1>
+          <p class="text-xs text-slate-400">Física 2n de Batxillerat | Generador i Resolutor Interactiu</p>
         </div>
       </div>
-
-      <!-- Main Action Controls -->
-      <div class="flex items-center gap-2 flex-wrap">
-        <button id="btnRandom" onclick="generateRandomProblem()" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium transition flex items-center gap-2 border border-slate-700">
-          <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          Problema Aleatori
-        </button>
-        <button id="btnToggleCustom" onclick="toggleCustomizer()" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium transition flex items-center gap-2 border border-slate-700">
-          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-          Personalitzar Dades
-        </button>
-        <button id="btnToggleSolution" onclick="toggleSolution()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold shadow-md shadow-blue-500/20 transition flex items-center gap-2">
-          <svg id="solutionBtnIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-          <span id="solutionBtnText">Mostrar Solució i Diagrama</span>
-        </button>
+      <div class="flex items-center space-x-2 text-xs bg-slate-800/80 px-3.5 py-1.5 rounded-full border border-slate-700/80">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-slate-300">GitHub Pages Ready</span>
       </div>
     </div>
   </header>
 
-  <!-- Customizer Panel (Collapsible) -->
-  <div id="customizerPanel" class="hidden border-b border-slate-800 bg-slate-950/90 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 py-5">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-sm font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-          Paràmetres del Problema
+  <!-- Main Content Container -->
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-1 space-y-6">
+
+    <!-- Card 1: Problem Statement & Controls -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-5 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded text-xs font-semibold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 mb-1">
+            Pràctica d'Electrostàtica
+          </span>
+          <h2 class="text-lg font-semibold">Configuració de Càrregues i Punts en el Pla Cartesià</h2>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btn-random" onclick="generateRandomProblem()" class="px-3.5 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>🎲 Problema Aleatori</span>
+          </button>
+          <button id="btn-toggle-custom" onclick="toggleCustomPanel()" class="px-3.5 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>⚙️ Personalitzar Dades</span>
+          </button>
+          <button id="toggle-solution-btn" onclick="toggleSolution()" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow flex items-center space-x-1.5">
+            <span>👁️ Mostrar Solució i Diagrama</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Problem Statement Rendered via JS KaTeX -->
+      <div id="statement-card" class="p-6 bg-slate-50/60 border-b border-slate-200 text-sm md:text-base leading-relaxed">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Customization Accordion Panel -->
+      <div id="custom-panel" class="hidden p-6 bg-slate-100 border-t border-slate-200 text-xs text-slate-700 space-y-4">
+        <h3 class="font-bold text-slate-900 text-sm flex items-center">
+          <span class="mr-2">⚙️</span> Personalització de Paràmetres de la Geometria i Càrregues
         </h3>
-        <span class="text-xs text-slate-400">Modifica els valors per recalcular automàticament</span>
-      </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Dimensions w, h -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <span class="font-bold text-slate-800 block border-b pb-1">📐 Geometria Font (m)</span>
+            <div>
+              <label class="block text-slate-600 mb-1">Amplada w (3 a 7 m): <span id="val-w-disp" class="font-bold text-indigo-600">5</span></label>
+              <input type="range" id="input-w" min="3" max="7" value="5" step="1" oninput="updateCustomValues()" class="w-full accent-indigo-600">
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1">Alçada h (3 a 7 m): <span id="val-h-disp" class="font-bold text-indigo-600">4</span></label>
+              <input type="range" id="input-h" min="3" max="7" value="4" step="1" oninput="updateCustomValues()" class="w-full accent-indigo-600">
+            </div>
+          </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-        <!-- Charge 1 -->
-        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
-          <div class="font-semibold text-red-400 flex justify-between">
-            <span>Càrrega q1</span>
-            <span class="text-slate-500">Font 1</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Valor</label>
-              <input type="number" id="inp_q1_val" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Unitat</label>
-              <select id="inp_q1_unit" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-                <option value="C">C</option>
-                <option value="mC">mC</option>
-                <option value="uC">µC</option>
-                <option value="nC">nC</option>
-                <option value="pC">pC</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Posició X (m)</label>
-              <input type="number" id="inp_q1_x" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Posició Y (m)</label>
-              <input type="number" id="inp_q1_y" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-          </div>
-        </div>
-
-        <!-- Charge 2 -->
-        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
-          <div class="font-semibold text-blue-400 flex justify-between">
-            <span>Càrrega q2</span>
-            <span class="text-slate-500">Font 2</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Valor</label>
-              <input type="number" id="inp_q2_val" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Unitat</label>
-              <select id="inp_q2_unit" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-                <option value="C">C</option>
-                <option value="mC">mC</option>
-                <option value="uC">µC</option>
-                <option value="nC">nC</option>
-                <option value="pC">pC</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Posició X (m)</label>
-              <input type="number" id="inp_q2_x" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Posició Y (m)</label>
-              <input type="number" id="inp_q2_y" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-          </div>
-        </div>
-
-        <!-- Charge 3 (Optional) -->
-        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
-          <div class="font-semibold text-emerald-400 flex items-center justify-between">
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="checkbox" id="inp_has_q3" class="rounded bg-slate-950 border-slate-700 text-emerald-500 focus:ring-0">
-              <span>Càrrega q3</span>
-            </label>
-            <span class="text-slate-500">Opcional</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Valor</label>
-              <input type="number" id="inp_q3_val" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Unitat</label>
-              <select id="inp_q3_unit" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-                <option value="C">C</option>
-                <option value="mC">mC</option>
-                <option value="uC">µC</option>
-                <option value="nC">nC</option>
-                <option value="pC">pC</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Posició X (m)</label>
-              <input type="number" id="inp_q3_x" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Posició Y (m)</label>
-              <input type="number" id="inp_q3_y" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-          </div>
-        </div>
-
-        <!-- Points A, B & Test Charge q4 -->
-        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
-          <div class="font-semibold text-amber-400 flex justify-between">
-            <span>Punts A, B i Càrrega de Prova q4</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Punt A (x, y)</label>
-              <div class="flex gap-1">
-                <input type="number" id="inp_Ax" step="any" placeholder="x" class="w-1/2 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-slate-200">
-                <input type="number" id="inp_Ay" step="any" placeholder="y" class="w-1/2 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-slate-200">
+          <!-- Points A(xA, yA) and B(xB, yB) -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 block border-b pb-1">📍 Coordenades Punts A i B</span>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <div>
+                <label class="block text-slate-500 font-semibold mb-1">Punt A (x, y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xA" value="0" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-yA" value="0" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                </div>
+              </div>
+              <div>
+                <label class="block text-slate-500 font-semibold mb-1">Punt B (x, y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xB" value="-3" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-yB" value="1" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                </div>
               </div>
             </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Punt B (x, y)</label>
-              <div class="flex gap-1">
-                <input type="number" id="inp_Bx" step="any" placeholder="x" class="w-1/2 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-slate-200">
-                <input type="number" id="inp_By" step="any" placeholder="y" class="w-1/2 bg-slate-950 border border-slate-700 rounded px-1.5 py-1 text-slate-200">
+            <div class="pt-1">
+              <span class="font-semibold text-slate-800 block mb-1">Nombre de Càrregues Font:</span>
+              <div class="flex space-x-3">
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="2" onchange="updateCustomValues()" class="accent-indigo-600">
+                  <span>2 Càrregues</span>
+                </label>
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="3" checked onchange="updateCustomValues()" class="accent-indigo-600">
+                  <span>3 Càrregues</span>
+                </label>
               </div>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-slate-400 mb-1">Prova q4 (Valor)</label>
-              <input type="number" id="inp_q4_val" step="any" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Unitat q4</label>
-              <select id="inp_q4_unit" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 focus:border-blue-500 outline-none">
-                <option value="C">C</option>
-                <option value="mC">mC</option>
+
+          <!-- Charges q1, q2, q3 -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 block border-b pb-1">⚡ Càrregues Font (q1, q2, q3)</span>
+            
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q1:</span>
+              <input type="number" id="input-q1-val" value="4" min="-9" max="9" class="w-16 p-1 border rounded text-center">
+              <select id="input-q1-unit" class="p-1 border rounded bg-slate-50 text-xs">
                 <option value="uC">µC</option>
                 <option value="nC">nC</option>
                 <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q2:</span>
+              <input type="number" id="input-q2-val" value="-3" min="-9" max="9" class="w-16 p-1 border rounded text-center">
+              <select id="input-q2-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div id="q3-control-row" class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q3:</span>
+              <input type="number" id="input-q3-val" value="2" min="-9" max="9" class="w-16 p-1 border rounded text-center">
+              <select id="input-q3-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
               </select>
             </div>
           </div>
+
+          <!-- Test charge q4 & Apply Button -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-800 block border-b pb-1">🧪 Càrrega de Prova q4 (a Punt A)</span>
+              <div class="flex items-center space-x-1 pt-2">
+                <span class="w-6 font-semibold">q4:</span>
+                <input type="number" id="input-q4-val" value="2" min="-5" max="5" class="w-16 p-1 border rounded text-center">
+                <select id="input-q4-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                  <option value="nC" selected>nC</option>
+                  <option value="uC">µC</option>
+                  <option value="pC">pC</option>
+                  <option value="mC">mC</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="applyCustomData()" class="w-full mt-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition shadow-sm text-center">
+              Aplicar Canvis
+            </button>
+          </div>
+
         </div>
       </div>
+    </div>
 
-      <div class="mt-4 flex justify-end">
-        <button onclick="applyCustomData()" class="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-md transition">
-          Aplicar Canvis
+    <!-- Card 2: Solution Container (Hidden by Default) -->
+    <div id="solution-container" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      
+      <!-- Stage Tabs Bar -->
+      <div class="border-b border-slate-200 bg-slate-100/90 px-4 pt-3 flex flex-wrap gap-2 text-xs sm:text-sm font-medium">
+        <button id="tab-stage-1" onclick="switchStage(1)" class="px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 font-semibold transition flex items-center space-x-1">
+          <span>📐 1. Diagrama Vectorial</span>
+        </button>
+        <button id="tab-stage-2" onclick="switchStage(2)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>🎯 2. Vectors Posició</span>
+        </button>
+        <button id="tab-stage-3" onclick="switchStage(3)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>⚡ 3. Camp Elèctric Total</span>
+        </button>
+        <button id="tab-stage-4" onclick="switchStage(4)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>🧲 4. Força sobre q4</span>
+        </button>
+        <button id="tab-stage-5" onclick="switchStage(5)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>🔋 5. Potencials i Treball</span>
         </button>
       </div>
-    </div>
-  </div>
 
-  <!-- Main Content -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
+      <!-- Stage Panels Content -->
+      <div class="p-6">
 
-    <!-- Problem Statement Card -->
-    <section class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-      <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      
-      <div class="flex items-center gap-3 mb-3">
-        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">Enunciat del Problema</span>
-        <span class="text-xs text-slate-400">Dades en Notació Científica • Constant de Coulomb: k = 8,99 × 10⁹ N·m²/C²</span>
+        <!-- Stage 1 Panel: Interactive Canvas Diagram -->
+        <div id="stage-panel-1" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm">Diagrama Vectorial Interactiu per Capes</h3>
+              <p class="text-xs text-slate-500">Seleccioneu la capa per visualitzar els elements vectorials pas a pas:</p>
+            </div>
+            
+            <!-- Layer Selector Buttons -->
+            <div class="inline-flex rounded-lg shadow-sm p-1 bg-slate-200/80 border border-slate-300 flex-wrap gap-1">
+              <button id="btn-layer-1" onclick="setLayer(1)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm">
+                Capa 1: Punts
+              </button>
+              <button id="btn-layer-2" onclick="setLayer(2)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900">
+                Capa 2: r_i
+              </button>
+              <button id="btn-layer-3" onclick="setLayer(3)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900">
+                Capa 3: E_i
+              </button>
+              <button id="btn-layer-4" onclick="setLayer(4)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900">
+                Capa 4: E_T i F_T
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas Display Area -->
+          <div class="relative w-full h-[450px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-inner flex items-center justify-center">
+            <canvas id="physics-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+            
+            <!-- Active Layer Badge -->
+            <div id="layer-badge" class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white px-3.5 py-1 rounded-full text-xs font-medium border border-slate-700 shadow">
+              Capa Actual: 1 (Càrregues i Punts)
+            </div>
+          </div>
+
+          <!-- Layer Explanation Card -->
+          <div id="layer-desc" class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-4 text-xs text-indigo-950 leading-relaxed">
+            <!-- Dynamic explanation via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 2 Panel: Position & Unit Vectors -->
+        <div id="stage-panel-2" class="hidden space-y-6">
+          <div class="border-l-4 border-amber-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 2: Càlculs Vectorials dels Vectors Posició i Unitaris</h3>
+            <p class="text-xs text-slate-600">Determinació dels vectors distància des de cada càrrega font cap al punt d'estudi A(xA, yA).</p>
+          </div>
+          <div id="stage2-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 3 Panel: Total Electric Field -->
+        <div id="stage-panel-3" class="hidden space-y-6">
+          <div class="border-l-4 border-indigo-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 3: Càlcul del Camp Elèctric Total (Principi de Superposició)</h3>
+            <p class="text-xs text-slate-600">Suma vectorial dels camps individuals creats a A(xA, yA).</p>
+          </div>
+          <div id="stage3-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 4 Panel: Force on Test Charge -->
+        <div id="stage-panel-4" class="hidden space-y-6">
+          <div class="border-l-4 border-emerald-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 4: Càlcul de la Força Elèctrica sobre la Càrrega de Prova q4</h3>
+            <p class="text-xs text-slate-600">Avaluació de la força vectorial exercida sobre la càrrega q4 situada al punt A(xA, yA).</p>
+          </div>
+          <div id="stage4-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 5 Panel: Potentials & Work -->
+        <div id="stage-panel-5" class="hidden space-y-6">
+          <div class="border-l-4 border-purple-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 5: Potencials Elèctrics i Treball del Camp</h3>
+            <p class="text-xs text-slate-600">Càlcul dels potencials escalars VA, VB, treball W_(A-&gt;B) i interpretació de la espontaneïtat del procés.</p>
+          </div>
+          <div id="stage5-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
       </div>
-
-      <div id="problemTextContainer" class="text-slate-200 leading-relaxed text-base md:text-lg">
-        <!-- Injected via JavaScript -->
-      </div>
-    </section>
-
-    <!-- Solution Section (Hidden initially) -->
-    <div id="solutionSection" class="hidden space-y-8">
-
-      <!-- Stage 1: Canvas & Interactive Diagram -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-          <div>
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white">1</span>
-              Diagrama Interactiu de Capes (Pla Cartesià)
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Selecciona una capa per analitzar el procés vectorial pas a pas</p>
-          </div>
-
-          <!-- Layer Switch Buttons -->
-          <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 gap-1 overflow-x-auto">
-            <button id="btnLayer1" onclick="setCanvasLayer(1)" class="layer-btn px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 whitespace-nowrap bg-blue-600 text-white shadow">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-              Capa 1: Punts
-            </button>
-            <button id="btnLayer2" onclick="setCanvasLayer(2)" class="layer-btn px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 whitespace-nowrap text-slate-400 hover:text-white">
-              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              Capa 2: Vectors r_i
-            </button>
-            <button id="btnLayer3" onclick="setCanvasLayer(3)" class="layer-btn px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 whitespace-nowrap text-slate-400 hover:text-white">
-              <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-              Capa 3: Camps E_i
-            </button>
-            <button id="btnLayer4" onclick="setCanvasLayer(4)" class="layer-btn px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 whitespace-nowrap text-slate-400 hover:text-white">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              Capa 4: Camp i Força Total
-            </button>
-          </div>
-        </div>
-
-        <!-- Canvas Display Container -->
-        <div class="relative w-full bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-inner flex justify-center items-center">
-          <canvas id="physicsCanvas" class="w-full h-[450px] block cursor-crosshair"></canvas>
-          
-          <!-- Layer Legend overlay -->
-          <div class="absolute bottom-3 left-3 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-lg p-2.5 text-xs text-slate-300 space-y-1 shadow-lg pointer-events-none">
-            <div id="layerLegendText" class="font-semibold text-sky-400">Capa 1: Ubicació de càrregues i punts d'estudi</div>
-            <div class="text-[11px] text-slate-400">Càrregues + (vermell), - (blau) | Punt A (taronja), B (verd)</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Stage 2: Vectors Posició i Distàncies -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div class="border-b border-slate-800 pb-3">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-600 text-xs text-white">2</span>
-            Vectors Posició, Mòduls i Vectors Unitaris respecte al Punt A
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Definim el vector directriu des de cada càrrega font $P_i$ cap al punt d'estudi $A(x_A, y_A)$</p>
-        </div>
-
-        <div id="stage2Container" class="space-y-4 text-sm text-slate-200">
-          <!-- Injected via JavaScript -->
-        </div>
-      </section>
-
-      <!-- Stage 3: Superposició del Camp Elèctric -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div class="border-b border-slate-800 pb-3">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-purple-600 text-xs text-white">3</span>
-            Càlcul del Camp Elèctric Total E_T al Punt A (Principi de Superposició)
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Sumem vectorialment les contribucions de cada càrrega: $\vec{E}_T = \sum \vec{E}_i$</p>
-        </div>
-
-        <div id="stage3Container" class="space-y-4 text-sm text-slate-200">
-          <!-- Injected via JavaScript -->
-        </div>
-      </section>
-
-      <!-- Stage 4: Força Elèctrica -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div class="border-b border-slate-800 pb-3">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-xs text-white">4</span>
-            Força Elèctrica sobre la Càrrega de Prova q4 situada a A
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Apliquem la relació fonamental $\vec{F}_T = q_4 \cdot \vec{E}_T$</p>
-        </div>
-
-        <div id="stage4Container" class="space-y-4 text-sm text-slate-200">
-          <!-- Injected via JavaScript -->
-        </div>
-      </section>
-
-      <!-- Stage 5: Potencials, Treball i Espontaneïtat -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div class="border-b border-slate-800 pb-3">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 text-xs text-white">5</span>
-            Potencials Escalars, Treball de Camp i Anàlisi d'Espontaneïtat
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Avaluem els potencials $V_A$ i $V_B$, el treball $W_{A \to B} = -q_4 \Delta V$ i el sentit físic del moviment</p>
-        </div>
-
-        <div id="stage5Container" class="space-y-4 text-sm text-slate-200">
-          <!-- Injected via JavaScript -->
-        </div>
-      </section>
-
     </div>
+
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950 py-4 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-      Recurs Didàctic de Física de 2n de Batxillerat • Electrostàtica i Treball Camp Elèctric
-    </div>
+  <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
+    <p>Aplicació Educativa de Física | 2n de Batxillerat - Electrostàtica | Visualitzador Vectorial KaTeX & HTML5 Canvas</p>
   </footer>
 
-  <!-- JS Logic -->
+  <!-- Application Logic JavaScript -->
   <script>
-    // --- CONSTANTS & STATE ---
-    const K_COULOMB = 8.9875517923e9; // N m^2 / C^2
-
-    const UNIT_FACTORS = {
-      'C': 1.0,
-      'mC': 1e-3,
-      'uC': 1e-6,
-      'nC': 1e-9,
-      'pC': 1e-12
+    // Global Application State
+    const state = {
+      w: 5,
+      h: 4,
+      xA: 0,
+      yA: 0,
+      xB: -3,
+      yB: 1,
+      numCharges: 3,
+      q1: { val: 4, unit: 'uC' },
+      q2: { val: -3, unit: 'uC' },
+      q3: { val: 2, unit: 'uC' },
+      q4: { val: 2, unit: 'nC' },
+      solutionVisible: false,
+      activeLayer: 1, // MUST ALWAYS DEFAULT TO LAYER 1
+      activeStage: 1
     };
 
-    let state = {
-      q1: { val: 2, unit: 'nC', x: 0, y: 6 },
-      q2: { val: -4, unit: 'nC', x: 7, y: 6 },
-      q3: { enabled: false, val: 3, unit: 'nC', x: 7, y: 0 },
-      A: { x: 3, y: 1 },
-      B: { x: 2, y: 5 },
-      q4: { val: -1, unit: 'nC' },
-      currentLayer: 1,
-      solutionVisible: false
-    };
-
-    // --- KATEX HELPER FUNCTIONS ---
+    // Safe KaTeX JS Wrapper Functions (NO RAW SINGLE '$' IN STRINGS)
     function mInline(tex) {
-      try {
-        return katex.renderToString(tex, { displayMode: false, throwOnError: false });
-      } catch (e) {
-        return tex;
-      }
+      if (typeof katex === 'undefined') return tex;
+      return katex.renderToString(tex, { displayMode: false, throwOnError: false });
     }
 
     function mBlock(tex) {
-      try {
-        return katex.renderToString(tex, { displayMode: true, throwOnError: false });
-      } catch (e) {
-        return tex;
+      if (typeof katex === 'undefined') return tex;
+      return katex.renderToString(tex, { displayMode: true, throwOnError: false });
+    }
+
+    // Conversion multiplier to Coulomb
+    function getValC(chargeObj) {
+      const mults = { 'C': 1, 'mC': 1e-3, 'uC': 1e-6, 'nC': 1e-9, 'pC': 1e-12 };
+      return chargeObj.val * (mults[chargeObj.unit] || 1e-6);
+    }
+
+    // TeX representation of charge units
+    function unitTex(unit) {
+      const map = {
+        'C': '\\text{C}',
+        'mC': '\\text{mC}',
+        'uC': '\\mu\\text{C}',
+        'nC': '\\text{nC}',
+        'pC': '\\text{pC}'
+      };
+      return map[unit] || '\\text{C}';
+    }
+
+    // Format scientific numbers for KaTeX render
+    function formatTexSci(n, digits = 3) {
+      if (Math.abs(n) === 0) return '0';
+      const exp = Math.floor(Math.log10(Math.abs(n)));
+      if (Math.abs(exp) <= 2) {
+        return Number(n.toFixed(digits)).toString();
+      }
+      const mant = n / Math.pow(10, exp);
+      return mant.toFixed(digits) + ' \\times 10^{' + exp + '}';
+    }
+
+    // Get array of source charge objects
+    function getChargePositions() {
+      const pos = [
+        { id: 1, name: 'q_1', x: 0, y: state.h, charge: state.q1, label: 'P_1(0, ' + state.h + ')' },
+        { id: 2, name: 'q_2', x: state.w, y: state.h, charge: state.q2, label: 'P_2(' + state.w + ', ' + state.h + ')' }
+      ];
+      if (state.numCharges === 3) {
+        pos.push({ id: 3, name: 'q_3', x: state.w, y: 0, charge: state.q3, label: 'P_3(' + state.w + ', 0)' });
+      }
+      return pos;
+    }
+
+    // Generate Problem Statement Text (STRICTLY NO "rectangle" OR "quadrat" WORDS)
+    function generateStatementHTML() {
+      const charges = getChargePositions();
+      const numWord = charges.length === 3 ? "tres" : "dues";
+      
+      let coordStr = "";
+      charges.forEach((c, idx) => {
+        coordStr += c.label + "\\text{ m}";
+        if (idx < charges.length - 2) coordStr += ", ";
+        else if (idx === charges.length - 2) coordStr += " i ";
+      });
+
+      let valStr = "";
+      charges.forEach((c, idx) => {
+        const signStr = c.charge.val > 0 ? "+" : "";
+        valStr += c.name + " = " + signStr + c.charge.val + "\\text{ }" + unitTex(c.charge.unit);
+        if (idx < charges.length - 2) valStr += ", ";
+        else if (idx === charges.length - 2) valStr += " i ";
+      });
+
+      const q4Sign = state.q4.val > 0 ? "+" : "";
+      const q4Tex = "q_4 = " + q4Sign + state.q4.val + "\\text{ }" + unitTex(state.q4.unit);
+      const ptATex = "A(" + state.xA + ", " + state.yA + ")\\text{ m}";
+      const ptBTex = "B(" + state.xB + ", " + state.yB + ")\\text{ m}";
+
+      let html = "<p class='mb-3 text-slate-800 leading-relaxed font-normal'>";
+      html += "S'ubiquen " + numWord + " càrregues puntuals en els punts de coordenades del pla cartesià " + mInline(coordStr) + ", amb valors " + mInline(valStr) + " respectivament. Totes les coordenades i distàncies estan expressades en metres.</p>";
+
+      html += "<div class='space-y-2 text-slate-700 font-medium text-sm md:text-base'>";
+      html += "<p><strong>a)</strong> Dibuixeu l'esquema vectorial de les càrregues i determineu el vector camp elèctric total " + mInline("\\vec{E}_T") + " al punt d'estudi " + mInline(ptATex) + ".</p>";
+      html += "<p><strong>b)</strong> Si es col·loca una càrrega de prova " + mInline(q4Tex) + " al punt " + mInline(ptATex) + ", calculeu la força elèctrica vectorial " + mInline("\\vec{F}_T") + " que actua sobre ella.</p>";
+      html += "<p><strong>c)</strong> Calculeu el potencial elèctric creat pel sistema de càrregues al punt " + mInline(ptATex) + " i al punt " + mInline(ptBTex) + ".</p>";
+      html += "<p><strong>d)</strong> Calculeu el treball " + mInline("W_{A \\to B}") + " realitzat pel camp elèctric per traslladar la càrrega " + mInline("q_4") + " des de " + mInline("A") + " fins a " + mInline("B") + " i raoneu si el procés és espontani.</p>";
+      html += "</div>";
+
+      return html;
+    }
+
+    // Toggle Solution Container Visibility
+    function toggleSolution() {
+      state.solutionVisible = !state.solutionVisible;
+      const solEl = document.getElementById('solution-container');
+      const btnEl = document.getElementById('toggle-solution-btn');
+
+      if (state.solutionVisible) {
+        solEl.classList.remove('hidden');
+        btnEl.innerHTML = '<span>🙈 Ocultar Solució</span>';
+        btnEl.classList.replace('bg-indigo-600', 'bg-slate-700');
+        btnEl.classList.replace('hover:bg-indigo-700', 'hover:bg-slate-800');
+        
+        // CANVAS MUST DEFAULT TO LAYER 1 AND STAGE 1 WHEN OPENED
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        
+        updateStageTabs();
+        updateLayerButtons();
+        renderAll();
+
+        solEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        solEl.classList.add('hidden');
+        btnEl.innerHTML = '<span>👁️ Mostrar Solució i Diagrama</span>';
+        btnEl.classList.replace('bg-slate-700', 'bg-indigo-600');
+        btnEl.classList.replace('hover:bg-slate-800', 'hover:bg-indigo-700');
       }
     }
 
-    function formatSci(num, decimals = 3) {
-      if (num === 0) return "0";
-      const abs = Math.abs(num);
-      if (abs >= 0.01 && abs <= 9999) {
-        return num.toFixed(decimals).replace(/\.?0+$/, "");
-      }
-      const exp = Math.floor(Math.log10(abs));
-      const mantissa = num / Math.pow(10, exp);
-      return `${mantissa.toFixed(decimals)}\\times 10^{${exp}}`;
-    }
-
-    function formatCoord(point) {
-      return `(${point.x}, ${point.y})`;
-    }
-
-    // --- INITIALIZATION ---
-    window.addEventListener('DOMContentLoaded', () => {
-      syncInputsFromState();
-      updateAll();
-      window.addEventListener('resize', redrawCanvas);
-    });
-
-    // --- STATE MANAGEMENT ---
-    function syncInputsFromState() {
-      document.getElementById('inp_q1_val').value = state.q1.val;
-      document.getElementById('inp_q1_unit').value = state.q1.unit;
-      document.getElementById('inp_q1_x').value = state.q1.x;
-      document.getElementById('inp_q1_y').value = state.q1.y;
-
-      document.getElementById('inp_q2_val').value = state.q2.val;
-      document.getElementById('inp_q2_unit').value = state.q2.unit;
-      document.getElementById('inp_q2_x').value = state.q2.x;
-      document.getElementById('inp_q2_y').value = state.q2.y;
-
-      document.getElementById('inp_has_q3').checked = state.q3.enabled;
-      document.getElementById('inp_q3_val').value = state.q3.val;
-      document.getElementById('inp_q3_unit').value = state.q3.unit;
-      document.getElementById('inp_q3_x').value = state.q3.x;
-      document.getElementById('inp_q3_y').value = state.q3.y;
-
-      document.getElementById('inp_Ax').value = state.A.x;
-      document.getElementById('inp_Ay').value = state.A.y;
-      document.getElementById('inp_Bx').value = state.B.x;
-      document.getElementById('inp_By').value = state.B.y;
-
-      document.getElementById('inp_q4_val').value = state.q4.val;
-      document.getElementById('inp_q4_unit').value = state.q4.unit;
-    }
-
-    function applyCustomData() {
-      state.q1.val = parseFloat(document.getElementById('inp_q1_val').value) || 0;
-      state.q1.unit = document.getElementById('inp_q1_unit').value;
-      state.q1.x = parseFloat(document.getElementById('inp_q1_x').value) || 0;
-      state.q1.y = parseFloat(document.getElementById('inp_q1_y').value) || 0;
-
-      state.q2.val = parseFloat(document.getElementById('inp_q2_val').value) || 0;
-      state.q2.unit = document.getElementById('inp_q2_unit').value;
-      state.q2.x = parseFloat(document.getElementById('inp_q2_x').value) || 0;
-      state.q2.y = parseFloat(document.getElementById('inp_q2_y').value) || 0;
-
-      state.q3.enabled = document.getElementById('inp_has_q3').checked;
-      state.q3.val = parseFloat(document.getElementById('inp_q3_val').value) || 0;
-      state.q3.unit = document.getElementById('inp_q3_unit').value;
-      state.q3.x = parseFloat(document.getElementById('inp_q3_x').value) || 0;
-      state.q3.y = parseFloat(document.getElementById('inp_q3_y').value) || 0;
-
-      state.A.x = parseFloat(document.getElementById('inp_Ax').value) || 0;
-      state.A.y = parseFloat(document.getElementById('inp_Ay').value) || 0;
-      state.B.x = parseFloat(document.getElementById('inp_Bx').value) || 0;
-      state.B.y = parseFloat(document.getElementById('inp_By').value) || 0;
-
-      state.q4.val = parseFloat(document.getElementById('inp_q4_val').value) || 0;
-      state.q4.unit = document.getElementById('inp_q4_unit').value;
-
-      updateAll();
-    }
-
+    // Random Problem Generator
     function generateRandomProblem() {
-      const w = Math.floor(Math.random() * 4) + 4; // 4 to 7
-      const h = Math.floor(Math.random() * 4) + 3; // 3 to 6
+      const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+      const getRandomNonZero = (min, max) => {
+        let v = 0;
+        while (v === 0) v = getRandomInt(min, max);
+        return v;
+      };
 
-      const val1 = (Math.floor(Math.random() * 5) + 1) * (Math.random() > 0.3 ? 1 : -1);
-      const val2 = (Math.floor(Math.random() * 5) + 1) * (Math.random() > 0.5 ? -1 : 1);
-      const val3 = (Math.floor(Math.random() * 4) + 1) * (Math.random() > 0.5 ? 1 : -1);
+      const unitsPool = ['uC', 'nC', 'mC', 'pC'];
 
-      state.q1 = { val: val1, unit: 'nC', x: 0, y: h };
-      state.q2 = { val: val2, unit: 'nC', x: w, y: h };
-      state.q3 = { enabled: Math.random() > 0.5, val: val3, unit: 'nC', x: w, y: 0 };
+      state.w = getRandomInt(3, 7);
+      state.h = getRandomInt(3, 7);
 
-      state.A = { x: Math.floor(w / 2) + 1, y: 1 };
-      state.B = { x: 1, y: h - 1 };
-      state.q4 = { val: (Math.floor(Math.random() * 4) + 1) * (Math.random() > 0.5 ? -1 : 1), unit: 'nC' };
+      state.xA = getRandomInt(-3, 3);
+      state.yA = getRandomInt(-3, 3);
+
+      do {
+        state.xB = getRandomInt(-5, 5);
+        state.yB = getRandomInt(-5, 5);
+      } while (state.xB === state.xA && state.yB === state.yA);
+
+      state.numCharges = Math.random() > 0.3 ? 3 : 2;
+
+      state.q1 = { val: getRandomNonZero(-9, 9), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q2 = { val: getRandomNonZero(-9, 9), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q3 = { val: getRandomNonZero(-9, 9), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q4 = { val: getRandomNonZero(-5, 5), unit: ['nC', 'uC', 'pC'][getRandomInt(0, 2)] };
 
       syncInputsFromState();
-      updateAll();
+
+      if (state.solutionVisible) {
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        updateStageTabs();
+        updateLayerButtons();
+      }
+
+      renderAll();
     }
 
-    function toggleCustomizer() {
-      const panel = document.getElementById('customizerPanel');
+    // Custom Panel Toggle
+    function toggleCustomPanel() {
+      const panel = document.getElementById('custom-panel');
       panel.classList.toggle('hidden');
     }
 
-    function toggleSolution() {
-      state.solutionVisible = !state.solutionVisible;
-      const sec = document.getElementById('solutionSection');
-      const btnText = document.getElementById('solutionBtnText');
+    function syncInputsFromState() {
+      document.getElementById('input-w').value = state.w;
+      document.getElementById('input-h').value = state.h;
+      document.getElementById('val-w-disp').innerText = state.w;
+      document.getElementById('val-h-disp').innerText = state.h;
 
-      if (state.solutionVisible) {
-        sec.classList.remove('hidden');
-        btnText.textContent = "Amagar Solució i Diagrama";
-        state.currentLayer = 1;
-        updateLayerButtonsUI();
-        redrawCanvas();
-        sec.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        sec.classList.add('hidden');
-        btnText.textContent = "Mostrar Solució i Diagrama";
-      }
+      document.getElementById('input-xA').value = state.xA;
+      document.getElementById('input-yA').value = state.yA;
+      document.getElementById('input-xB').value = state.xB;
+      document.getElementById('input-yB').value = state.yB;
+
+      document.querySelector('input[name="num-charges"][value="' + state.numCharges + '"]').checked = true;
+
+      document.getElementById('input-q1-val').value = state.q1.val;
+      document.getElementById('input-q1-unit').value = state.q1.unit;
+      document.getElementById('input-q2-val').value = state.q2.val;
+      document.getElementById('input-q2-unit').value = state.q2.unit;
+      document.getElementById('input-q3-val').value = state.q3.val;
+      document.getElementById('input-q3-unit').value = state.q3.unit;
+      document.getElementById('input-q4-val').value = state.q4.val;
+      document.getElementById('input-q4-unit').value = state.q4.unit;
+
+      const q3Row = document.getElementById('q3-control-row');
+      if (state.numCharges === 2) q3Row.classList.add('opacity-40', 'pointer-events-none');
+      else q3Row.classList.remove('opacity-40', 'pointer-events-none');
     }
 
-    function setCanvasLayer(layer) {
-      state.currentLayer = layer;
-      updateLayerButtonsUI();
-      redrawCanvas();
+    function updateCustomValues() {
+      state.w = parseInt(document.getElementById('input-w').value);
+      state.h = parseInt(document.getElementById('input-h').value);
+      document.getElementById('val-w-disp').innerText = state.w;
+      document.getElementById('val-h-disp').innerText = state.h;
+
+      const selectedNum = parseInt(document.querySelector('input[name="num-charges"]:checked').value);
+      state.numCharges = selectedNum;
+
+      const q3Row = document.getElementById('q3-control-row');
+      if (state.numCharges === 2) q3Row.classList.add('opacity-40', 'pointer-events-none');
+      else q3Row.classList.remove('opacity-40', 'pointer-events-none');
     }
 
-    function updateLayerButtonsUI() {
-      const legendText = document.getElementById('layerLegendText');
-      const layersInfo = {
-        1: { title: "Capa 1: Ubicació de càrregues i punts d'estudi", btn: 'btnLayer1' },
-        2: { title: "Capa 2: Vectors posició des de les càrregues cap al punt A", btn: 'btnLayer2' },
-        3: { title: "Capa 3: Vectors camp elèctric individual creats a A", btn: 'btnLayer3' },
-        4: { title: "Capa 4: Camp elèctric total (suma vectorial / paral·lelogram) i força elèctrica", btn: 'btnLayer4' }
+    function applyCustomData() {
+      updateCustomValues();
+
+      state.xA = parseInt(document.getElementById('input-xA').value) || 0;
+      state.yA = parseInt(document.getElementById('input-yA').value) || 0;
+      state.xB = parseInt(document.getElementById('input-xB').value) || 0;
+      state.yB = parseInt(document.getElementById('input-yB').value) || 0;
+
+      state.q1 = {
+        val: parseInt(document.getElementById('input-q1-val').value) || 1,
+        unit: document.getElementById('input-q1-unit').value
+      };
+      state.q2 = {
+        val: parseInt(document.getElementById('input-q2-val').value) || -1,
+        unit: document.getElementById('input-q2-unit').value
+      };
+      state.q3 = {
+        val: parseInt(document.getElementById('input-q3-val').value) || 1,
+        unit: document.getElementById('input-q3-unit').value
+      };
+      state.q4 = {
+        val: parseInt(document.getElementById('input-q4-val').value) || 1,
+        unit: document.getElementById('input-q4-unit').value
       };
 
+      if (state.solutionVisible) {
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        updateStageTabs();
+        updateLayerButtons();
+      }
+
+      renderAll();
+    }
+
+    // Set Active Layer (1 to 4)
+    function setLayer(layerNum) {
+      state.activeLayer = layerNum;
+      updateLayerButtons();
+      drawCanvas();
+      renderLayerDescription();
+    }
+
+    function updateLayerButtons() {
       for (let i = 1; i <= 4; i++) {
-        const btn = document.getElementById(`btnLayer${i}`);
-        if (i === state.currentLayer) {
-          btn.className = "layer-btn px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 whitespace-nowrap bg-blue-600 text-white shadow";
+        const btn = document.getElementById('btn-layer-' + i);
+        if (i === state.activeLayer) {
+          btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm";
         } else {
-          btn.className = "layer-btn px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 whitespace-nowrap text-slate-400 hover:text-white";
+          btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900 hover:bg-slate-300/50";
         }
       }
 
-      legendText.textContent = layersInfo[state.currentLayer].title;
-    }
-
-    // --- MAIN CALCULATIONS & RENDER ---
-    function updateAll() {
-      renderProblemStatement();
-      renderStage2();
-      renderStage3();
-      renderStage4();
-      renderStage5();
-      redrawCanvas();
-    }
-
-    function getChargeInCoulombs(q) {
-      return q.val * UNIT_FACTORS[q.unit];
-    }
-
-    function renderProblemStatement() {
-      const container = document.getElementById('problemTextContainer');
-      
-      const q1C = getChargeInCoulombs(state.q1);
-      const q2C = getChargeInCoulombs(state.q2);
-      const q4C = getChargeInCoulombs(state.q4);
-
-      let text = `En un sistema de referència cartesià en dues dimensions (mesurat en metres), tenim situades les càrregues puntuals `;
-      text += `${mInline(`q_1 = ${state.q1.val}\\text{ ${state.q1.unit}}`)} a les coordenades ${mInline(`P_1${formatCoord(state.q1)}`)} i `;
-      text += `${mInline(`q_2 = ${state.q2.val}\\text{ ${state.q2.unit}}`)} a les coordenades ${mInline(`P_2${formatCoord(state.q2)}`)}. `;
-
-      if (state.q3.enabled) {
-        text += `A més, hi ha una tercera càrrega font ${mInline(`q_3 = ${state.q3.val}\\text{ ${state.q3.unit}}`)} a ${mInline(`P_3${formatCoord(state.q3)}`)}. `;
-      }
-
-      text += `<br><br>Es demana calcular:<br>`;
-      text += `1. El camp elèctric total ${mInline(`\\vec{E}_T`)} al punt d'estudi ${mInline(`A${formatCoord(state.A)}`)} utilitzant el principi de superposició.<br>`;
-      text += `2. La força elèctrica ${mInline(`\\vec{F}_T`)} que experimenta una càrrega de prova ${mInline(`q_4 = ${state.q4.val}\\text{ ${state.q4.unit}}`)} quan es col·loca al punt ${mInline(`A`)}.<br>`;
-      text += `3. El treball realitzat pel camp elèctric ${mInline(`W_{A \\to B}`)} per traslladar la càrrega de prova ${mInline(`q_4`)} des de ${mInline(`A${formatCoord(state.A)}`)} fins al punt ${mInline(`B${formatCoord(state.B)}`)}; i determinar si aquest procés de desplaçament és espontani.`;
-
-      container.innerHTML = text;
-    }
-
-    function getActiveCharges() {
-      const charges = [
-        { id: 1, name: 'q1', val: state.q1.val, unit: state.q1.unit, cVal: getChargeInCoulombs(state.q1), pos: state.q1, color: state.q1.val >= 0 ? '#ef4444' : '#3b82f6' },
-        { id: 2, name: 'q2', val: state.q2.val, unit: state.q2.unit, cVal: getChargeInCoulombs(state.q2), pos: state.q2, color: state.q2.val >= 0 ? '#ef4444' : '#3b82f6' }
+      const badge = document.getElementById('layer-badge');
+      const titles = [
+        "Capa 1: Només Càrregues i Punts",
+        "Capa 2: Vectors Posició (r_i)",
+        "Capa 3: Camps Elèctrics Individuals (E_i)",
+        "Capa 4: Camp Total (E_T) i Força (F_T)"
       ];
-      if (state.q3.enabled) {
-        charges.push({ id: 3, name: 'q3', val: state.q3.val, unit: state.q3.unit, cVal: getChargeInCoulombs(state.q3), pos: state.q3, color: state.q3.val >= 0 ? '#ef4444' : '#3b82f6' });
+      badge.innerText = titles[state.activeLayer - 1];
+    }
+
+    // Switch Solution Stages (1 to 5)
+    function switchStage(stageNum) {
+      state.activeStage = stageNum;
+      updateStageTabs();
+
+      for (let i = 1; i <= 5; i++) {
+        const panel = document.getElementById('stage-panel-' + i);
+        if (i === stageNum) panel.classList.remove('hidden');
+        else panel.classList.add('hidden');
       }
-      return charges;
+
+      if (stageNum === 1) {
+        setTimeout(drawCanvas, 50);
+      }
     }
 
-    function computePhysics() {
-      const charges = getActiveCharges();
-      const A = state.A;
-      const B = state.B;
-
-      // Vectors r_i relative to A
-      const chargeDataA = charges.map(q => {
-        const rx = A.x - q.pos.x;
-        const ry = A.y - q.pos.y;
-        const dist = Math.hypot(rx, ry) || 1e-6;
-        const ux = rx / dist;
-        const uy = ry / dist;
-
-        // E_i = k * q_i / dist^2 * u_i = k * q_i / dist^3 * (rx, ry)
-        const E_mag = (K_COULOMB * Math.abs(q.cVal)) / (dist * dist);
-        const Ex = (K_COULOMB * q.cVal * rx) / (dist * dist * dist);
-        const Ey = (K_COULOMB * q.cVal * ry) / (dist * dist * dist);
-
-        // Potential V_i at A
-        const Va = (K_COULOMB * q.cVal) / dist;
-
-        // Dist to B
-        const rxB = B.x - q.pos.x;
-        const ryB = B.y - q.pos.y;
-        const distB = Math.hypot(rxB, ryB) || 1e-6;
-        const Vb = (K_COULOMB * q.cVal) / distB;
-
-        return {
-          q,
-          rx, ry, dist,
-          ux, uy,
-          Ex, Ey, E_mag,
-          Va, Vb, distB
-        };
-      });
-
-      // Total E at A
-      const ETx = chargeDataA.reduce((sum, d) => sum + d.Ex, 0);
-      const ETy = chargeDataA.reduce((sum, d) => sum + d.Ey, 0);
-      const ET_mag = Math.hypot(ETx, ETy);
-
-      // Force F_T = q4 * E_T
-      const q4C = getChargeInCoulombs(state.q4);
-      const FTx = q4C * ETx;
-      const FTy = q4C * ETy;
-      const FT_mag = Math.hypot(FTx, FTy);
-
-      // Potentials V_A, V_B
-      const VA_tot = chargeDataA.reduce((sum, d) => sum + d.Va, 0);
-      const VB_tot = chargeDataA.reduce((sum, d) => sum + d.Vb, 0);
-
-      // Work W_{A -> B} = -q4 * (V_B - V_A) = q4 * (V_A - V_B)
-      const deltaV = VB_tot - VA_tot;
-      const Work = -q4C * deltaV;
-
-      return {
-        charges,
-        chargeDataA,
-        ETx, ETy, ET_mag,
-        q4C,
-        FTx, FTy, FT_mag,
-        VA_tot, VB_tot, deltaV, Work
-      };
+    function updateStageTabs() {
+      for (let i = 1; i <= 5; i++) {
+        const tab = document.getElementById('tab-stage-' + i);
+        if (i === state.activeStage) {
+          tab.className = "px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 font-semibold transition flex items-center space-x-1";
+        } else {
+          tab.className = "px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1";
+        }
+      }
     }
 
-    function renderStage2() {
-      const data = computePhysics();
-      const container = document.getElementById('stage2Container');
+    // Advanced Arrowhead Drawing with Target Spatial Offset
+    function drawArrow(ctx, x1, y1, x2, y2, color, width = 2.5, headLen = 11, label = "", dash = [], sourceRadius = 0, targetRadius = 0) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 1e-3) return;
 
-      let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">`;
+      const angle = Math.atan2(dy, dx);
 
-      data.chargeDataA.forEach(item => {
-        html += `
-          <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2">
-            <div class="font-bold text-sky-400 flex justify-between items-center text-xs">
-              <span>Respecte a Càrrega q${item.q.id}</span>
-              <span class="text-slate-500">P_${item.q.id}${formatCoord(item.q.pos)} → A${formatCoord(state.A)}</span>
-            </div>
-            <div class="space-y-1">
-              <div>${mInline(`\\vec{r}_{${item.q.id},A} = (${item.rx.toFixed(2)})\\hat{i} + (${item.ry.toFixed(2)})\\hat{j}\\text{ m}`)}</div>
-              <div>${mInline(`r_{${item.q.id},A} = \\sqrt{(${item.rx.toFixed(2)})^2 + (${item.ry.toFixed(2)})^2} = ${item.dist.toFixed(3)}\\text{ m}`)}</div>
-              <div>${mInline(`\\vec{u}_{${item.q.id},A} = (${item.ux.toFixed(3)})\\hat{i} + (${item.uy.toFixed(3)})\\hat{j}`)}</div>
-            </div>
-          </div>
-        `;
-      });
+      // SPATIAL OFFSET: Start outside source node perimeter and end outside target node perimeter
+      const startX = x1 + sourceRadius * Math.cos(angle);
+      const startY = y1 + sourceRadius * Math.sin(angle);
+      const endX = x2 - targetRadius * Math.cos(angle);
+      const endY = y2 - targetRadius * Math.sin(angle);
 
-      html += `</div>`;
-      container.innerHTML = html;
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      if (dash.length) ctx.setLineDash(dash);
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrowhead drawn at perimeter end point (endX, endY)
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX - headLen * Math.cos(angle - Math.PI / 6), endY - headLen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(endX - headLen * Math.cos(angle + Math.PI / 6), endY - headLen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      if (label) {
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const midX = (startX + endX) / 2;
+        const midY = (startY + endY) / 2;
+        const offX = 12 * Math.cos(angle - Math.PI / 2);
+        const offY = 12 * Math.sin(angle - Math.PI / 2);
+        ctx.fillText(label, midX + offX, midY + offY);
+      }
+      ctx.restore();
     }
 
-    function renderStage3() {
-      const data = computePhysics();
-      const container = document.getElementById('stage3Container');
-
-      let html = `<div class="space-y-3">`;
-      html += `<p class="text-xs text-slate-300">Calculem el camp elèctric individual creat per cada càrrega mitjançant la llei de Coulomb en forma vectorial ${mInline(`\\vec{E}_i = k\\cdot \\frac{q_i}{r_i^2}\\vec{u}_i`)}:</p>`;
-
-      html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">`;
-      data.chargeDataA.forEach(item => {
-        html += `
-          <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-1.5 text-xs">
-            <div class="font-bold text-purple-400">Camp \\vec{E}_${item.q.id}</div>
-            <div>${mInline(`q_${item.q.id} = ${formatSci(item.q.cVal)}\\text{ C}`)}</div>
-            <div>${mInline(`E_{${item.q.id}x} = ${formatSci(item.Ex)}\\text{ N/C}`)}</div>
-            <div>${mInline(`E_{${item.q.id}y} = ${formatSci(item.Ey)}\\text{ N/C}`)}</div>
-            <div class="pt-1 border-t border-slate-800 text-purple-300 font-mono">
-              ${mInline(`\\vec{E}_${item.q.id} = (${formatSci(item.Ex)})\\hat{i} + (${formatSci(item.Ey)})\\hat{j}\\text{ N/C}`)}
-            </div>
-          </div>
-        `;
-      });
-      html += `</div>`;
-
-      // Vector Sum
-      html += `
-        <div class="bg-purple-950/30 border border-purple-800/40 p-4 rounded-xl space-y-2">
-          <div class="font-bold text-purple-300 text-sm">Suma Vectorial i Camp Total \\vec{E}_T a A:</div>
-          <div class="text-xs space-y-1">
-            <div>${mInline(`E_{Tx} = \\sum E_{ix} = ${formatSci(data.ETx)}\\text{ N/C}`)}</div>
-            <div>${mInline(`E_{Ty} = \\sum E_{iy} = ${formatSci(data.ETy)}\\text{ N/C}`)}</div>
-            <div class="text-sm font-semibold text-purple-200 pt-1">
-              ${mInline(`\\vec{E}_T = (${formatSci(data.ETx)})\\hat{i} + (${formatSci(data.ETy)})\\hat{j}\\text{ N/C}`)}
-            </div>
-            <div>${mInline(`\\|\\vec{E}_T\\| = \\sqrt{E_{Tx}^2 + E_{Ty}^2} = ${formatSci(data.ET_mag)}\\text{ N/C}`)}</div>
-          </div>
-        </div>
-      `;
-
-      html += `</div>`;
-      container.innerHTML = html;
-    }
-
-    function renderStage4() {
-      const data = computePhysics();
-      const container = document.getElementById('stage4Container');
-
-      const isSameDir = data.q4C > 0;
-
-      let html = `
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-3">
-          <div class="text-xs space-y-1">
-            <div>Càrrega de prova: ${mInline(`q_4 = ${state.q4.val}\\text{ ${state.q4.unit}} = ${formatSci(data.q4C)}\\text{ C}`)}</div>
-            <div>Fórmula: ${mInline(`\\vec{F}_T = q_4 \\cdot \\vec{E}_T`)}</div>
-          </div>
-
-          <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg text-xs space-y-1 font-mono text-emerald-300">
-            <div>${mInline(`F_{Tx} = q_4 \\cdot E_{Tx} = (${formatSci(data.q4C)}) \\cdot (${formatSci(data.ETx)}) = ${formatSci(data.FTx)}\\text{ N}`)}</div>
-            <div>${mInline(`F_{Ty} = q_4 \\cdot E_{Ty} = (${formatSci(data.q4C)}) \\cdot (${formatSci(data.ETy)}) = ${formatSci(data.FTy)}\\text{ N}`)}</div>
-            <div class="text-sm font-bold text-emerald-200 pt-1">
-              ${mInline(`\\vec{F}_T = (${formatSci(data.FTx)})\\hat{i} + (${formatSci(data.FTy)})\\hat{j}\\text{ N}`)}
-            </div>
-            <div>${mInline(`\\|\\vec{F}_T\\| = |q_4| \\cdot \\|\\vec{E}_T\\| = ${formatSci(data.FT_mag)}\\text{ N}`)}</div>
-          </div>
-
-          <div class="text-xs text-slate-300 bg-emerald-950/20 border border-emerald-800/30 p-2.5 rounded-lg">
-            <span class="font-semibold text-emerald-400">Interpretació Vectorial:</span>
-            ${isSameDir 
-              ? `Com que la càrrega de prova $q_4 > 0$, el vector força $\\vec{F}_T$ té la <strong>mateixa direcció i sentit</strong> que el camp elèctric $\\vec{E}_T$.`
-              : `Com que la càrrega de prova $q_4 < 0$, el vector força $\\vec{F}_T$ té la <strong>mateixa direcció però sentit oposat</strong> al camp elèctric $\\vec{E}_T$.`}
-          </div>
-        </div>
-      `;
-
-      container.innerHTML = html;
-    }
-
-    function renderStage5() {
-      const data = computePhysics();
-      const container = document.getElementById('stage5Container');
-
-      const isSpontaneous = data.Work > 0;
-
-      let html = `
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <!-- Potentials -->
-          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
-            <div class="font-bold text-indigo-400 text-sm">1. Potencials Elèctrics Escalars</div>
-            <div>${mInline(`V_A = \\sum k\\frac{q_i}{r_{i,A}} = ${formatSci(data.VA_tot)}\\text{ V}`)}</div>
-            <div>${mInline(`V_B = \\sum k\\frac{q_i}{r_{i,B}} = ${formatSci(data.VB_tot)}\\text{ V}`)}</div>
-            <div class="pt-1 border-t border-slate-800 text-slate-300">
-              Diferència de potencial: ${mInline(`\\Delta V = V_B - V_A = ${formatSci(data.deltaV)}\\text{ V}`)}
-            </div>
-          </div>
-
-          <!-- Work & Spontaneity -->
-          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
-            <div class="font-bold text-indigo-400 text-sm">2. Treball del Camp i Espontaneïtat</div>
-            <div>Fórmula: ${mInline(`W_{A \\to B} = -q_4 (V_B - V_A) = -q_4 \\Delta V`)}</div>
-            <div class="text-sm font-bold text-indigo-200">
-              ${mInline(`W_{A \\to B} = -(${formatSci(data.q4C)}) \\cdot (${formatSci(data.deltaV)}) = ${formatSci(data.Work)}\\text{ J}`)}
-            </div>
-
-            <div class="mt-2 p-2.5 rounded-lg border text-xs ${isSpontaneous ? 'bg-emerald-950/30 border-emerald-800/50 text-emerald-300' : 'bg-amber-950/30 border-amber-800/50 text-amber-300'}">
-              <div class="font-bold uppercase tracking-wider mb-0.5">${isSpontaneous ? 'Procés Espontani (W > 0)' : 'Procés No Espontani (W < 0)'}</div>
-              ${isSpontaneous 
-                ? `El camp elèctric realitza un treball positiu (${mInline(`W_{A \\to B} > 0`)}), de manera que l'energia potencial elèctrica disminueix (${mInline(`\\Delta U < 0`)}). La càrrega es mou de manera espontània per acció de la força elèctrica.`
-                : `El treball realitzat pel camp elèctric és negatiu (${mInline(`W_{A \\to B} < 0`)}), el que significa que l'energia potencial augmenta (${mInline(`\\Delta U > 0`)}). Cal aportar un treball extern per realitzar aquest desplaçament.`}
-            </div>
-          </div>
-        </div>
-      `;
-
-      container.innerHTML = html;
-    }
-
-    // --- CANVAS RENDERING (CORRECT VECTOR SUPERPOSITION ALGORITHM) ---
-    function redrawCanvas() {
-      const canvas = document.getElementById('physicsCanvas');
+    // Render HTML5 Canvas Diagram
+    function drawCanvas() {
+      const canvas = document.getElementById('physics-canvas');
       if (!canvas) return;
+      const ctx = canvas.getContext('2d');
 
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-
-      const ctx = canvas.getContext('2d');
       ctx.scale(dpr, dpr);
 
       const width = rect.width;
@@ -821,336 +723,473 @@
 
       ctx.clearRect(0, 0, width, height);
 
-      // Gather geometry coordinates
-      const charges = getActiveCharges();
-      const A = state.A;
-      const B = state.B;
+      // Bounds computation including all charges, A, and B
+      const charges = getChargePositions();
+      const allX = [0, state.w, state.xA, state.xB];
+      const allY = [0, state.h, state.yA, state.yB];
 
-      const allX = [...charges.map(q => q.pos.x), A.x, B.x];
-      const allY = [...charges.map(q => q.pos.y), A.y, B.y];
+      const xMin = Math.min(...allX) - 1.8;
+      const xMax = Math.max(...allX) + 1.8;
+      const yMin = Math.min(...allY) - 1.8;
+      const yMax = Math.max(...allY) + 1.8;
 
-      let minX = Math.min(...allX) - 1.5;
-      let maxX = Math.max(...allX) + 1.5;
-      let minY = Math.min(...allY) - 1.5;
-      let maxY = Math.max(...allY) + 1.5;
+      const scale = Math.min((width - 120) / (xMax - xMin), (height - 100) / (yMax - yMin));
+      const originX = 60 + (-xMin) * scale;
+      const originY = height - 50 - (-yMin) * scale;
 
-      // Maintain aspect ratio
-      const gridW = maxX - minX;
-      const gridH = maxY - minY;
-      const padding = 40;
+      const toX = (x) => originX + x * scale;
+      const toY = (y) => originY - y * scale;
 
-      const scaleX = (width - 2 * padding) / gridW;
-      const scaleY = (height - 2 * padding) / gridH;
-      const scale = Math.min(scaleX, scaleY);
-
-      // Center grid
-      const offsetX = padding + (width - 2 * padding - gridW * scale) / 2;
-      const offsetY = padding + (height - 2 * padding - gridH * scale) / 2;
-
-      function toCanvasX(x) {
-        return offsetX + (x - minX) * scale;
-      }
-
-      function toCanvasY(y) {
-        return height - (offsetY + (y - minY) * scale);
-      }
-
-      // 1. Draw Cartesian Grid Lines & Axes
-      ctx.strokeStyle = '#1e293b';
+      // Soft Grid
+      ctx.strokeStyle = '#f1f5f9';
       ctx.lineWidth = 1;
-
-      const startX = Math.floor(minX);
-      const endX = Math.ceil(maxX);
-      const startY = Math.floor(minY);
-      const endY = Math.ceil(maxY);
-
-      for (let gx = startX; gx <= endX; gx++) {
-        const cx = toCanvasX(gx);
+      for (let x = Math.floor(xMin); x <= Math.ceil(xMax); x++) {
         ctx.beginPath();
-        ctx.moveTo(cx, 0);
-        ctx.lineTo(cx, height);
-        ctx.stroke();
-
-        ctx.fillStyle = '#475569';
-        ctx.font = '10px sans-serif';
-        ctx.fillText(`${gx}m`, cx + 2, height - 8);
-      }
-
-      for (let gy = startY; gy <= endY; gy++) {
-        const cy = toCanvasY(gy);
-        ctx.beginPath();
-        ctx.moveTo(0, cy);
-        ctx.lineTo(width, cy);
-        ctx.stroke();
-
-        ctx.fillStyle = '#475569';
-        ctx.font = '10px sans-serif';
-        ctx.fillText(`${gy}m`, 6, cy - 3);
-      }
-
-      // Draw Main Axes (x=0, y=0) if visible
-      if (minX <= 0 && maxX >= 0) {
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(toCanvasX(0), 0);
-        ctx.lineTo(toCanvasX(0), height);
+        ctx.moveTo(toX(x), 0);
+        ctx.lineTo(toX(x), height);
         ctx.stroke();
       }
-      if (minY <= 0 && maxY >= 0) {
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 2;
+      for (let y = Math.floor(yMin); y <= Math.ceil(yMax); y++) {
         ctx.beginPath();
-        ctx.moveTo(0, toCanvasY(0));
-        ctx.lineTo(width, toCanvasY(0));
+        ctx.moveTo(0, toY(y));
+        ctx.lineTo(width, toY(y));
         ctx.stroke();
       }
 
-      // 2. Compute physics for vector drawing
-      const physics = computePhysics();
-      const Ax_px = toCanvasX(A.x);
-      const Ay_px = toCanvasY(A.y);
+      // Cartesian Axes
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, originY);
+      ctx.lineTo(width, originY);
+      ctx.stroke();
 
-      // Scale factor S_E for electric field vectors
-      const maxE = Math.max(...physics.chargeDataA.map(d => d.E_mag), physics.ET_mag, 1e-9);
-      const maxVectorPxLength = Math.min(width, height) * 0.28; // max length 28% of canvas size
-      const S_E = maxVectorPxLength / maxE;
+      ctx.beginPath();
+      ctx.moveTo(originX, 0);
+      ctx.lineTo(originX, height);
+      ctx.stroke();
 
-      // LAYER 1: Point locations & distance lines
-      charges.forEach(q => {
-        const qx = toCanvasX(q.pos.x);
-        const qy = toCanvasY(q.pos.y);
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('x (m)', width - 35, originY - 8);
+      ctx.fillText('y (m)', originX + 8, 15);
 
-        ctx.setLineDash([4, 4]);
-        ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 1.5;
+      // Coordinate ticks
+      for (let x = Math.floor(xMin); x <= Math.ceil(xMax); x++) {
+        if (x === 0) continue;
         ctx.beginPath();
-        ctx.moveTo(qx, qy);
-        ctx.lineTo(Ax_px, Ay_px);
+        ctx.moveTo(toX(x), originY - 3);
+        ctx.lineTo(toX(x), originY + 3);
         ctx.stroke();
-        ctx.setLineDash([]);
-
-        const midX = (qx + Ax_px) / 2;
-        const midY = (qy + Ay_px) / 2;
-        drawPillLabel(ctx, `r_${q.id}`, midX, midY, '#1e293b', '#94a3b8');
-      });
-
-      // LAYER 2: Position vectors r_i from charges to A
-      if (state.currentLayer >= 2) {
-        physics.chargeDataA.forEach(item => {
-          const qx = toCanvasX(item.q.pos.x);
-          const qy = toCanvasY(item.q.pos.y);
-
-          drawArrow(ctx, qx, qy, Ax_px, Ay_px, '#f59e0b', 2.5, 14, 12);
-        });
+        ctx.fillText(x.toString(), toX(x) - 4, originY + 16);
       }
-
-      // LAYER 3 & 4: Individual Electric Fields E_i at A
-      const fieldVectorsPx = physics.chargeDataA.map(item => {
-        const dx = item.Ex * S_E;
-        const dy = -item.Ey * S_E;
-        return {
-          id: item.q.id,
-          dx, dy,
-          endX: Ax_px + dx,
-          endY: Ay_px + dy,
-          mag: item.E_mag,
-          color: '#a855f7' // Purple
-        };
-      });
-
-      if (state.currentLayer >= 3) {
-        fieldVectorsPx.forEach(v => {
-          const angle = Math.atan2(v.dy, v.dx);
-          const lx = v.endX + 14 * Math.cos(angle);
-          const ly = v.endY + 14 * Math.sin(angle);
-
-          drawArrow(ctx, Ax_px, Ay_px, v.endX, v.endY, v.color, 2, 10, 0);
-          drawPillLabel(ctx, `E_${v.id}`, lx, ly, '#581c87', '#e9d5ff');
-        });
-      }
-
-      // LAYER 4: Vector Addition Parallelogram & Total Field E_T + Force F_T
-      if (state.currentLayer >= 4) {
-        const ET_dx = physics.ETx * S_E;
-        const ET_dy = -physics.ETy * S_E;
-        const ET_endX = Ax_px + ET_dx;
-        const ET_endY = Ay_px + ET_dy;
-
-        // Draw Parallelogram dashed lines
-        if (fieldVectorsPx.length === 2) {
-          const v1 = fieldVectorsPx[0];
-          const v2 = fieldVectorsPx[1];
-
-          ctx.setLineDash([3, 3]);
-          ctx.strokeStyle = '#c084fc';
-          ctx.lineWidth = 1.5;
-
-          ctx.beginPath();
-          ctx.moveTo(v1.endX, v1.endY);
-          ctx.lineTo(ET_endX, ET_endY);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.moveTo(v2.endX, v2.endY);
-          ctx.lineTo(ET_endX, ET_endY);
-          ctx.stroke();
-
-          ctx.setLineDash([]);
-        } else if (fieldVectorsPx.length === 3) {
-          let currX = Ax_px;
-          let currY = Ay_px;
-          ctx.setLineDash([3, 3]);
-          ctx.strokeStyle = '#c084fc';
-          ctx.lineWidth = 1.5;
-
-          fieldVectorsPx.forEach(v => {
-            ctx.beginPath();
-            ctx.moveTo(currX, currY);
-            ctx.lineTo(currX + v.dx, currY + v.dy);
-            ctx.stroke();
-            currX += v.dx;
-            currY += v.dy;
-          });
-          ctx.setLineDash([]);
-        }
-
-        // Total Electric Field Vector E_T
-        const angleET = Math.atan2(ET_dy, ET_dx);
-        const lxET = ET_endX + 16 * Math.cos(angleET);
-        const lyET = ET_endY + 16 * Math.sin(angleET);
-
-        drawArrow(ctx, Ax_px, Ay_px, ET_endX, ET_endY, '#10b981', 4, 14, 0);
-        drawPillLabel(ctx, 'E_T', lxET, lyET, '#064e3b', '#6ee7b7');
-
-        // Total Force Vector F_T
-        if (physics.FT_mag > 1e-15) {
-          const FT_scale = (maxVectorPxLength * 0.85) / physics.FT_mag;
-          const FT_dx = physics.FTx * FT_scale;
-          const FT_dy = -physics.FTy * FT_scale;
-          const FT_endX = Ax_px + FT_dx;
-          const FT_endY = Ay_px + FT_dy; // Corrected: uses Ay_px
-
-          const angleFT = Math.atan2(FT_dy, FT_dx);
-          const lxFT = FT_endX + 16 * Math.cos(angleFT);
-          const lyFT = FT_endY + 16 * Math.sin(angleFT);
-
-          drawArrow(ctx, Ax_px, Ay_px, FT_endX, FT_endY, '#ec4899', 3.5, 12, 0);
-          drawPillLabel(ctx, 'F_T', lxFT, lyFT, '#831843', '#fbcfe8');
-        }
-      }
-
-      // Draw Nodes (Charges & Study Points A, B)
-      charges.forEach(q => {
-        const cx = toCanvasX(q.pos.x);
-        const cy = toCanvasY(q.pos.y);
-        const isPos = q.val >= 0;
-
-        ctx.fillStyle = isPos ? '#ef4444' : '#3b82f6';
+      for (let y = Math.floor(yMin); y <= Math.ceil(yMax); y++) {
+        if (y === 0) continue;
         ctx.beginPath();
-        ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+        ctx.moveTo(originX - 3, toY(y));
+        ctx.lineTo(originX + 3, toY(y));
+        ctx.stroke();
+        ctx.fillText(y.toString(), originX - 16, toY(y) + 4);
+      }
+
+      // Geometry frame lines (Light dotted)
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(toX(0), toY(0));
+      ctx.lineTo(toX(0), toY(state.h));
+      ctx.lineTo(toX(state.w), toY(state.h));
+      ctx.lineTo(toX(state.w), toY(0));
+      ctx.lineTo(toX(0), toY(0));
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Point A(xA, yA) Node Circle
+      const nodeRadiusA = 7;
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(toX(state.xA), toY(state.yA), nodeRadiusA, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.fillStyle = '#b45309';
+      ctx.fillText('A(' + state.xA + ',' + state.yA + ')', toX(state.xA) + 10, toY(state.yA) + 16);
+
+      // Point B(xB, yB) Node Circle
+      const nodeRadiusB = 7;
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.arc(toX(state.xB), toY(state.yB), nodeRadiusB, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#047857';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#047857';
+      ctx.fillText('B(' + state.xB + ',' + state.yB + ')', toX(state.xB) + 10, toY(state.yB) + 16);
+
+      // Source Charges Nodes
+      const chargeRadius = 13;
+      charges.forEach(c => {
+        const cx = toX(c.x);
+        const cy = toY(c.y);
+        const isPos = c.charge.val > 0;
+        const color = isPos ? '#ef4444' : '#3b82f6';
+        const sign = isPos ? '+' : '−';
+
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(cx, cy, chargeRadius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = isPos ? '#991b1b' : '#1e40af';
         ctx.lineWidth = 2;
         ctx.stroke();
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 14px sans-serif';
+        ctx.font = 'bold 13px Inter, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(isPos ? '+' : '−', cx, cy);
+        ctx.fillText(sign, cx, cy);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
 
-        ctx.font = '11px sans-serif';
-        ctx.fillStyle = '#f8fafc';
-        ctx.fillText(`q_${q.id} (${q.val > 0 ? '+' : ''}${q.val} ${q.unit})`, cx, cy - 22);
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const valSign = isPos ? '+' : '';
+        ctx.fillText(c.name + ' (' + valSign + c.charge.val + ' ' + c.charge.unit + ')', cx + 16, cy + 4);
       });
 
-      // Point A Node
-      ctx.fillStyle = '#f59e0b';
-      ctx.beginPath();
-      ctx.arc(Ax_px, Ay_px, 9, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+      // LAYER 2: Position Vectors r_i (Source Radius -> Target Radius A offset)
+      if (state.activeLayer >= 2) {
+        charges.forEach(c => {
+          const fromX = toX(c.x);
+          const fromY = toY(c.y);
+          const toX_A = toX(state.xA);
+          const toY_A = toY(state.yA);
+          drawArrow(ctx, fromX, fromY, toX_A, toY_A, '#d97706', 2.5, 10, 'r_' + c.id, [], chargeRadius, nodeRadiusA);
+        });
+      }
 
-      ctx.fillStyle = '#fef3c7';
-      ctx.font = 'bold 12px sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText(`A${formatCoord(A)}`, Ax_px + 12, Ay_px + 4);
+      // Field Calculations
+      const K = 9e9;
+      let totalEx = 0;
+      let totalEy = 0;
+      const fields = [];
 
-      // Point B Node
-      const Bx_px = toCanvasX(B.x);
-      const By_px = toCanvasY(B.y);
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+        const qC = getValC(c.charge);
 
-      ctx.fillStyle = '#10b981';
-      ctx.beginPath();
-      ctx.arc(Bx_px, By_px, 9, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+        const Ex = (K * qC / (rMag * rMag)) * ux;
+        const Ey = (K * qC / (rMag * rMag)) * uy;
 
-      ctx.fillStyle = '#d1fae5';
-      ctx.font = 'bold 12px sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText(`B${formatCoord(B)}`, Bx_px + 12, By_px + 4);
+        totalEx += Ex;
+        totalEy += Ey;
+
+        const E_mag = Math.sqrt(Ex * Ex + Ey * Ey);
+        fields.push({ id: c.id, name: c.name, Ex, Ey, E_mag });
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+      const q4C = getValC(state.q4);
+      const totalFx = q4C * totalEx;
+      const totalFy = q4C * totalEy;
+      const totalF_mag = Math.sqrt(totalFx * totalFx + totalFy * totalFy);
+
+      // LAYER 3: Individual Field Vectors E_i at A
+      if (state.activeLayer >= 3) {
+        const maxE = Math.max(...fields.map(f => f.E_mag), 1e-9);
+        const maxPixelLen = scale * 1.8;
+
+        fields.forEach((f, idx) => {
+          const len = Math.max(28, (f.E_mag / maxE) * maxPixelLen);
+          const angle = Math.atan2(-f.Ey, f.Ex); // Canvas Y is inverted
+          const startX = toX(state.xA);
+          const startY = toY(state.yA);
+          const endX = startX + len * Math.cos(angle);
+          const endY = startY + len * Math.sin(angle);
+
+          const colors = ['#0284c7', '#7c3aed', '#db2777'];
+          drawArrow(ctx, startX, startY, endX, endY, colors[idx % colors.length], 3, 10, 'E_' + f.id, [], nodeRadiusA, 0);
+        });
+      }
+
+      // LAYER 4: Total Field E_T and Force F_T Vectors at A
+      if (state.activeLayer >= 4) {
+        const startX = toX(state.xA);
+        const startY = toY(state.yA);
+
+        if (totalE_mag > 0) {
+          const angleE = Math.atan2(-totalEy, totalEx);
+          const lenE = scale * 2.0;
+          const endEx = startX + lenE * Math.cos(angleE);
+          const endEy = startY + lenE * Math.sin(angleE);
+
+          drawArrow(ctx, startX, startY, endEx, endEy, '#4f46e5', 4, 12, 'E_T', [], nodeRadiusA, 0);
+        }
+
+        if (totalF_mag > 0) {
+          const angleF = Math.atan2(-totalFy, totalFx);
+          const lenF = scale * 2.2;
+          const endFx = startX + lenF * Math.cos(angleF);
+          const endFy = startY + lenF * Math.sin(angleF);
+
+          drawArrow(ctx, startX, startY, endFx, endFy, '#059669', 4, 12, 'F_T', [], nodeRadiusA, 0);
+        }
+      }
     }
 
-    // --- CANVAS ARROW & LABEL HELPERS ---
-    function drawArrow(ctx, x1, y1, x2, y2, color, lineWidth = 2, headLength = 10, offsetEnd = 0) {
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const len = Math.hypot(dx, dy);
+    // Render Layer Description Card
+    function renderLayerDescription() {
+      const el = document.getElementById('layer-desc');
+      const ptA = "A(" + state.xA + "," + state.yA + ")\\text{ m}";
+      const ptB = "B(" + state.xB + "," + state.yB + ")\\text{ m}";
 
-      if (len < 1) return;
-
-      const angle = Math.atan2(dy, dx);
-
-      const endX = x2 - offsetEnd * Math.cos(angle);
-      const endY = y2 - offsetEnd * Math.sin(angle);
-
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-      ctx.lineWidth = lineWidth;
-
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(endX, endY);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(endX, endY);
-      ctx.lineTo(
-        endX - headLength * Math.cos(angle - Math.PI / 6),
-        endY - headLength * Math.sin(angle - Math.PI / 6)
-      );
-      ctx.lineTo(
-        endX - headLength * Math.cos(angle + Math.PI / 6),
-        endY - headLength * Math.sin(angle + Math.PI / 6)
-      );
-      ctx.closePath();
-      ctx.fill();
+      const descriptions = [
+        "<strong>Capa 1 (Ubicacions i Punts):</strong> Mostra la posició de les càrregues font " + mInline("q_1, q_2" + (state.numCharges === 3 ? ", q_3" : "")) + ", el punt d'estudi " + mInline(ptA) + " i el punt de destinació " + mInline(ptB) + ". Vista inicial sense vectors.",
+        "<strong>Capa 2 (Vectors Posició):</strong> Sobreimposa els vectors posició " + mInline("\\vec{r}_1, \\vec{r}_2" + (state.numCharges === 3 ? ", \\vec{r}_3" : "")) + " dirigits des de la posició de cada càrrega font cap al punt d'estudi " + mInline(ptA) + ".",
+        "<strong>Capa 3 (Camps Individuals):</strong> Sobreimposa els vectors camp elèctric " + mInline("\\vec{E}_1, \\vec{E}_2" + (state.numCharges === 3 ? ", \\vec{E}_3" : "")) + " creats per cada càrrega al punt " + mInline(ptA) + ".",
+        "<strong>Capa 4 (Camp i Força Totals):</strong> Sobreimposa el vector camp elèctric total " + mInline("\\vec{E}_T") + " (superposició) i el vector força " + mInline("\\vec{F}_T = q_4 \\vec{E}_T") + " sobre la càrrega de prova col·locada a " + mInline(ptA) + "."
+      ];
+      el.innerHTML = descriptions[state.activeLayer - 1];
     }
 
-    function drawPillLabel(ctx, text, x, y, bgColor, textColor) {
-      ctx.font = 'bold 11px sans-serif';
-      const textWidth = ctx.measureText(text).width;
-      const paddingX = 6;
-      const paddingY = 3;
-      const w = textWidth + paddingX * 2;
-      const h = 16;
+    // Render Stage 2
+    function renderStage2() {
+      const container = document.getElementById('stage2-content');
+      const charges = getChargePositions();
+      const ptATex = "A(" + state.xA + "," + state.yA + ")";
 
-      ctx.fillStyle = bgColor;
-      ctx.beginPath();
-      ctx.roundRect(x - w / 2, y - h / 2, w, h, 4);
-      ctx.fill();
+      let html = "<p>Un vector posició " + mInline("\\vec{r}_i") + " es defineix des de la posició de la càrrega " + mInline("P_i(x_i, y_i)") + " fins al punt d'estudi " + mInline(ptATex) + ":</p>";
+      html += mBlock("\\vec{r}_i = \\vec{r}_A - \\vec{r}_{P_i} = (" + state.xA + " - x_i)\\hat{i} + (" + state.yA + " - y_i)\\hat{j}\\text{ (m)}");
 
-      ctx.fillStyle = textColor;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(text, x, y);
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+
+        html += "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+        html += "<h4 class='font-bold text-slate-900 text-sm'>Càrrega " + mInline(c.name) + " a " + mInline(c.label + "\\text{ m}") + "</h4>";
+        html += "<p>• Vector posició: " + mInline("\\vec{r}_" + c.id + " = (" + rx + ")\\hat{i} + (" + ry + ")\\hat{j}\\text{ m}") + "</p>";
+        html += "<p>• Mòdul (distància fins a A): " + mInline("r_" + c.id + " = \\sqrt{(" + rx + ")^2 + (" + ry + ")^2} = \\sqrt{" + (rx*rx + ry*ry) + "} = " + rMag.toFixed(3) + "\\text{ m}") + "</p>";
+        html += "<p>• Vector unitari: " + mInline("\\vec{u}_" + c.id + " = \\frac{\\vec{r}_" + c.id + "}{r_" + c.id + "} = " + ux.toFixed(3) + "\\hat{i} + (" + uy.toFixed(3) + ")\\hat{j}") + "</p>";
+        html += "</div>";
+      });
+
+      container.innerHTML = html;
     }
+
+    // Render Stage 3
+    function renderStage3() {
+      const container = document.getElementById('stage3-content');
+      const charges = getChargePositions();
+      const K = 9e9;
+
+      let html = "<p>El camp elèctric creat per una càrrega puntual ve donat per " + mInline("\\vec{E}_i = K \\frac{q_i}{r_i^2} \\vec{u}_i") + " on " + mInline("K = 9 \\times 10^9\\text{ N}\\cdot\\text{m}^2/\\text{C}^2") + ".</p>";
+
+      let totalEx = 0;
+      let totalEy = 0;
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+        const qC = getValC(c.charge);
+
+        const Ex = (K * qC / (rMag * rMag)) * ux;
+        const Ey = (K * qC / (rMag * rMag)) * uy;
+
+        totalEx += Ex;
+        totalEy += Ey;
+
+        const qSign = c.charge.val > 0 ? "+" : "";
+
+        html += "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+        html += "<h4 class='font-bold text-slate-900 text-sm'>Camp creat per " + mInline(c.name + " = " + qSign + c.charge.val + "\\text{ }" + unitTex(c.charge.unit) + " = " + formatTexSci(qC) + "\\text{ C}") + "</h4>";
+        html += "<p>" + mInline("\\vec{E}_" + c.id + " = 9 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{(" + rMag.toFixed(3) + ")^2} (" + ux.toFixed(3) + "\\hat{i} + " + uy.toFixed(3) + "\\hat{j})") + "</p>";
+        html += "<p class='font-medium text-indigo-700'>" + mInline("\\vec{E}_" + c.id + " = (" + formatTexSci(Ex) + ")\\hat{i} + (" + formatTexSci(Ey) + ")\\hat{j}\\text{ N/C}") + "</p>";
+        html += "</div>";
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+
+      html += "<div class='bg-indigo-50 p-4 rounded-xl border border-indigo-200 space-y-2 text-indigo-950'>";
+      html += "<h4 class='font-bold text-sm'>Camp Elèctric Total per Superposició (" + mInline("\\vec{E}_T = \\sum \\vec{E}_i") + ")</h4>";
+      html += "<p>" + mInline("\\vec{E}_T = (" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}\\text{ N/C}") + "</p>";
+      html += "<p>" + mInline("|\\vec{E}_T| = \\sqrt{(" + formatTexSci(totalEx) + ")^2 + (" + formatTexSci(totalEy) + ")^2} = " + formatTexSci(totalE_mag) + "\\text{ N/C}") + "</p>";
+      html += "</div>";
+
+      container.innerHTML = html;
+    }
+
+    // Render Stage 4
+    function renderStage4() {
+      const container = document.getElementById('stage4-content');
+      const charges = getChargePositions();
+      const K = 9e9;
+
+      let totalEx = 0;
+      let totalEy = 0;
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+        const qC = getValC(c.charge);
+
+        totalEx += (K * qC / (rMag * rMag)) * ux;
+        totalEy += (K * qC / (rMag * rMag)) * uy;
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+      const q4C = getValC(state.q4);
+
+      const totalFx = q4C * totalEx;
+      const totalFy = q4C * totalEy;
+      const totalF_mag = Math.abs(q4C) * totalE_mag;
+
+      const q4Sign = state.q4.val > 0 ? "+" : "";
+
+      let html = "<p>La força elèctrica que actua sobre una càrrega de prova " + mInline("q_4") + " situada en un camp " + mInline("\\vec{E}_T") + " és " + mInline("\\vec{F}_T = q_4 \\cdot \\vec{E}_T") + ".</p>";
+
+      html += "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3'>";
+      html += "<p>• Càrrega de prova: " + mInline("q_4 = " + q4Sign + state.q4.val + "\\text{ }" + unitTex(state.q4.unit) + " = " + formatTexSci(q4C) + "\\text{ C}") + "</p>";
+      html += "<p>• Vector Camp elèctric a A: " + mInline("\\vec{E}_T = (" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}\\text{ N/C}") + "</p>";
+      html += mBlock("\\vec{F}_T = (" + formatTexSci(q4C) + ") \\cdot [(" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}]");
+      html += "<p class='font-bold text-emerald-700 text-base'>" + mInline("\\vec{F}_T = (" + formatTexSci(totalFx) + ")\\hat{i} + (" + formatTexSci(totalFy) + ")\\hat{j}\\text{ N}") + "</p>";
+      html += "<p>• Mòdul de la força: " + mInline("|\\vec{F}_T| = |q_4| \\cdot |\\vec{E}_T| = " + formatTexSci(totalF_mag) + "\\text{ N}") + "</p>";
+      html += "</div>";
+
+      const alignText = state.q4.val > 0 
+        ? "Com que " + mInline("q_4 > 0") + ", el vector força " + mInline("\\vec{F}_T") + " té la <strong>mateixa direcció i sentit</strong> que el camp elèctric " + mInline("\\vec{E}_T") + "."
+        : "Com que " + mInline("q_4 < 0") + ", el vector força " + mInline("\\vec{F}_T") + " té la <strong>mateixa direcció però sentit oposat</strong> al camp elèctric " + mInline("\\vec{E}_T") + ".";
+
+      html += "<div class='bg-emerald-50 p-4 rounded-xl border border-emerald-200 text-emerald-950 text-xs sm:text-sm leading-relaxed'>";
+      html += "<p>💡 <strong>Interpretació Vectorial:</strong> " + alignText + "</p>";
+      html += "</div>";
+
+      container.innerHTML = html;
+    }
+
+    // Render Stage 5
+    function renderStage5() {
+      const container = document.getElementById('stage5-content');
+      const charges = getChargePositions();
+      const K = 9e9;
+
+      let VA = 0;
+      let VB = 0;
+
+      const ptATex = "A(" + state.xA + "," + state.yA + ")";
+      const ptBTex = "B(" + state.xB + "," + state.yB + ")";
+
+      let htmlVA = "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+      htmlVA += "<h4 class='font-bold text-slate-900 text-sm'>1. Potencial Elèctric al punt " + mInline(ptATex) + ": " + mInline("V_A = \\sum K \\frac{q_i}{r_{i,A}}") + "</h4>";
+
+      charges.forEach(c => {
+        const dx = state.xA - c.x;
+        const dy = state.yA - c.y;
+        const rA = Math.sqrt(dx * dx + dy * dy);
+        const qC = getValC(c.charge);
+        const Vi = K * qC / rA;
+        VA += Vi;
+
+        htmlVA += "<p>• " + mInline("V_{" + c.id + ",A} = 9 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{" + rA.toFixed(3) + "} = " + formatTexSci(Vi) + "\\text{ V}") + "</p>";
+      });
+
+      htmlVA += "<p class='font-bold text-indigo-700 pt-1'>" + mInline("V_A = " + formatTexSci(VA) + "\\text{ V}") + "</p>";
+      htmlVA += "</div>";
+
+      let htmlVB = "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+      htmlVB += "<h4 class='font-bold text-slate-900 text-sm'>2. Potencial Elèctric al punt " + mInline(ptBTex) + ": " + mInline("V_B = \\sum K \\frac{q_i}{r_{i,B}}") + "</h4>";
+
+      charges.forEach(c => {
+        const dx = state.xB - c.x;
+        const dy = state.yB - c.y;
+        const rB = Math.sqrt(dx * dx + dy * dy);
+        const qC = getValC(c.charge);
+        const Vi = K * qC / rB;
+        VB += Vi;
+
+        htmlVB += "<p>• Distància de " + mInline(c.name) + " a B: " + mInline("r_{" + c.id + ",B} = \\sqrt{(" + (state.xB - c.x) + ")^2 + (" + (state.yB - c.y) + ")^2} = " + rB.toFixed(3) + "\\text{ m}") + "</p>";
+        htmlVB += "<p>• " + mInline("V_{" + c.id + ",B} = 9 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{" + rB.toFixed(3) + "} = " + formatTexSci(Vi) + "\\text{ V}") + "</p>";
+      });
+
+      htmlVB += "<p class='font-bold text-indigo-700 pt-1'>" + mInline("V_B = " + formatTexSci(VB) + "\\text{ V}") + "</p>";
+      htmlVB += "</div>";
+
+      const q4C = getValC(state.q4);
+      const deltaV = VB - VA;
+      const W_AB = -q4C * deltaV; // W_camp = -q * DeltaV = q * (VA - VB)
+
+      let htmlW = "<div class='bg-indigo-50 p-4 rounded-xl border border-indigo-200 space-y-3 text-indigo-950'>";
+      htmlW += "<h4 class='font-bold text-sm'>3. Treball del Camp Elèctric " + mInline("W_{A \\to B}") + "</h4>";
+      htmlW += "<p>El treball realitzat per la força elèctrica del camp ve donat per:</p>";
+      htmlW += mBlock("W_{A \\to B} = -q_4 (V_B - V_A) = q_4 (V_A - V_B)");
+      htmlW += "<p>" + mInline("W_{A \\to B} = (" + formatTexSci(q4C) + "\\text{ C}) \\cdot (" + formatTexSci(VA) + " - " + formatTexSci(VB) + ")\\text{ V}") + "</p>";
+      htmlW += "<p class='font-bold text-indigo-900 text-base'>" + mInline("W_{A \\to B} = " + formatTexSci(W_AB) + "\\text{ J}") + "</p>";
+      htmlW += "</div>";
+
+      // Spontaneity Interpretation
+      const isSpontaneous = W_AB > 0;
+      const interClass = isSpontaneous 
+        ? "bg-emerald-50 border-emerald-300 text-emerald-950" 
+        : "bg-amber-50 border-amber-300 text-amber-950";
+
+      let htmlInter = "<div class='p-4 rounded-xl border " + interClass + " space-y-2'>";
+      htmlInter += "<h4 class='font-bold text-sm flex items-center'><span class='mr-2'>" + (isSpontaneous ? "✅" : "⚠️") + "</span> Interpretació Física de la Espontaneïtat:</h4>";
+
+      if (isSpontaneous) {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} > 0") + ", el camp elèctric realitza un <strong>treball positiu</strong> en el desplaçament de la càrrega des de " + mInline("A") + " fins a " + mInline("B") + ".</p>";
+        htmlInter += "<p>Per tant, el procés és <strong>ESPONTANI</strong>. La càrrega " + mInline("q_4") + " es desplaça afavorida per les forces elèctriques del sistema, disminuint la seva energia potencial elèctrica (" + mInline("\\Delta U < 0") + ").</p>";
+      } else if (W_AB < 0) {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} < 0") + ", el camp elèctric realitza un <strong>treball negatiu</strong> en el desplaçament.</p>";
+        htmlInter += "<p>Per tant, el procés és <strong>NO ESPONTANI</strong>. Cal la intervenció d'un agent extern que apliqui una força contra el camp elèctric, augmentant l'energia potencial elèctrica (" + mInline("\\Delta U > 0") + ").</p>";
+      } else {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} = 0") + ", els punts " + mInline("A") + " i " + mInline("B") + " estan al mateix potencial elèctric (" + mInline("V_A = V_B") + "). No es requereix treball net.</p>";
+      }
+      htmlInter += "</div>";
+
+      container.innerHTML = htmlVA + htmlVB + htmlW + htmlInter;
+    }
+
+    // Render All Components
+    function renderAll() {
+      document.getElementById('statement-card').innerHTML = generateStatementHTML();
+      
+      if (state.solutionVisible) {
+        renderLayerDescription();
+        renderStage2();
+        renderStage3();
+        renderStage4();
+        renderStage5();
+        drawCanvas();
+      }
+    }
+
+    // Initialize on window load
+    window.onload = function() {
+      syncInputsFromState();
+      renderAll();
+
+      window.addEventListener('resize', () => {
+        if (state.solutionVisible && state.activeStage === 1) {
+          drawCanvas();
+        }
+      });
+    };
   </script>
 </body>
 </html>
