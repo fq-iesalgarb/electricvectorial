@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Electrostàtica: Camp, Potencial i Treball | 2n Batxillerat</title>
   
-  <!-- Enllaç al favicon SVG personalitzat -->
+  <!-- Favicon SVG Personalitzat -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <!-- Tailwind CSS CDN -->
@@ -34,6 +34,7 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     .katex-display { margin: 0.4em 0 !important; }
+    canvas { touch-action: none; }
   </style>
 </head>
 <body class="min-h-full flex flex-col text-slate-800 bg-slate-50">
@@ -49,7 +50,7 @@
         </div>
         <div>
           <h1 class="text-xl font-bold tracking-tight">Electrostàtica: Camp, Potencial i Treball</h1>
-          <p class="text-xs text-slate-400">Física 2n de Batxillerat | Generador i Resolutor Interactiu</p>
+          <p class="text-xs text-slate-400">Física 2n de Batxillerat | Generador, Simulador i Resolutor Interactiu</p>
         </div>
       </div>
       <div class="flex items-center space-x-2 text-xs bg-slate-800/80 px-3.5 py-1.5 rounded-full border border-slate-700/80">
@@ -99,31 +100,31 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <!-- Coordenades Càrregues Font (Edició Lliure) -->
+          <!-- Source Charges Coordinates -->
           <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <span class="font-bold text-slate-800 block border-b pb-1">📍 Coordenades Càrregues Font (m)</span>
             
             <div class="flex items-center justify-between gap-1">
               <span class="font-semibold text-slate-700">q1 (x, y):</span>
               <div class="flex space-x-1">
-                <input type="number" id="input-x1" value="0" step="0.5" class="w-14 p-1 border rounded text-center">
-                <input type="number" id="input-y1" value="4" step="0.5" class="w-14 p-1 border rounded text-center">
+                <input type="number" id="input-x1" value="0" step="0.5" onchange="applyCustomData()" class="w-14 p-1 border rounded text-center">
+                <input type="number" id="input-y1" value="4" step="0.5" onchange="applyCustomData()" class="w-14 p-1 border rounded text-center">
               </div>
             </div>
 
             <div class="flex items-center justify-between gap-1">
               <span class="font-semibold text-slate-700">q2 (x, y):</span>
               <div class="flex space-x-1">
-                <input type="number" id="input-x2" value="5" step="0.5" class="w-14 p-1 border rounded text-center">
-                <input type="number" id="input-y2" value="4" step="0.5" class="w-14 p-1 border rounded text-center">
+                <input type="number" id="input-x2" value="5" step="0.5" onchange="applyCustomData()" class="w-14 p-1 border rounded text-center">
+                <input type="number" id="input-y2" value="4" step="0.5" onchange="applyCustomData()" class="w-14 p-1 border rounded text-center">
               </div>
             </div>
 
             <div id="q3-pos-row" class="flex items-center justify-between gap-1">
               <span class="font-semibold text-slate-700">q3 (x, y):</span>
               <div class="flex space-x-1">
-                <input type="number" id="input-x3" value="5" step="0.5" class="w-14 p-1 border rounded text-center">
-                <input type="number" id="input-y3" value="0" step="0.5" class="w-14 p-1 border rounded text-center">
+                <input type="number" id="input-x3" value="5" step="0.5" onchange="applyCustomData()" class="w-14 p-1 border rounded text-center">
+                <input type="number" id="input-y3" value="0" step="0.5" onchange="applyCustomData()" class="w-14 p-1 border rounded text-center">
               </div>
             </div>
 
@@ -134,22 +135,22 @@
             </div>
           </div>
 
-          <!-- Points A(xA, yA) and B(xB, yB) -->
+          <!-- Points A and B Coordinates -->
           <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <span class="font-bold text-slate-800 block border-b pb-1">📍 Coordenades Punts A i B</span>
             <div class="grid grid-cols-2 gap-2 pt-1">
               <div>
                 <label class="block text-slate-500 font-semibold mb-1">Punt A (x, y):</label>
                 <div class="flex space-x-1">
-                  <input type="number" id="input-xA" value="0" min="-10" max="10" class="w-full p-1 border rounded text-center">
-                  <input type="number" id="input-yA" value="0" min="-10" max="10" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-xA" value="0" step="0.5" onchange="applyCustomData()" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-yA" value="0" step="0.5" onchange="applyCustomData()" class="w-full p-1 border rounded text-center">
                 </div>
               </div>
               <div>
                 <label class="block text-slate-500 font-semibold mb-1">Punt B (x, y):</label>
                 <div class="flex space-x-1">
-                  <input type="number" id="input-xB" value="-3" min="-10" max="10" class="w-full p-1 border rounded text-center">
-                  <input type="number" id="input-yB" value="1" min="-10" max="10" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-xB" value="-3" step="0.5" onchange="applyCustomData()" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-yB" value="1" step="0.5" onchange="applyCustomData()" class="w-full p-1 border rounded text-center">
                 </div>
               </div>
             </div>
@@ -157,25 +158,25 @@
               <span class="font-semibold text-slate-800 block mb-1">Nombre de Càrregues Font:</span>
               <div class="flex space-x-3">
                 <label class="flex items-center space-x-1 cursor-pointer">
-                  <input type="radio" name="num-charges" value="2" onchange="updateCustomValues()" class="accent-indigo-600">
+                  <input type="radio" name="num-charges" value="2" onchange="applyCustomData()" class="accent-indigo-600">
                   <span>2 Càrregues</span>
                 </label>
                 <label class="flex items-center space-x-1 cursor-pointer">
-                  <input type="radio" name="num-charges" value="3" checked onchange="updateCustomValues()" class="accent-indigo-600">
+                  <input type="radio" name="num-charges" value="3" checked onchange="applyCustomData()" class="accent-indigo-600">
                   <span>3 Càrregues</span>
                 </label>
               </div>
             </div>
           </div>
 
-          <!-- Charges q1, q2, q3 -->
+          <!-- Source Charge Values -->
           <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <span class="font-bold text-slate-800 block border-b pb-1">⚡ Valors Càrregues Font</span>
             
             <div class="flex items-center space-x-1">
               <span class="w-6 font-semibold">q1:</span>
-              <input type="number" id="input-q1-val" value="4" min="-20" max="20" class="w-16 p-1 border rounded text-center">
-              <select id="input-q1-unit" class="p-1 border rounded bg-slate-50 text-xs">
+              <input type="number" id="input-q1-val" value="4" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center">
+              <select id="input-q1-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 text-xs">
                 <option value="uC">µC</option>
                 <option value="nC">nC</option>
                 <option value="pC">pC</option>
@@ -186,8 +187,8 @@
 
             <div class="flex items-center space-x-1">
               <span class="w-6 font-semibold">q2:</span>
-              <input type="number" id="input-q2-val" value="-3" min="-20" max="20" class="w-16 p-1 border rounded text-center">
-              <select id="input-q2-unit" class="p-1 border rounded bg-slate-50 text-xs">
+              <input type="number" id="input-q2-val" value="-3" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center">
+              <select id="input-q2-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 text-xs">
                 <option value="uC" selected>µC</option>
                 <option value="nC">nC</option>
                 <option value="pC">pC</option>
@@ -198,8 +199,8 @@
 
             <div id="q3-control-row" class="flex items-center space-x-1">
               <span class="w-6 font-semibold">q3:</span>
-              <input type="number" id="input-q3-val" value="2" min="-20" max="20" class="w-16 p-1 border rounded text-center">
-              <select id="input-q3-unit" class="p-1 border rounded bg-slate-50 text-xs">
+              <input type="number" id="input-q3-val" value="2" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center">
+              <select id="input-q3-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 text-xs">
                 <option value="uC" selected>µC</option>
                 <option value="nC">nC</option>
                 <option value="pC">pC</option>
@@ -209,14 +210,14 @@
             </div>
           </div>
 
-          <!-- Test charge q4 & Apply Button -->
+          <!-- Test Charge q4 & Apply Button -->
           <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
             <div>
               <span class="font-bold text-slate-800 block border-b pb-1">🧪 Càrrega de Prova q4 (a Punt A)</span>
               <div class="flex items-center space-x-1 pt-2">
                 <span class="w-6 font-semibold">q4:</span>
-                <input type="number" id="input-q4-val" value="2" min="-10" max="10" class="w-16 p-1 border rounded text-center">
-                <select id="input-q4-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                <input type="number" id="input-q4-val" value="2" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center">
+                <select id="input-q4-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 text-xs">
                   <option value="nC" selected>nC</option>
                   <option value="uC">µC</option>
                   <option value="pC">pC</option>
@@ -226,7 +227,7 @@
               </div>
             </div>
             <button onclick="applyCustomData()" class="w-full mt-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition shadow-sm text-center">
-              Aplicar Canvis
+              Actualitzar Simulació
             </button>
           </div>
 
@@ -264,7 +265,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
             <div>
               <h3 class="font-bold text-slate-800 text-sm">Diagrama Vectorial Interactiu per Capes Exclusives</h3>
-              <p class="text-xs text-slate-500">Seleccioneu la capa per visualitzar els vectors sense solapaments:</p>
+              <p class="text-xs text-slate-500">Seleccioneu la capa per visualitzar els vectors ben emmarcats sense solapaments:</p>
             </div>
             
             <!-- Layer Selector Buttons -->
@@ -284,21 +285,29 @@
             </div>
           </div>
 
-          <!-- Canvas Display Area with Zoom Controls -->
-          <div class="relative w-full h-[480px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-inner flex items-center justify-center">
-            <canvas id="physics-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+          <!-- Canvas Display Area with Drag/Pan & Zoom Controls -->
+          <div class="relative w-full h-[520px] bg-slate-900/5 rounded-xl border border-slate-200 overflow-hidden shadow-inner flex items-center justify-center">
+            <canvas id="physics-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
             
             <!-- Active Layer Badge -->
-            <div id="layer-badge" class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white px-3.5 py-1 rounded-full text-xs font-medium border border-slate-700 shadow">
+            <div id="layer-badge" class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-sm text-white px-3.5 py-1.5 rounded-full text-xs font-medium border border-slate-700 shadow">
               Capa Actual: 1 (Només Càrregues i Punts)
             </div>
 
-            <!-- Zoom Control Panel -->
-            <div class="absolute top-3 right-3 flex items-center space-x-1 bg-white/90 backdrop-blur-sm p-1 rounded-lg border border-slate-200 shadow-md text-xs font-semibold text-slate-700">
-              <button onclick="changeZoom(-0.25)" title="Reduir Zoom" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded transition">-</button>
-              <span id="zoom-val" class="px-2 text-indigo-600 min-w-[45px] text-center">100%</span>
-              <button onclick="changeZoom(0.25)" title="Ampliar Zoom" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded transition">+</button>
-              <button onclick="resetZoom()" title="Restablir Zoom" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded transition">🔄</button>
+            <!-- Interactivity Help Badge -->
+            <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-slate-700 px-3 py-1 rounded-lg text-xs border border-slate-200 shadow hidden sm:flex items-center space-x-1">
+              <span>🖱️ <strong>Arrossega</strong> càrregues/punts per moure'ls. Fons per <strong>panoràmica (panning)</strong>.</span>
+            </div>
+
+            <!-- Viewport & Auto-Fit Control Panel -->
+            <div class="absolute top-3 right-3 flex items-center space-x-1.5 bg-white/95 backdrop-blur-sm p-1.5 rounded-xl border border-slate-200 shadow-md text-xs font-semibold text-slate-700">
+              <button onclick="changeZoom(-0.2)" title="Reduir Zoom" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg transition">-</button>
+              <span id="zoom-val" class="px-1.5 text-indigo-600 min-w-[45px] text-center">100%</span>
+              <button onclick="changeZoom(0.2)" title="Ampliar Zoom" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg transition">+</button>
+              <button onclick="autoFitView()" title="Ajustar Emmarcat Automàticament a la Capa Active" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm flex items-center space-x-1">
+                <span>🎯 Emmarcar</span>
+              </button>
+              <button onclick="resetViewport()" title="Restablir Vista Per Defecte" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg transition">🔄</button>
             </div>
           </div>
 
@@ -381,10 +390,19 @@
       solutionVisible: false,
       activeLayer: 1,
       activeStage: 1,
-      zoomLevel: 1.0
+      // Viewport View Transformation State
+      scale: 45, // Pixels per meter base
+      panX: 0,
+      panY: 0,
+      userZoomFactor: 1.0,
+      // Mouse Interaction State
+      draggedItem: null,
+      isPanning: false,
+      panStartMouse: { x: 0, y: 0 },
+      panStartOffset: { x: 0, y: 0 }
     };
 
-    // Safe KaTeX JS Wrapper Functions (NO RAW SINGLE '$' IN STRINGS)
+    // Safe KaTeX JS Wrapper Functions
     function mInline(tex) {
       if (typeof katex === 'undefined') return tex;
       return katex.renderToString(tex, { displayMode: false, throwOnError: false });
@@ -427,11 +445,11 @@
     // Get array of source charge objects
     function getChargePositions() {
       const pos = [
-        { id: 1, name: 'q_1', x: state.q1Pos.x, y: state.q1Pos.y, label: 'P_1(' + state.q1Pos.x + ', ' + state.q1Pos.y + ')', charge: state.q1 },
-        { id: 2, name: 'q_2', x: state.q2Pos.x, y: state.q2Pos.y, label: 'P_2(' + state.q2Pos.x + ', ' + state.q2Pos.y + ')', charge: state.q2 }
+        { id: 1, name: 'q_1', key: 'q1Pos', x: state.q1Pos.x, y: state.q1Pos.y, label: 'P_1(' + state.q1Pos.x + ', ' + state.q1Pos.y + ')', charge: state.q1 },
+        { id: 2, name: 'q_2', key: 'q2Pos', x: state.q2Pos.x, y: state.q2Pos.y, label: 'P_2(' + state.q2Pos.x + ', ' + state.q2Pos.y + ')', charge: state.q2 }
       ];
       if (state.numCharges === 3) {
-        pos.push({ id: 3, name: 'q_3', x: state.q3Pos.x, y: state.q3Pos.y, label: 'P_3(' + state.q3Pos.x + ', ' + state.q3Pos.y + ')', charge: state.q3 });
+        pos.push({ id: 3, name: 'q_3', key: 'q3Pos', x: state.q3Pos.x, y: state.q3Pos.y, label: 'P_3(' + state.q3Pos.x + ', ' + state.q3Pos.y + ')', charge: state.q3 });
       }
       return pos;
     }
@@ -492,6 +510,7 @@
         updateStageTabs();
         updateLayerButtons();
         renderAll();
+        setTimeout(() => autoFitView(), 50);
 
         solEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
@@ -513,7 +532,6 @@
 
       const unitsPool = ['uC', 'nC', 'mC', 'pC'];
 
-      // Arbitrary non-aligned or aligned positions
       state.q1Pos = { x: getRandomInt(-4, 4), y: getRandomInt(1, 6) };
       state.q2Pos = { x: getRandomInt(1, 6), y: getRandomInt(-4, 4) };
       state.q3Pos = { x: getRandomInt(-6, 2), y: getRandomInt(-6, -1) };
@@ -543,6 +561,7 @@
       }
 
       renderAll();
+      setTimeout(() => autoFitView(), 50);
     }
 
     // Custom Panel Toggle
@@ -557,6 +576,7 @@
       state.q3Pos = { x: 5, y: 0 };
       syncInputsFromState();
       renderAll();
+      autoFitView();
     }
 
     function syncInputsFromState() {
@@ -572,7 +592,8 @@
       document.getElementById('input-xB').value = state.xB;
       document.getElementById('input-yB').value = state.yB;
 
-      document.querySelector('input[name="num-charges"][value="' + state.numCharges + '"]').checked = true;
+      const numRadio = document.querySelector('input[name="num-charges"][value="' + state.numCharges + '"]');
+      if (numRadio) numRadio.checked = true;
 
       document.getElementById('input-q1-val').value = state.q1.val;
       document.getElementById('input-q1-unit').value = state.q1.unit;
@@ -594,23 +615,9 @@
       }
     }
 
-    function updateCustomValues() {
+    function applyCustomData() {
       const selectedNum = parseInt(document.querySelector('input[name="num-charges"]:checked').value);
       state.numCharges = selectedNum;
-
-      const q3PosRow = document.getElementById('q3-pos-row');
-      const q3Row = document.getElementById('q3-control-row');
-      if (state.numCharges === 2) {
-        q3PosRow.classList.add('opacity-40', 'pointer-events-none');
-        q3Row.classList.add('opacity-40', 'pointer-events-none');
-      } else {
-        q3PosRow.classList.remove('opacity-40', 'pointer-events-none');
-        q3Row.classList.remove('opacity-40', 'pointer-events-none');
-      }
-    }
-
-    function applyCustomData() {
-      updateCustomValues();
 
       state.q1Pos.x = parseFloat(document.getElementById('input-x1').value) || 0;
       state.q1Pos.y = parseFloat(document.getElementById('input-y1').value) || 0;
@@ -641,44 +648,198 @@
         unit: document.getElementById('input-q4-unit').value
       };
 
-      if (state.solutionVisible) {
-        state.activeLayer = 1;
-        state.activeStage = 1;
-        updateStageTabs();
-        updateLayerButtons();
+      syncInputsFromState();
+      renderAll();
+      autoFitView();
+    }
+
+    // --- AUTO-FIT & BOUNDING BOX CALCULATION FOR ACTIVE LAYER ---
+
+    function getFieldVectors() {
+      const K = 9e9;
+      const charges = getChargePositions();
+      const fields = [];
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rMag > 0 ? rx / rMag : 0;
+        const uy = rMag > 0 ? ry / rMag : 0;
+        const qC = getValC(c.charge);
+
+        const Ex = rMag > 0 ? (K * qC / (rMag * rMag)) * ux : 0;
+        const Ey = rMag > 0 ? (K * qC / (rMag * rMag)) * uy : 0;
+        const E_mag = Math.sqrt(Ex * Ex + Ey * Ey);
+
+        fields.push({ id: c.id, name: c.name, Ex, Ey, E_mag });
+      });
+
+      return fields;
+    }
+
+    function getTotalFieldAndForce() {
+      const fields = getFieldVectors();
+      let totalEx = 0;
+      let totalEy = 0;
+
+      fields.forEach(f => {
+        totalEx += f.Ex;
+        totalEy += f.Ey;
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+      const q4C = getValC(state.q4);
+      const totalFx = q4C * totalEx;
+      const totalFy = q4C * totalEy;
+      const totalF_mag = Math.sqrt(totalFx * totalFx + totalFy * totalFy);
+
+      return { totalEx, totalEy, totalE_mag, totalFx, totalFy, totalF_mag };
+    }
+
+    function getActiveBoundingBox() {
+      const charges = getChargePositions();
+      const points = [
+        { x: state.q1Pos.x, y: state.q1Pos.y },
+        { x: state.q2Pos.x, y: state.q2Pos.y },
+        { x: state.xA, y: state.yA },
+        { x: state.xB, y: state.yB }
+      ];
+      if (state.numCharges === 3) {
+        points.push({ x: state.q3Pos.x, y: state.q3Pos.y });
       }
 
-      renderAll();
+      // Layer 2: Position vectors r_i connect charges to A (already covered by charges and A)
+
+      // Layer 3: Individual Field Vectors E_i starting at A
+      if (state.activeLayer === 3) {
+        const fields = getFieldVectors();
+        const maxE = Math.max(...fields.map(f => f.E_mag), 1e-9);
+        const maxVectorLenMeters = 2.4; // Equivalent visual length in world meters
+
+        fields.forEach(f => {
+          if (f.E_mag > 0) {
+            const len = Math.max(0.8, (f.E_mag / maxE) * maxVectorLenMeters);
+            const angle = Math.atan2(f.Ey, f.Ex);
+            points.push({
+              x: state.xA + len * Math.cos(angle),
+              y: state.yA + len * Math.sin(angle)
+            });
+          }
+        });
+      }
+
+      // Layer 4: Total Field E_T and Force F_T starting at A
+      if (state.activeLayer === 4) {
+        const { totalEx, totalEy, totalE_mag, totalFx, totalFy, totalF_mag } = getTotalFieldAndForce();
+        const visLenE = 2.4;
+        const visLenF = 1.5;
+
+        if (totalE_mag > 0) {
+          const angleE = Math.atan2(totalEy, totalEx);
+          points.push({
+            x: state.xA + visLenE * Math.cos(angleE),
+            y: state.yA + visLenE * Math.sin(angleE)
+          });
+        }
+
+        if (totalF_mag > 0) {
+          const angleF = Math.atan2(totalFy, totalFx);
+          points.push({
+            x: state.xA + visLenF * Math.cos(angleF),
+            y: state.yA + visLenF * Math.sin(angleF)
+          });
+        }
+      }
+
+      let minX = Math.min(...points.map(p => p.x));
+      let maxX = Math.max(...points.map(p => p.x));
+      let minY = Math.min(...points.map(p => p.y));
+      let maxY = Math.max(...points.map(p => p.y));
+
+      // Extra Safety Padding (in meters) to guarantee labels and arrowheads are not cut off
+      const padding = 1.8;
+      return {
+        minX: minX - padding,
+        maxX: maxX + padding,
+        minY: minY - padding,
+        maxY: maxY + padding
+      };
     }
 
-    // Zoom Functions
+    function autoFitView() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      if (width === 0 || height === 0) return;
+
+      const bbox = getActiveBoundingBox();
+      const worldW = bbox.maxX - bbox.minX;
+      const worldH = bbox.maxY - bbox.minY;
+
+      const scaleX = width / worldW;
+      const scaleY = height / worldH;
+
+      state.scale = Math.min(scaleX, scaleY);
+      state.userZoomFactor = 1.0;
+
+      state.panX = width / 2 - ((bbox.minX + bbox.maxX) / 2) * state.scale;
+      state.panY = height / 2 + ((bbox.minY + bbox.maxY) / 2) * state.scale;
+
+      updateZoomLabel();
+      drawCanvas();
+    }
+
+    function resetViewport() {
+      autoFitView();
+    }
+
     function changeZoom(delta) {
-      state.zoomLevel = Math.max(0.5, Math.min(3.0, state.zoomLevel + delta));
-      document.getElementById('zoom-val').innerText = Math.round(state.zoomLevel * 100) + '%';
+      const oldZoom = state.userZoomFactor;
+      state.userZoomFactor = Math.max(0.4, Math.min(3.5, state.userZoomFactor + delta));
+      const ratio = state.userZoomFactor / oldZoom;
+
+      const canvas = document.getElementById('physics-canvas');
+      if (canvas) {
+        const rect = canvas.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        state.panX = centerX + (state.panX - centerX) * ratio;
+        state.panY = centerY + (state.panY - centerY) * ratio;
+        state.scale *= ratio;
+      }
+
+      updateZoomLabel();
       drawCanvas();
     }
 
-    function resetZoom() {
-      state.zoomLevel = 1.0;
-      document.getElementById('zoom-val').innerText = '100%';
-      drawCanvas();
+    function updateZoomLabel() {
+      const zoomEl = document.getElementById('zoom-val');
+      if (zoomEl) {
+        zoomEl.innerText = Math.round(state.userZoomFactor * 100) + '%';
+      }
     }
 
     // Set Active Layer (1 to 4) - EXCLUSIVE LAYERS
     function setLayer(layerNum) {
       state.activeLayer = layerNum;
       updateLayerButtons();
-      drawCanvas();
       renderLayerDescription();
+      autoFitView();
     }
 
     function updateLayerButtons() {
       for (let i = 1; i <= 4; i++) {
         const btn = document.getElementById('btn-layer-' + i);
-        if (i === state.activeLayer) {
-          btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm";
-        } else {
-          btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900 hover:bg-slate-300/50";
+        if (btn) {
+          if (i === state.activeLayer) {
+            btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm";
+          } else {
+            btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900 hover:bg-slate-300/50";
+          }
         }
       }
 
@@ -689,7 +850,7 @@
         "Capa 3: Només Camps Elèctrics Individuals (E_i)",
         "Capa 4: Només Camp Total (E_T) i Força (F_T)"
       ];
-      badge.innerText = titles[state.activeLayer - 1];
+      if (badge) badge.innerText = titles[state.activeLayer - 1];
     }
 
     // Switch Solution Stages (1 to 5)
@@ -699,27 +860,31 @@
 
       for (let i = 1; i <= 5; i++) {
         const panel = document.getElementById('stage-panel-' + i);
-        if (i === stageNum) panel.classList.remove('hidden');
-        else panel.classList.add('hidden');
+        if (panel) {
+          if (i === stageNum) panel.classList.remove('hidden');
+          else panel.classList.add('hidden');
+        }
       }
 
       if (stageNum === 1) {
-        setTimeout(drawCanvas, 50);
+        setTimeout(() => autoFitView(), 50);
       }
     }
 
     function updateStageTabs() {
       for (let i = 1; i <= 5; i++) {
         const tab = document.getElementById('tab-stage-' + i);
-        if (i === state.activeStage) {
-          tab.className = "px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 font-semibold transition flex items-center space-x-1";
-        } else {
-          tab.className = "px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1";
+        if (tab) {
+          if (i === state.activeStage) {
+            tab.className = "px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 font-semibold transition flex items-center space-x-1";
+          } else {
+            tab.className = "px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1";
+          }
         }
       }
     }
 
-    // Advanced Arrowhead Drawing
+    // Advanced Arrowhead Drawing Helper
     function drawArrow(ctx, x1, y1, x2, y2, color, width = 2.5, headLen = 11, label = "", dash = [], sourceRadius = 0, targetRadius = 0) {
       const dx = x2 - x1;
       const dy = y2 - y1;
@@ -758,10 +923,22 @@
         const midY = (startY + endY) / 2;
         const offX = 14 * Math.cos(angle - Math.PI / 2);
         const offY = 14 * Math.sin(angle - Math.PI / 2);
+        
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        const textWidth = ctx.measureText(label).width;
+        ctx.fillRect(midX + offX - 3, midY + offY - 11, textWidth + 6, 14);
+
+        ctx.fillStyle = color;
         ctx.fillText(label, midX + offX, midY + offY);
       }
       ctx.restore();
     }
+
+    // Coordinate transformations
+    function toScreenX(x) { return state.panX + x * state.scale; }
+    function toScreenY(y) { return state.panY - y * state.scale; }
+    function toWorldX(sx) { return (sx - state.panX) / state.scale; }
+    function toWorldY(sy) { return (state.panY - sy) / state.scale; }
 
     // Render HTML5 Canvas Diagram
     function drawCanvas() {
@@ -780,48 +957,41 @@
 
       ctx.clearRect(0, 0, width, height);
 
-      const charges = getChargePositions();
-      const allX = charges.map(c => c.x).concat([state.xA, state.xB]);
-      const allY = charges.map(c => c.y).concat([state.yA, state.yB]);
+      // Soft Grid Background
+      const minWX = toWorldX(0);
+      const maxWX = toWorldX(width);
+      const maxWY = toWorldY(0);
+      const minWY = toWorldY(height);
 
-      const xMin = Math.min(...allX) - 1.8;
-      const xMax = Math.max(...allX) + 1.8;
-      const yMin = Math.min(...allY) - 1.8;
-      const yMax = Math.max(...allY) + 1.8;
-
-      const baseScale = Math.min((width - 120) / (xMax - xMin), (height - 100) / (yMax - yMin));
-      const scale = baseScale * state.zoomLevel;
-
-      const originX = width / 2 - ((xMin + xMax) / 2) * scale;
-      const originY = height / 2 + ((yMin + yMax) / 2) * scale;
-
-      const toX = (x) => originX + x * scale;
-      const toY = (y) => originY - y * scale;
-
-      // Soft Grid
       ctx.strokeStyle = '#f1f5f9';
       ctx.lineWidth = 1;
-      for (let x = Math.floor(xMin - 5); x <= Math.ceil(xMax + 5); x++) {
+      for (let x = Math.floor(minWX - 1); x <= Math.ceil(maxWX + 1); x++) {
         ctx.beginPath();
-        ctx.moveTo(toX(x), 0);
-        ctx.lineTo(toX(x), height);
+        ctx.moveTo(toScreenX(x), 0);
+        ctx.lineTo(toScreenX(x), height);
         ctx.stroke();
       }
-      for (let y = Math.floor(yMin - 5); y <= Math.ceil(yMax + 5); y++) {
+      for (let y = Math.floor(minWY - 1); y <= Math.ceil(maxWY + 1); y++) {
         ctx.beginPath();
-        ctx.moveTo(0, toY(y));
-        ctx.lineTo(width, toY(y));
+        ctx.moveTo(0, toScreenY(y));
+        ctx.lineTo(width, toScreenY(y));
         ctx.stroke();
       }
 
       // Cartesian Axes
+      const originX = toScreenX(0);
+      const originY = toScreenY(0);
+
       ctx.strokeStyle = '#94a3b8';
       ctx.lineWidth = 1.5;
+      
+      // X axis
       ctx.beginPath();
       ctx.moveTo(0, originY);
       ctx.lineTo(width, originY);
       ctx.stroke();
 
+      // Y axis
       ctx.beginPath();
       ctx.moveTo(originX, 0);
       ctx.lineTo(originX, height);
@@ -829,26 +999,30 @@
 
       ctx.font = '11px Inter, sans-serif';
       ctx.fillStyle = '#64748b';
-      ctx.fillText('x (m)', width - 35, originY - 8);
-      ctx.fillText('y (m)', originX + 8, 15);
+      ctx.fillText('x (m)', Math.min(width - 35, Math.max(10, originX + 10)), Math.min(height - 10, Math.max(20, originY - 8)));
+      ctx.fillText('y (m)', Math.min(width - 35, Math.max(10, originX + 8)), 15);
 
-      // Coordinate ticks
-      for (let x = Math.floor(xMin - 2); x <= Math.ceil(xMax + 2); x++) {
+      // Axis Ticks
+      for (let x = Math.floor(minWX); x <= Math.ceil(maxWX); x++) {
         if (x === 0) continue;
+        const sx = toScreenX(x);
         ctx.beginPath();
-        ctx.moveTo(toX(x), originY - 3);
-        ctx.lineTo(toX(x), originY + 3);
+        ctx.moveTo(sx, originY - 3);
+        ctx.lineTo(sx, originY + 3);
         ctx.stroke();
-        ctx.fillText(x.toString(), toX(x) - 4, originY + 16);
+        ctx.fillText(x.toString(), sx - 4, Math.min(height - 5, Math.max(15, originY + 16)));
       }
-      for (let y = Math.floor(yMin - 2); y <= Math.ceil(yMax + 2); y++) {
+      for (let y = Math.floor(minWY); y <= Math.ceil(maxWY); y++) {
         if (y === 0) continue;
+        const sy = toScreenY(y);
         ctx.beginPath();
-        ctx.moveTo(originX - 3, toY(y));
-        ctx.lineTo(originX + 3, toY(y));
+        ctx.moveTo(originX - 3, sy);
+        ctx.lineTo(originX + 3, sy);
         ctx.stroke();
-        ctx.fillText(y.toString(), originX - 18, toY(y) + 4);
+        ctx.fillText(y.toString(), Math.max(5, originX - 18), sy + 4);
       }
+
+      const charges = getChargePositions();
 
       // Auxiliary dashed geometric connection lines between source charges
       ctx.strokeStyle = '#cbd5e1';
@@ -856,8 +1030,8 @@
       ctx.setLineDash([4, 4]);
       ctx.beginPath();
       charges.forEach((c, idx) => {
-        if (idx === 0) ctx.moveTo(toX(c.x), toY(c.y));
-        else ctx.lineTo(toX(c.x), toY(c.y));
+        if (idx === 0) ctx.moveTo(toScreenX(c.x), toScreenY(c.y));
+        else ctx.lineTo(toScreenX(c.x), toScreenY(c.y));
       });
       if (charges.length > 2) ctx.closePath();
       ctx.stroke();
@@ -865,34 +1039,42 @@
 
       // Point A(xA, yA) Node Circle
       const nodeRadiusA = 7;
+      const sXA = toScreenX(state.xA);
+      const sYA = toScreenY(state.yA);
+
       ctx.fillStyle = '#f59e0b';
       ctx.beginPath();
-      ctx.arc(toX(state.xA), toY(state.yA), nodeRadiusA, 0, Math.PI * 2);
+      ctx.arc(sXA, sYA, nodeRadiusA, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = '#b45309';
       ctx.lineWidth = 2;
       ctx.stroke();
+
       ctx.font = 'bold 12px Inter, sans-serif';
       ctx.fillStyle = '#b45309';
-      ctx.fillText('A(' + state.xA + ',' + state.yA + ')', toX(state.xA) + 10, toY(state.yA) + 16);
+      ctx.fillText('A(' + state.xA + ',' + state.yA + ')', sXA + 10, sYA + 16);
 
       // Point B(xB, yB) Node Circle
       const nodeRadiusB = 7;
+      const sXB = toScreenX(state.xB);
+      const sYB = toScreenY(state.yB);
+
       ctx.fillStyle = '#10b981';
       ctx.beginPath();
-      ctx.arc(toX(state.xB), toY(state.yB), nodeRadiusB, 0, Math.PI * 2);
+      ctx.arc(sXB, sYB, nodeRadiusB, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = '#047857';
       ctx.lineWidth = 2;
       ctx.stroke();
+
       ctx.fillStyle = '#047857';
-      ctx.fillText('B(' + state.xB + ',' + state.yB + ')', toX(state.xB) + 10, toY(state.yB) + 16);
+      ctx.fillText('B(' + state.xB + ',' + state.yB + ')', sXB + 10, sYB + 16);
 
       // Source Charges Nodes (Layer 1 Base)
       const chargeRadius = 13;
       charges.forEach(c => {
-        const cx = toX(c.x);
-        const cy = toY(c.y);
+        const cx = toScreenX(c.x);
+        const cy = toScreenY(c.y);
         const isPos = c.charge.val > 0;
         const color = isPos ? '#ef4444' : '#3b82f6';
         const sign = isPos ? '+' : '−';
@@ -922,90 +1104,201 @@
       // CAPA 2: EXCLUSIVAMENT Vectors Posició r_i
       if (state.activeLayer === 2) {
         charges.forEach(c => {
-          const fromX = toX(c.x);
-          const fromY = toY(c.y);
-          const toX_A = toX(state.xA);
-          const toY_A = toY(state.yA);
-          drawArrow(ctx, fromX, fromY, toX_A, toY_A, '#d97706', 2.5, 10, 'r_' + c.id, [], chargeRadius, nodeRadiusA);
+          const fromX = toScreenX(c.x);
+          const fromY = toScreenY(c.y);
+          drawArrow(ctx, fromX, fromY, sXA, sYA, '#d97706', 2.5, 10, 'r_' + c.id, [], chargeRadius, nodeRadiusA);
         });
       }
 
-      // Calculations for fields
-      const K = 9e9;
-      let totalEx = 0;
-      let totalEy = 0;
-      const fields = [];
-
-      charges.forEach(c => {
-        const rx = state.xA - c.x;
-        const ry = state.yA - c.y;
-        const rMag = Math.sqrt(rx * rx + ry * ry);
-        const ux = rMag > 0 ? rx / rMag : 0;
-        const uy = rMag > 0 ? ry / rMag : 0;
-        const qC = getValC(c.charge);
-
-        const Ex = rMag > 0 ? (K * qC / (rMag * rMag)) * ux : 0;
-        const Ey = rMag > 0 ? (K * qC / (rMag * rMag)) * uy : 0;
-
-        totalEx += Ex;
-        totalEy += Ey;
-
-        const E_mag = Math.sqrt(Ex * Ex + Ey * Ey);
-        fields.push({ id: c.id, name: c.name, Ex, Ey, E_mag });
-      });
-
-      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
-      const q4C = getValC(state.q4);
-      const totalFx = q4C * totalEx;
-      const totalFy = q4C * totalEy;
-      const totalF_mag = Math.sqrt(totalFx * totalFx + totalFy * totalFy);
-
       // CAPA 3: EXCLUSIVAMENT Vectors Camp Elèctric Individual E_i a A
       if (state.activeLayer === 3) {
+        const fields = getFieldVectors();
         const maxE = Math.max(...fields.map(f => f.E_mag), 1e-9);
-        const maxPixelLen = scale * 1.8;
+        const maxPixelLen = state.scale * 2.2;
 
         fields.forEach((f, idx) => {
-          const len = Math.max(28, (f.E_mag / maxE) * maxPixelLen);
+          const len = Math.max(30, (f.E_mag / maxE) * maxPixelLen);
           const angle = Math.atan2(-f.Ey, f.Ex);
-          const startX = toX(state.xA);
-          const startY = toY(state.yA);
-          const endX = startX + len * Math.cos(angle);
-          const endY = startY + len * Math.sin(angle);
+          const endX = sXA + len * Math.cos(angle);
+          const endY = sYA + len * Math.sin(angle);
 
           const colors = ['#0284c7', '#7c3aed', '#db2777'];
-          drawArrow(ctx, startX, startY, endX, endY, colors[idx % colors.length], 3, 10, 'E_' + f.id, [], nodeRadiusA, 0);
+          drawArrow(ctx, sXA, sYA, endX, endY, colors[idx % colors.length], 3, 10, 'E_' + f.id, [], nodeRadiusA, 0);
         });
       }
 
       // CAPA 4: EXCLUSIVAMENT Vector Camp Total E_T i Força F_T a A
       if (state.activeLayer === 4) {
-        const startX = toX(state.xA);
-        const startY = toY(state.yA);
+        const { totalEx, totalEy, totalE_mag, totalFx, totalFy, totalF_mag } = getTotalFieldAndForce();
 
-        if (totalE_mag > 0) {
-          const angleE = Math.atan2(-totalEy, totalEx);
-          const lenE = scale * 2.0;
-          const endEx = startX + lenE * Math.cos(angleE);
-          const endEy = startY + lenE * Math.sin(angleE);
+        const vecE = {
+          mag: totalE_mag,
+          angle: Math.atan2(-totalEy, totalEx),
+          len: state.scale * 2.4,
+          color: '#4f46e5',
+          label: 'E_T',
+          width: 4
+        };
 
-          drawArrow(ctx, startX, startY, endEx, endEy, '#4f46e5', 4, 12, 'E_T', [], nodeRadiusA, 0);
-        }
+        const vecF = {
+          mag: totalF_mag,
+          angle: Math.atan2(-totalFy, totalFx),
+          len: state.scale * 1.5,
+          color: '#059669',
+          label: 'F_T',
+          width: 3.5
+        };
 
-        if (totalF_mag > 0) {
-          const angleF = Math.atan2(-totalFy, totalFx);
-          const lenF = scale * 2.2;
-          const endFx = startX + lenF * Math.cos(angleF);
-          const endFy = startY + lenF * Math.sin(angleF);
+        const drawVec = (v) => {
+          if (v.mag > 0) {
+            const endX = sXA + v.len * Math.cos(v.angle);
+            const endY = sYA + v.len * Math.sin(v.angle);
+            drawArrow(ctx, sXA, sYA, endX, endY, v.color, v.width, 12, v.label, [], nodeRadiusA, 0);
+          }
+        };
 
-          drawArrow(ctx, startX, startY, endFx, endFy, '#059669', 4, 12, 'F_T', [], nodeRadiusA, 0);
+        // El vector més llarg es dibuixa primer i el més curt segon (perquè quedi a sobre)
+        if (vecE.len >= vecF.len) {
+          drawVec(vecE);
+          drawVec(vecF);
+        } else {
+          drawVec(vecF);
+          drawVec(vecE);
         }
       }
+    }
+
+    // Interactive Dragging and Canvas Panning Mouse Listeners
+    function setupCanvasInteractivity() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+
+      const getDraggableAt = (worldX, worldY) => {
+        const tolerance = 25 / state.scale; // 25px tolerance
+        const charges = getChargePositions();
+
+        for (let c of charges) {
+          const dx = worldX - c.x;
+          const dy = worldY - c.y;
+          if (Math.sqrt(dx * dx + dy * dy) <= tolerance) {
+            return { type: 'charge', key: c.key, name: c.name };
+          }
+        }
+
+        // Check Point A
+        if (Math.sqrt((worldX - state.xA)**2 + (worldY - state.yA)**2) <= tolerance) {
+          return { type: 'pointA' };
+        }
+
+        // Check Point B
+        if (Math.sqrt((worldX - state.xB)**2 + (worldY - state.yB)**2) <= tolerance) {
+          return { type: 'pointB' };
+        }
+
+        return null;
+      };
+
+      const handlePointerDown = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const wX = toWorldX(mouseX);
+        const wY = toWorldY(mouseY);
+
+        const hit = getDraggableAt(wX, wY);
+        if (hit) {
+          state.draggedItem = hit;
+        } else {
+          state.isPanning = true;
+          state.panStartMouse = { x: e.clientX, y: e.clientY };
+          state.panStartOffset = { x: state.panX, y: state.panY };
+        }
+      };
+
+      const handlePointerMove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const wX = toWorldX(mouseX);
+        const wY = toWorldY(mouseY);
+
+        // Hover cursor feedback
+        if (!state.draggedItem && !state.isPanning) {
+          const hit = getDraggableAt(wX, wY);
+          canvas.style.cursor = hit ? 'pointer' : 'grab';
+        }
+
+        // Item dragging
+        if (state.draggedItem) {
+          // Snap coordinates to 0.5m grid
+          const snappedX = Math.round(wX * 2) / 2;
+          const snappedY = Math.round(wY * 2) / 2;
+
+          if (state.draggedItem.type === 'charge') {
+            state[state.draggedItem.key].x = snappedX;
+            state[state.draggedItem.key].y = snappedY;
+          } else if (state.draggedItem.type === 'pointA') {
+            state.xA = snappedX;
+            state.yA = snappedY;
+          } else if (state.draggedItem.type === 'pointB') {
+            state.xB = snappedX;
+            state.yB = snappedY;
+          }
+
+          syncInputsFromState();
+          renderAll();
+          return;
+        }
+
+        // Canvas Panning
+        if (state.isPanning) {
+          canvas.style.cursor = 'grabbing';
+          const dx = e.clientX - state.panStartMouse.x;
+          const dy = e.clientY - state.panStartMouse.y;
+          state.panX = state.panStartOffset.x + dx;
+          state.panY = state.panStartOffset.y + dy;
+          drawCanvas();
+        }
+      };
+
+      const handlePointerUp = () => {
+        state.draggedItem = null;
+        state.isPanning = false;
+        canvas.style.cursor = 'grab';
+      };
+
+      canvas.addEventListener('mousedown', handlePointerDown);
+      window.addEventListener('mousemove', handlePointerMove);
+      window.addEventListener('mouseup', handlePointerUp);
+
+      // Touch screen support
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          handlePointerDown(e.touches[0]);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1 && (state.draggedItem || state.isPanning)) {
+          handlePointerMove(e.touches[0]);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', handlePointerUp);
+
+      // Mouse Wheel Zooming
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomDelta = e.deltaY < 0 ? 0.15 : -0.15;
+        changeZoom(zoomDelta);
+      }, { passive: false });
     }
 
     // Render Layer Description Card
     function renderLayerDescription() {
       const el = document.getElementById('layer-desc');
+      if (!el) return;
       const ptA = "A(" + state.xA + "," + state.yA + ")\\text{ m}";
       const ptB = "B(" + state.xB + "," + state.yB + ")\\text{ m}";
 
@@ -1021,6 +1314,7 @@
     // Render Stage 2
     function renderStage2() {
       const container = document.getElementById('stage2-content');
+      if (!container) return;
       const charges = getChargePositions();
       const ptATex = "A(" + state.xA + "," + state.yA + ")";
 
@@ -1048,6 +1342,7 @@
     // Render Stage 3
     function renderStage3() {
       const container = document.getElementById('stage3-content');
+      if (!container) return;
       const charges = getChargePositions();
       const K = 9e9;
 
@@ -1093,6 +1388,7 @@
     // Render Stage 4
     function renderStage4() {
       const container = document.getElementById('stage4-content');
+      if (!container) return;
       const charges = getChargePositions();
       const K = 9e9;
 
@@ -1144,6 +1440,7 @@
     // Render Stage 5
     function renderStage5() {
       const container = document.getElementById('stage5-content');
+      if (!container) return;
       const charges = getChargePositions();
       const K = 9e9;
 
@@ -1224,7 +1521,8 @@
 
     // Render All Components
     function renderAll() {
-      document.getElementById('statement-card').innerHTML = generateStatementHTML();
+      const stmt = document.getElementById('statement-card');
+      if (stmt) stmt.innerHTML = generateStatementHTML();
       
       if (state.solutionVisible) {
         renderLayerDescription();
@@ -1240,10 +1538,11 @@
     window.onload = function() {
       syncInputsFromState();
       renderAll();
+      setupCanvasInteractivity();
 
       window.addEventListener('resize', () => {
         if (state.solutionVisible && state.activeStage === 1) {
-          drawCanvas();
+          autoFitView();
         }
       });
     };
