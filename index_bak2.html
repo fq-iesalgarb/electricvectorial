@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://fq-iesalgarb.github.io/electricvectorial/ -->
+<html lang="ca" class="h-full bg-slate-50"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrostàtica: Camp, Potencial i Treball | 2n Batxillerat</title>
+  
+  <!-- Enllaç al favicon SVG personalitzat -->
+  <link rel="icon" type="image/svg+xml" href="https://fq-iesalgarb.github.io/electricvectorial/favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="./Electrostàtica_ Camp, Potencial i Treball _ 2n Batxillerat_files/saved_resource"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- KaTeX CSS & JS via CDN -->
+  <link rel="stylesheet" href="./Electrostàtica_ Camp, Potencial i Treball _ 2n Batxillerat_files/katex.min.css">
+  <script src="./Electrostàtica_ Camp, Potencial i Treball _ 2n Batxillerat_files/katex.min.js.baixa"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./Electrostàtica_ Camp, Potencial i Treball _ 2n Batxillerat_files/css2" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .katex-display { margin: 0.4em 0 !important; }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.left-3{left:0.75rem}.top-3{top:0.75rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mr-2{margin-right:0.5rem}.mt-3{margin-top:0.75rem}.mt-auto{margin-top:auto}.mb-3{margin-bottom:0.75rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-2{height:0.5rem}.h-6{height:1.5rem}.h-\[450px\]{height:450px}.h-full{height:100%}.min-h-full{min-height:100%}.w-16{width:4rem}.w-2{width:0.5rem}.w-6{width:1.5rem}.w-full{width:100%}.max-w-6xl{max-width:72rem}.flex-1{flex:1 1 0%}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-crosshair{cursor:crosshair}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-amber-500{--tw-border-opacity:1;border-color:rgb(245 158 11 / var(--tw-border-opacity, 1))}.border-emerald-500{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255 / var(--tw-border-opacity, 1))}.border-indigo-400\/30{border-color:rgb(129 140 248 / 0.3)}.border-indigo-500{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.border-indigo-600{--tw-border-opacity:1;border-color:rgb(79 70 229 / var(--tw-border-opacity, 1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-700\/80{border-color:rgb(51 65 85 / 0.8)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-indigo-50\/70{background-color:rgb(238 242 255 / 0.7)}.bg-indigo-500\/30{background-color:rgb(99 102 241 / 0.3)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-100\/90{background-color:rgb(241 245 249 / 0.9)}.bg-slate-200\/80{background-color:rgb(226 232 240 / 0.8)}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-50\/60{background-color:rgb(248 250 252 / 0.6)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/80{background-color:rgb(30 41 59 / 0.8)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-indigo-950{--tw-gradient-to:rgb(30 27 75 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #1e1b4b var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-slate-900{--tw-gradient-to:#0f172a var(--tw-gradient-to-position)}.p-1{padding:0.25rem}.p-2\.5{padding:0.625rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-1{padding-bottom:0.25rem}.pl-4{padding-left:1rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-normal{font-weight:400}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-indigo-950{--tw-text-opacity:1;color:rgb(30 27 75 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.accent-indigo-600{accent-color:#4f46e5}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
+<body class="min-h-full flex flex-col text-slate-800 bg-slate-50">
+
+  <!-- Header Bar -->
+  <header class="bg-slate-900 text-white shadow-md border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 bg-indigo-600 rounded-xl shadow-md">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Electrostàtica: Camp, Potencial i Treball</h1>
+          <p class="text-xs text-slate-400">Física 2n de Batxillerat | Generador i Resolutor Interactiu</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2 text-xs bg-slate-800/80 px-3.5 py-1.5 rounded-full border border-slate-700/80">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-slate-300">GitHub Pages Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-1 space-y-6">
+
+    <!-- Card 1: Problem Statement & Controls -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-5 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded text-xs font-semibold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 mb-1">
+            Pràctica d'Electrostàtica
+          </span>
+          <h2 class="text-lg font-semibold">Configuració de Càrregues i Punts en el Pla Cartesià</h2>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btn-random" onclick="generateRandomProblem()" class="px-3.5 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>🎲 Problema Aleatori</span>
+          </button>
+          <button id="btn-toggle-custom" onclick="toggleCustomPanel()" class="px-3.5 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>⚙️ Personalitzar Dades</span>
+          </button>
+          <button id="toggle-solution-btn" onclick="toggleSolution()" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow flex items-center space-x-1.5">
+            <span>👁️ Mostrar Solució i Diagrama</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Problem Statement Rendered via JS KaTeX -->
+      <div id="statement-card" class="p-6 bg-slate-50/60 border-b border-slate-200 text-sm md:text-base leading-relaxed"><p class="mb-3 text-slate-800 leading-relaxed font-normal">S'ubiquen tres càrregues puntuals en els punts de coordenades del pla cartesià <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">P_1(0, 4)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>5</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">P_2(5, 4)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span> i <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>5</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">P_3(5, 0)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span>, amb valors <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mn>1</mn></msub><mo>=</mo><mo>+</mo><mn>4</mn><mtext>&nbsp;</mtext><mi>μ</mi><mtext>C</mtext></mrow><annotation encoding="application/x-tex">q_1 = +4\text{ }\mu\text{C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">+</span><span class="mord">4</span><span class="mord text"><span class="mord">&nbsp;</span></span><span class="mord mathnormal">μ</span><span class="mord text"><span class="mord">C</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>3</mn><mtext>&nbsp;</mtext><mi>μ</mi><mtext>C</mtext></mrow><annotation encoding="application/x-tex">q_2 = -3\text{ }\mu\text{C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">−</span><span class="mord">3</span><span class="mord text"><span class="mord">&nbsp;</span></span><span class="mord mathnormal">μ</span><span class="mord text"><span class="mord">C</span></span></span></span></span> i <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mn>3</mn></msub><mo>=</mo><mo>+</mo><mn>2</mn><mtext>&nbsp;</mtext><mi>μ</mi><mtext>C</mtext></mrow><annotation encoding="application/x-tex">q_3 = +2\text{ }\mu\text{C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">+</span><span class="mord">2</span><span class="mord text"><span class="mord">&nbsp;</span></span><span class="mord mathnormal">μ</span><span class="mord text"><span class="mord">C</span></span></span></span></span> respectivament. Totes les coordenades i distàncies estan expressades en metres.</p><div class="space-y-2 text-slate-700 font-medium text-sm md:text-base"><p><strong>a)</strong> Dibuixeu l'esquema vectorial de les càrregues i determineu el vector camp elèctric total <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover accent="true"><mi>E</mi><mo>⃗</mo></mover><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">\vec{E}_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1163em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span><span style="top:-3.2523em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1522em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"></path></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> al punt d'estudi <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">A(0, 0)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span>.</p><p><strong>b)</strong> Si es col·loca una càrrega de prova <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mn>4</mn></msub><mo>=</mo><mo>+</mo><mn>2</mn><mtext>&nbsp;nC</mtext></mrow><annotation encoding="application/x-tex">q_4 = +2\text{ }\text{nC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">+</span><span class="mord">2</span><span class="mord text"><span class="mord">&nbsp;</span></span><span class="mord text"><span class="mord">nC</span></span></span></span></span> al punt <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">A(0, 0)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span>, calculeu la força elèctrica vectorial <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover accent="true"><mi>F</mi><mo>⃗</mo></mover><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">\vec{F}_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1163em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span></span><span style="top:-3.2523em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1522em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z"></path></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> que actua sobre ella.</p><p><strong>c)</strong> Calculeu el potencial elèctric creat pel sistema de càrregues al punt <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">A(0, 0)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span> i al punt <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo><mtext>&nbsp;m</mtext></mrow><annotation encoding="application/x-tex">B(-3, 1)\text{ m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord">−</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord text"><span class="mord">&nbsp;m</span></span></span></span></span>.</p><p><strong>d)</strong> Calculeu el treball <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>W</mi><mrow><mi>A</mi><mo>→</mo><mi>B</mi></mrow></msub></mrow><annotation encoding="application/x-tex">W_{A \to B}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mrel mtight">→</span><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> realitzat pel camp elèctric per traslladar la càrrega <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">q_4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> des de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> fins a <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> i raoneu si el procés és espontani.</p></div></div>
+
+      <!-- Customization Accordion Panel -->
+      <div id="custom-panel" class="hidden p-6 bg-slate-100 border-t border-slate-200 text-xs text-slate-700 space-y-4">
+        <h3 class="font-bold text-slate-900 text-sm flex items-center">
+          <span class="mr-2">⚙️</span> Personalització de Paràmetres de la Geometria i Càrregues
+        </h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Dimensions w, h -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <span class="font-bold text-slate-800 block border-b pb-1">📐 Geometria Font (m)</span>
+            <div>
+              <label class="block text-slate-600 mb-1">Amplada w (3 a 7 m): <span id="val-w-disp" class="font-bold text-indigo-600">5</span></label>
+              <input type="range" id="input-w" min="3" max="7" value="5" step="1" oninput="updateCustomValues()" class="w-full accent-indigo-600">
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1">Alçada h (3 a 7 m): <span id="val-h-disp" class="font-bold text-indigo-600">4</span></label>
+              <input type="range" id="input-h" min="3" max="7" value="4" step="1" oninput="updateCustomValues()" class="w-full accent-indigo-600">
+            </div>
+          </div>
+
+          <!-- Points A(xA, yA) and B(xB, yB) -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 block border-b pb-1">📍 Coordenades Punts A i B</span>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <div>
+                <label class="block text-slate-500 font-semibold mb-1">Punt A (x, y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xA" value="0" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-yA" value="0" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                </div>
+              </div>
+              <div>
+                <label class="block text-slate-500 font-semibold mb-1">Punt B (x, y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xB" value="-3" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                  <input type="number" id="input-yB" value="1" min="-6" max="6" class="w-full p-1 border rounded text-center">
+                </div>
+              </div>
+            </div>
+            <div class="pt-1">
+              <span class="font-semibold text-slate-800 block mb-1">Nombre de Càrregues Font:</span>
+              <div class="flex space-x-3">
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="2" onchange="updateCustomValues()" class="accent-indigo-600">
+                  <span>2 Càrregues</span>
+                </label>
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="3" checked="" onchange="updateCustomValues()" class="accent-indigo-600">
+                  <span>3 Càrregues</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charges q1, q2, q3 -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 block border-b pb-1">⚡ Càrregues Font (q1, q2, q3)</span>
+            
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q1:</span>
+              <input type="number" id="input-q1-val" value="4" min="-9" max="9" class="w-16 p-1 border rounded text-center">
+              <select id="input-q1-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                <option value="uC">µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q2:</span>
+              <input type="number" id="input-q2-val" value="-3" min="-9" max="9" class="w-16 p-1 border rounded text-center">
+              <select id="input-q2-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                <option value="uC" selected="">µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div id="q3-control-row" class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q3:</span>
+              <input type="number" id="input-q3-val" value="2" min="-9" max="9" class="w-16 p-1 border rounded text-center">
+              <select id="input-q3-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                <option value="uC" selected="">µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Test charge q4 & Apply Button -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-800 block border-b pb-1">🧪 Càrrega de Prova q4 (a Punt A)</span>
+              <div class="flex items-center space-x-1 pt-2">
+                <span class="w-6 font-semibold">q4:</span>
+                <input type="number" id="input-q4-val" value="2" min="-5" max="5" class="w-16 p-1 border rounded text-center">
+                <select id="input-q4-unit" class="p-1 border rounded bg-slate-50 text-xs">
+                  <option value="nC" selected="">nC</option>
+                  <option value="uC">µC</option>
+                  <option value="pC">pC</option>
+                  <option value="mC">mC</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="applyCustomData()" class="w-full mt-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition shadow-sm text-center">
+              Aplicar Canvis
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Solution Container (Hidden by Default) -->
+    <div id="solution-container" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      
+      <!-- Stage Tabs Bar -->
+      <div class="border-b border-slate-200 bg-slate-100/90 px-4 pt-3 flex flex-wrap gap-2 text-xs sm:text-sm font-medium">
+        <button id="tab-stage-1" onclick="switchStage(1)" class="px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 font-semibold transition flex items-center space-x-1">
+          <span>📐 1. Diagrama Vectorial</span>
+        </button>
+        <button id="tab-stage-2" onclick="switchStage(2)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>🎯 2. Vectors Posició</span>
+        </button>
+        <button id="tab-stage-3" onclick="switchStage(3)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>⚡ 3. Camp Elèctric Total</span>
+        </button>
+        <button id="tab-stage-4" onclick="switchStage(4)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>🧲 4. Força sobre q4</span>
+        </button>
+        <button id="tab-stage-5" onclick="switchStage(5)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1">
+          <span>🔋 5. Potencials i Treball</span>
+        </button>
+      </div>
+
+      <!-- Stage Panels Content -->
+      <div class="p-6">
+
+        <!-- Stage 1 Panel: Interactive Canvas Diagram -->
+        <div id="stage-panel-1" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm">Diagrama Vectorial Interactiu per Capes</h3>
+              <p class="text-xs text-slate-500">Seleccioneu la capa per visualitzar els elements vectorials pas a pas:</p>
+            </div>
+            
+            <!-- Layer Selector Buttons -->
+            <div class="inline-flex rounded-lg shadow-sm p-1 bg-slate-200/80 border border-slate-300 flex-wrap gap-1">
+              <button id="btn-layer-1" onclick="setLayer(1)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm">
+                Capa 1: Punts
+              </button>
+              <button id="btn-layer-2" onclick="setLayer(2)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900">
+                Capa 2: r_i
+              </button>
+              <button id="btn-layer-3" onclick="setLayer(3)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900">
+                Capa 3: E_i
+              </button>
+              <button id="btn-layer-4" onclick="setLayer(4)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900">
+                Capa 4: E_T i F_T
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas Display Area -->
+          <div class="relative w-full h-[450px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-inner flex items-center justify-center">
+            <canvas id="physics-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+            
+            <!-- Active Layer Badge -->
+            <div id="layer-badge" class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white px-3.5 py-1 rounded-full text-xs font-medium border border-slate-700 shadow">
+              Capa Actual: 1 (Càrregues i Punts)
+            </div>
+          </div>
+
+          <!-- Layer Explanation Card -->
+          <div id="layer-desc" class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-4 text-xs text-indigo-950 leading-relaxed">
+            <!-- Dynamic explanation via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 2 Panel: Position & Unit Vectors -->
+        <div id="stage-panel-2" class="hidden space-y-6">
+          <div class="border-l-4 border-amber-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 2: Càlculs Vectorials dels Vectors Posició i Unitaris</h3>
+            <p class="text-xs text-slate-600">Determinació dels vectors distància des de cada càrrega font cap al punt d'estudi A(xA, yA).</p>
+          </div>
+          <div id="stage2-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 3 Panel: Total Electric Field -->
+        <div id="stage-panel-3" class="hidden space-y-6">
+          <div class="border-l-4 border-indigo-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 3: Càlcul del Camp Elèctric Total (Principi de Superposició)</h3>
+            <p class="text-xs text-slate-600">Suma vectorial dels camps individuals creats a A(xA, yA).</p>
+          </div>
+          <div id="stage3-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 4 Panel: Force on Test Charge -->
+        <div id="stage-panel-4" class="hidden space-y-6">
+          <div class="border-l-4 border-emerald-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 4: Càlcul de la Força Elèctrica sobre la Càrrega de Prova q4</h3>
+            <p class="text-xs text-slate-600">Avaluació de la força vectorial exercida sobre la càrrega q4 situada al punt A(xA, yA).</p>
+          </div>
+          <div id="stage4-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 5 Panel: Potentials & Work -->
+        <div id="stage-panel-5" class="hidden space-y-6">
+          <div class="border-l-4 border-purple-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900">Etapa 5: Potencials Elèctrics i Treball del Camp</h3>
+            <p class="text-xs text-slate-600">Càlcul dels potencials escalars VA, VB, treball W_(A-&gt;B) i interpretació de la espontaneïtat del procés.</p>
+          </div>
+          <div id="stage5-content" class="space-y-4 text-sm">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
+    <p>Aplicació Educativa de Física | 2n de Batxillerat - Electrostàtica | Visualitzador Vectorial KaTeX &amp; HTML5 Canvas</p>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script>
+    // Global Application State
+    const state = {
+      w: 5,
+      h: 4,
+      xA: 0,
+      yA: 0,
+      xB: -3,
+      yB: 1,
+      numCharges: 3,
+      q1: { val: 4, unit: 'uC' },
+      q2: { val: -3, unit: 'uC' },
+      q3: { val: 2, unit: 'uC' },
+      q4: { val: 2, unit: 'nC' },
+      solutionVisible: false,
+      activeLayer: 1, // MUST ALWAYS DEFAULT TO LAYER 1
+      activeStage: 1
+    };
+
+    // Safe KaTeX JS Wrapper Functions (NO RAW SINGLE '$' IN STRINGS)
+    function mInline(tex) {
+      if (typeof katex === 'undefined') return tex;
+      return katex.renderToString(tex, { displayMode: false, throwOnError: false });
+    }
+
+    function mBlock(tex) {
+      if (typeof katex === 'undefined') return tex;
+      return katex.renderToString(tex, { displayMode: true, throwOnError: false });
+    }
+
+    // Conversion multiplier to Coulomb
+    function getValC(chargeObj) {
+      const mults = { 'C': 1, 'mC': 1e-3, 'uC': 1e-6, 'nC': 1e-9, 'pC': 1e-12 };
+      return chargeObj.val * (mults[chargeObj.unit] || 1e-6);
+    }
+
+    // TeX representation of charge units
+    function unitTex(unit) {
+      const map = {
+        'C': '\\text{C}',
+        'mC': '\\text{mC}',
+        'uC': '\\mu\\text{C}',
+        'nC': '\\text{nC}',
+        'pC': '\\text{pC}'
+      };
+      return map[unit] || '\\text{C}';
+    }
+
+    // Format scientific numbers for KaTeX render
+    function formatTexSci(n, digits = 3) {
+      if (Math.abs(n) === 0) return '0';
+      const exp = Math.floor(Math.log10(Math.abs(n)));
+      if (Math.abs(exp) <= 2) {
+        return Number(n.toFixed(digits)).toString();
+      }
+      const mant = n / Math.pow(10, exp);
+      return mant.toFixed(digits) + ' \\times 10^{' + exp + '}';
+    }
+
+    // Get array of source charge objects
+    function getChargePositions() {
+      const pos = [
+        { id: 1, name: 'q_1', x: 0, y: state.h, label: 'P_1(0, ' + state.h + ')' },
+        { id: 2, name: 'q_2', x: state.w, y: state.h, label: 'P_2(' + state.w + ', ' + state.h + ')' }
+      ];
+      if (state.numCharges === 3) {
+        pos.push({ id: 3, name: 'q_3', x: state.w, y: 0, label: 'P_3(' + state.w + ', 0)' });
+      }
+      pos[0].charge = state.q1;
+      pos[1].charge = state.q2;
+      if (state.numCharges === 3) pos[2].charge = state.q3;
+      return pos;
+    }
+
+    // Generate Problem Statement Text (Cleaned separation of math vs HTML text)
+    function generateStatementHTML() {
+      const charges = getChargePositions();
+      const numWord = charges.length === 3 ? "tres" : "dues";
+      
+      let coordStr = "";
+      charges.forEach((c, idx) => {
+        coordStr += mInline(c.label + "\\text{ m}");
+        if (idx < charges.length - 2) coordStr += ", ";
+        else if (idx === charges.length - 2) coordStr += " i ";
+      });
+
+      let valStr = "";
+      charges.forEach((c, idx) => {
+        const signStr = c.charge.val > 0 ? "+" : "";
+        valStr += mInline(c.name + " = " + signStr + c.charge.val + "\\text{ }" + unitTex(c.charge.unit));
+        if (idx < charges.length - 2) valStr += ", ";
+        else if (idx === charges.length - 2) valStr += " i ";
+      });
+
+      const q4Sign = state.q4.val > 0 ? "+" : "";
+      const q4Tex = "q_4 = " + q4Sign + state.q4.val + "\\text{ }" + unitTex(state.q4.unit);
+      const ptATex = "A(" + state.xA + ", " + state.yA + ")\\text{ m}";
+      const ptBTex = "B(" + state.xB + ", " + state.yB + ")\\text{ m}";
+
+      let html = "<p class='mb-3 text-slate-800 leading-relaxed font-normal'>";
+      html += "S'ubiquen " + numWord + " càrregues puntuals en els punts de coordenades del pla cartesià " + coordStr + ", amb valors " + valStr + " respectivament. Totes les coordenades i distàncies estan expressades en metres.</p>";
+
+      html += "<div class='space-y-2 text-slate-700 font-medium text-sm md:text-base'>";
+      html += "<p><strong>a)</strong> Dibuixeu l'esquema vectorial de les càrregues i determineu el vector camp elèctric total " + mInline("\\vec{E}_T") + " al punt d'estudi " + mInline(ptATex) + ".</p>";
+      html += "<p><strong>b)</strong> Si es col·loca una càrrega de prova " + mInline(q4Tex) + " al punt " + mInline(ptATex) + ", calculeu la força elèctrica vectorial " + mInline("\\vec{F}_T") + " que actua sobre ella.</p>";
+      html += "<p><strong>c)</strong> Calculeu el potencial elèctric creat pel sistema de càrregues al punt " + mInline(ptATex) + " i al punt " + mInline(ptBTex) + ".</p>";
+      html += "<p><strong>d)</strong> Calculeu el treball " + mInline("W_{A \\to B}") + " realitzat pel camp elèctric per traslladar la càrrega " + mInline("q_4") + " des de " + mInline("A") + " fins a " + mInline("B") + " i raoneu si el procés és espontani.</p>";
+      html += "</div>";
+
+      return html;
+    }
+
+    // Toggle Solution Container Visibility
+    function toggleSolution() {
+      state.solutionVisible = !state.solutionVisible;
+      const solEl = document.getElementById('solution-container');
+      const btnEl = document.getElementById('toggle-solution-btn');
+
+      if (state.solutionVisible) {
+        solEl.classList.remove('hidden');
+        btnEl.innerHTML = '<span>🙈 Ocultar Solució</span>';
+        btnEl.classList.replace('bg-indigo-600', 'bg-slate-700');
+        btnEl.classList.replace('hover:bg-indigo-700', 'hover:bg-slate-800');
+        
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        
+        updateStageTabs();
+        updateLayerButtons();
+        renderAll();
+
+        solEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        solEl.classList.add('hidden');
+        btnEl.innerHTML = '<span>👁️ Mostrar Solució i Diagrama</span>';
+        btnEl.classList.replace('bg-slate-700', 'bg-indigo-600');
+        btnEl.classList.replace('hover:bg-slate-800', 'hover:bg-indigo-700');
+      }
+    }
+
+    // Random Problem Generator
+    function generateRandomProblem() {
+      const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+      const getRandomNonZero = (min, max) => {
+        let v = 0;
+        while (v === 0) v = getRandomInt(min, max);
+        return v;
+      };
+
+      const unitsPool = ['uC', 'nC', 'mC', 'pC'];
+
+      state.w = getRandomInt(3, 7);
+      state.h = getRandomInt(3, 7);
+
+      state.xA = getRandomInt(-3, 3);
+      state.yA = getRandomInt(-3, 3);
+
+      do {
+        state.xB = getRandomInt(-5, 5);
+        state.yB = getRandomInt(-5, 5);
+      } while (state.xB === state.xA && state.yB === state.yA);
+
+      state.numCharges = Math.random() > 0.3 ? 3 : 2;
+
+      state.q1 = { val: getRandomNonZero(-9, 9), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q2 = { val: getRandomNonZero(-9, 9), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q3 = { val: getRandomNonZero(-9, 9), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q4 = { val: getRandomNonZero(-5, 5), unit: ['nC', 'uC', 'pC'][getRandomInt(0, 2)] };
+
+      syncInputsFromState();
+
+      if (state.solutionVisible) {
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        updateStageTabs();
+        updateLayerButtons();
+      }
+
+      renderAll();
+    }
+
+    // Custom Panel Toggle
+    function toggleCustomPanel() {
+      const panel = document.getElementById('custom-panel');
+      panel.classList.toggle('hidden');
+    }
+
+    function syncInputsFromState() {
+      document.getElementById('input-w').value = state.w;
+      document.getElementById('input-h').value = state.h;
+      document.getElementById('val-w-disp').innerText = state.w;
+      document.getElementById('val-h-disp').innerText = state.h;
+
+      document.getElementById('input-xA').value = state.xA;
+      document.getElementById('input-yA').value = state.yA;
+      document.getElementById('input-xB').value = state.xB;
+      document.getElementById('input-yB').value = state.yB;
+
+      document.querySelector('input[name="num-charges"][value="' + state.numCharges + '"]').checked = true;
+
+      document.getElementById('input-q1-val').value = state.q1.val;
+      document.getElementById('input-q1-unit').value = state.q1.unit;
+      document.getElementById('input-q2-val').value = state.q2.val;
+      document.getElementById('input-q2-unit').value = state.q2.unit;
+      document.getElementById('input-q3-val').value = state.q3.val;
+      document.getElementById('input-q3-unit').value = state.q3.unit;
+      document.getElementById('input-q4-val').value = state.q4.val;
+      document.getElementById('input-q4-unit').value = state.q4.unit;
+
+      const q3Row = document.getElementById('q3-control-row');
+      if (state.numCharges === 2) q3Row.classList.add('opacity-40', 'pointer-events-none');
+      else q3Row.classList.remove('opacity-40', 'pointer-events-none');
+    }
+
+    function updateCustomValues() {
+      state.w = parseInt(document.getElementById('input-w').value);
+      state.h = parseInt(document.getElementById('input-h').value);
+      document.getElementById('val-w-disp').innerText = state.w;
+      document.getElementById('val-h-disp').innerText = state.h;
+
+      const selectedNum = parseInt(document.querySelector('input[name="num-charges"]:checked').value);
+      state.numCharges = selectedNum;
+
+      const q3Row = document.getElementById('q3-control-row');
+      if (state.numCharges === 2) q3Row.classList.add('opacity-40', 'pointer-events-none');
+      else q3Row.classList.remove('opacity-40', 'pointer-events-none');
+    }
+
+    function applyCustomData() {
+      updateCustomValues();
+
+      state.xA = parseInt(document.getElementById('input-xA').value) || 0;
+      state.yA = parseInt(document.getElementById('input-yA').value) || 0;
+      state.xB = parseInt(document.getElementById('input-xB').value) || 0;
+      state.yB = parseInt(document.getElementById('input-yB').value) || 0;
+
+      state.q1 = {
+        val: parseInt(document.getElementById('input-q1-val').value) || 1,
+        unit: document.getElementById('input-q1-unit').value
+      };
+      state.q2 = {
+        val: parseInt(document.getElementById('input-q2-val').value) || -1,
+        unit: document.getElementById('input-q2-unit').value
+      };
+      state.q3 = {
+        val: parseInt(document.getElementById('input-q3-val').value) || 1,
+        unit: document.getElementById('input-q3-unit').value
+      };
+      state.q4 = {
+        val: parseInt(document.getElementById('input-q4-val').value) || 1,
+        unit: document.getElementById('input-q4-unit').value
+      };
+
+      if (state.solutionVisible) {
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        updateStageTabs();
+        updateLayerButtons();
+      }
+
+      renderAll();
+    }
+
+    // Set Active Layer (1 to 4)
+    function setLayer(layerNum) {
+      state.activeLayer = layerNum;
+      updateLayerButtons();
+      drawCanvas();
+      renderLayerDescription();
+    }
+
+    function updateLayerButtons() {
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById('btn-layer-' + i);
+        if (i === state.activeLayer) {
+          btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm";
+        } else {
+          btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 hover:text-slate-900 hover:bg-slate-300/50";
+        }
+      }
+
+      const badge = document.getElementById('layer-badge');
+      const titles = [
+        "Capa 1: Només Càrregues i Punts",
+        "Capa 2: Vectors Posició (r_i)",
+        "Capa 3: Camps Elèctrics Individuals (E_i)",
+        "Capa 4: Camp Total (E_T) i Força (F_T)"
+      ];
+      badge.innerText = titles[state.activeLayer - 1];
+    }
+
+    // Switch Solution Stages (1 to 5)
+    function switchStage(stageNum) {
+      state.activeStage = stageNum;
+      updateStageTabs();
+
+      for (let i = 1; i <= 5; i++) {
+        const panel = document.getElementById('stage-panel-' + i);
+        if (i === stageNum) panel.classList.remove('hidden');
+        else panel.classList.add('hidden');
+      }
+
+      if (stageNum === 1) {
+        setTimeout(drawCanvas, 50);
+      }
+    }
+
+    function updateStageTabs() {
+      for (let i = 1; i <= 5; i++) {
+        const tab = document.getElementById('tab-stage-' + i);
+        if (i === state.activeStage) {
+          tab.className = "px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 font-semibold transition flex items-center space-x-1";
+        } else {
+          tab.className = "px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center space-x-1";
+        }
+      }
+    }
+
+    // Advanced Arrowhead Drawing with Target Spatial Offset
+    function drawArrow(ctx, x1, y1, x2, y2, color, width = 2.5, headLen = 11, label = "", dash = [], sourceRadius = 0, targetRadius = 0) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 1e-3) return;
+
+      const angle = Math.atan2(dy, dx);
+
+      const startX = x1 + sourceRadius * Math.cos(angle);
+      const startY = y1 + sourceRadius * Math.sin(angle);
+      const endX = x2 - targetRadius * Math.cos(angle);
+      const endY = y2 - targetRadius * Math.sin(angle);
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      if (dash.length) ctx.setLineDash(dash);
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX - headLen * Math.cos(angle - Math.PI / 6), endY - headLen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(endX - headLen * Math.cos(angle + Math.PI / 6), endY - headLen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      if (label) {
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const midX = (startX + endX) / 2;
+        const midY = (startY + endY) / 2;
+        const offX = 12 * Math.cos(angle - Math.PI / 2);
+        const offY = 12 * Math.sin(angle - Math.PI / 2);
+        ctx.fillText(label, midX + offX, midY + offY);
+      }
+      ctx.restore();
+    }
+
+    // Render HTML5 Canvas Diagram
+    function drawCanvas() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const charges = getChargePositions();
+      const allX = [0, state.w, state.xA, state.xB];
+      const allY = [0, state.h, state.yA, state.yB];
+
+      const xMin = Math.min(...allX) - 1.8;
+      const xMax = Math.max(...allX) + 1.8;
+      const yMin = Math.min(...allY) - 1.8;
+      const yMax = Math.max(...allY) + 1.8;
+
+      const scale = Math.min((width - 120) / (xMax - xMin), (height - 100) / (yMax - yMin));
+      const originX = 60 + (-xMin) * scale;
+      const originY = height - 50 - (-yMin) * scale;
+
+      const toX = (x) => originX + x * scale;
+      const toY = (y) => originY - y * scale;
+
+      // Soft Grid
+      ctx.strokeStyle = '#f1f5f9';
+      ctx.lineWidth = 1;
+      for (let x = Math.floor(xMin); x <= Math.ceil(xMax); x++) {
+        ctx.beginPath();
+        ctx.moveTo(toX(x), 0);
+        ctx.lineTo(toX(x), height);
+        ctx.stroke();
+      }
+      for (let y = Math.floor(yMin); y <= Math.ceil(yMax); y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, toY(y));
+        ctx.lineTo(width, toY(y));
+        ctx.stroke();
+      }
+
+      // Cartesian Axes
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, originY);
+      ctx.lineTo(width, originY);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(originX, 0);
+      ctx.lineTo(originX, height);
+      ctx.stroke();
+
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('x (m)', width - 35, originY - 8);
+      ctx.fillText('y (m)', originX + 8, 15);
+
+      // Coordinate ticks
+      for (let x = Math.floor(xMin); x <= Math.ceil(xMax); x++) {
+        if (x === 0) continue;
+        ctx.beginPath();
+        ctx.moveTo(toX(x), originY - 3);
+        ctx.lineTo(toX(x), originY + 3);
+        ctx.stroke();
+        ctx.fillText(x.toString(), toX(x) - 4, originY + 16);
+      }
+      for (let y = Math.floor(yMin); y <= Math.ceil(yMax); y++) {
+        if (y === 0) continue;
+        ctx.beginPath();
+        ctx.moveTo(originX - 3, toY(y));
+        ctx.lineTo(originX + 3, toY(y));
+        ctx.stroke();
+        ctx.fillText(y.toString(), originX - 16, toY(y) + 4);
+      }
+
+      // Geometry frame lines (Light dotted)
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(toX(0), toY(0));
+      ctx.lineTo(toX(0), toY(state.h));
+      ctx.lineTo(toX(state.w), toY(state.h));
+      ctx.lineTo(toX(state.w), toY(0));
+      ctx.lineTo(toX(0), toY(0));
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Point A(xA, yA) Node Circle
+      const nodeRadiusA = 7;
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(toX(state.xA), toY(state.yA), nodeRadiusA, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.fillStyle = '#b45309';
+      ctx.fillText('A(' + state.xA + ',' + state.yA + ')', toX(state.xA) + 10, toY(state.yA) + 16);
+
+      // Point B(xB, yB) Node Circle
+      const nodeRadiusB = 7;
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.arc(toX(state.xB), toY(state.yB), nodeRadiusB, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#047857';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#047857';
+      ctx.fillText('B(' + state.xB + ',' + state.yB + ')', toX(state.xB) + 10, toY(state.yB) + 16);
+
+      // Source Charges Nodes
+      const chargeRadius = 13;
+      charges.forEach(c => {
+        const cx = toX(c.x);
+        const cy = toY(c.y);
+        const isPos = c.charge.val > 0;
+        const color = isPos ? '#ef4444' : '#3b82f6';
+        const sign = isPos ? '+' : '−';
+
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(cx, cy, chargeRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = isPos ? '#991b1b' : '#1e40af';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 13px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(sign, cx, cy);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const valSign = isPos ? '+' : '';
+        ctx.fillText(c.name + ' (' + valSign + c.charge.val + ' ' + c.charge.unit + ')', cx + 16, cy + 4);
+      });
+
+      // LAYER 2: Position Vectors r_i
+      if (state.activeLayer >= 2) {
+        charges.forEach(c => {
+          const fromX = toX(c.x);
+          const fromY = toY(c.y);
+          const toX_A = toX(state.xA);
+          const toY_A = toY(state.yA);
+          drawArrow(ctx, fromX, fromY, toX_A, toY_A, '#d97706', 2.5, 10, 'r_' + c.id, [], chargeRadius, nodeRadiusA);
+        });
+      }
+
+      // Field Calculations
+      const K = 9e9;
+      let totalEx = 0;
+      let totalEy = 0;
+      const fields = [];
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+        const qC = getValC(c.charge);
+
+        const Ex = (K * qC / (rMag * rMag)) * ux;
+        const Ey = (K * qC / (rMag * rMag)) * uy;
+
+        totalEx += Ex;
+        totalEy += Ey;
+
+        const E_mag = Math.sqrt(Ex * Ex + Ey * Ey);
+        fields.push({ id: c.id, name: c.name, Ex, Ey, E_mag });
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+      const q4C = getValC(state.q4);
+      const totalFx = q4C * totalEx;
+      const totalFy = q4C * totalEy;
+      const totalF_mag = Math.sqrt(totalFx * totalFx + totalFy * totalFy);
+
+      // LAYER 3: Individual Field Vectors E_i at A
+      if (state.activeLayer >= 3) {
+        const maxE = Math.max(...fields.map(f => f.E_mag), 1e-9);
+        const maxPixelLen = scale * 1.8;
+
+        fields.forEach((f, idx) => {
+          const len = Math.max(28, (f.E_mag / maxE) * maxPixelLen);
+          const angle = Math.atan2(-f.Ey, f.Ex);
+          const startX = toX(state.xA);
+          const startY = toY(state.yA);
+          const endX = startX + len * Math.cos(angle);
+          const endY = startY + len * Math.sin(angle);
+
+          const colors = ['#0284c7', '#7c3aed', '#db2777'];
+          drawArrow(ctx, startX, startY, endX, endY, colors[idx % colors.length], 3, 10, 'E_' + f.id, [], nodeRadiusA, 0);
+        });
+      }
+
+      // LAYER 4: Total Field E_T and Force F_T Vectors at A
+      if (state.activeLayer >= 4) {
+        const startX = toX(state.xA);
+        const startY = toY(state.yA);
+
+        if (totalE_mag > 0) {
+          const angleE = Math.atan2(-totalEy, totalEx);
+          const lenE = scale * 2.0;
+          const endEx = startX + lenE * Math.cos(angleE);
+          const endEy = startY + lenE * Math.sin(angleE);
+
+          drawArrow(ctx, startX, startY, endEx, endEy, '#4f46e5', 4, 12, 'E_T', [], nodeRadiusA, 0);
+        }
+
+        if (totalF_mag > 0) {
+          const angleF = Math.atan2(-totalFy, totalFx);
+          const lenF = scale * 2.2;
+          const endFx = startX + lenF * Math.cos(angleF);
+          const endFy = startY + lenF * Math.sin(angleF);
+
+          drawArrow(ctx, startX, startY, endFx, endFy, '#059669', 4, 12, 'F_T', [], nodeRadiusA, 0);
+        }
+      }
+    }
+
+    // Render Layer Description Card
+    function renderLayerDescription() {
+      const el = document.getElementById('layer-desc');
+      const ptA = "A(" + state.xA + "," + state.yA + ")\\text{ m}";
+      const ptB = "B(" + state.xB + "," + state.yB + ")\\text{ m}";
+
+      const descriptions = [
+        "<strong>Capa 1 (Ubicacions i Punts):</strong> Mostra la posició de les càrregues font " + mInline("q_1, q_2" + (state.numCharges === 3 ? ", q_3" : "")) + ", el punt d'estudi " + mInline(ptA) + " i el punt de destinació " + mInline(ptB) + ". Vista inicial sense vectors.",
+        "<strong>Capa 2 (Vectors Posició):</strong> Sobreimposa els vectors posició " + mInline("\\vec{r}_1, \\vec{r}_2" + (state.numCharges === 3 ? ", \\vec{r}_3" : "")) + " dirigits des de la posició de cada càrrega font cap al punt d'estudi " + mInline(ptA) + ".",
+        "<strong>Capa 3 (Camps Individuals):</strong> Sobreimposa els vectors camp elèctric " + mInline("\\vec{E}_1, \\vec{E}_2" + (state.numCharges === 3 ? ", \\vec{E}_3" : "")) + " creats per cada càrrega al punt " + mInline(ptA) + ".",
+        "<strong>Capa 4 (Camp i Força Totals):</strong> Sobreimposa el vector camp elèctric total " + mInline("\\vec{E}_T") + " (superposició) i el vector força " + mInline("\\vec{F}_T = q_4 \\vec{E}_T") + " sobre la càrrega de prova col·locada a " + mInline(ptA) + "."
+      ];
+      el.innerHTML = descriptions[state.activeLayer - 1];
+    }
+
+    // Render Stage 2
+    function renderStage2() {
+      const container = document.getElementById('stage2-content');
+      const charges = getChargePositions();
+      const ptATex = "A(" + state.xA + "," + state.yA + ")";
+
+      let html = "<p>Un vector posició " + mInline("\\vec{r}_i") + " es defineix des de la posició de la càrrega " + mInline("P_i(x_i, y_i)") + " fins al punt d'estudi " + mInline(ptATex) + ":</p>";
+      html += mBlock("\\vec{r}_i = \\vec{r}_A - \\vec{r}_{P_i} = (" + state.xA + " - x_i)\\hat{i} + (" + state.yA + " - y_i)\\hat{j}\\text{ (m)}");
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+
+        html += "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+        html += "<h4 class='font-bold text-slate-900 text-sm'>Càrrega " + mInline(c.name) + " a " + mInline(c.label + "\\text{ m}") + "</h4>";
+        html += "<p>• Vector posició: " + mInline("\\vec{r}_" + c.id + " = (" + rx + ")\\hat{i} + (" + ry + ")\\hat{j}\\text{ m}") + "</p>";
+        html += "<p>• Mòdul (distància fins a A): " + mInline("r_" + c.id + " = \\sqrt{(" + rx + ")^2 + (" + ry + ")^2} = \\sqrt{" + (rx*rx + ry*ry) + "} = " + rMag.toFixed(3) + "\\text{ m}") + "</p>";
+        html += "<p>• Vector unitari: " + mInline("\\vec{u}_" + c.id + " = \\frac{\\vec{r}_" + c.id + "}{r_" + c.id + "} = " + ux.toFixed(3) + "\\hat{i} + (" + uy.toFixed(3) + ")\\hat{j}") + "</p>";
+        html += "</div>";
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Render Stage 3
+    function renderStage3() {
+      const container = document.getElementById('stage3-content');
+      const charges = getChargePositions();
+      const K = 9e9;
+
+      let html = "<p>El camp elèctric creat per una càrrega puntual ve donat per " + mInline("\\vec{E}_i = K \\frac{q_i}{r_i^2} \\vec{u}_i") + " on " + mInline("K = 9 \\times 10^9\\text{ N}\\cdot\\text{m}^2/\\text{C}^2") + ".</p>";
+
+      let totalEx = 0;
+      let totalEy = 0;
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+        const qC = getValC(c.charge);
+
+        const Ex = (K * qC / (rMag * rMag)) * ux;
+        const Ey = (K * qC / (rMag * rMag)) * uy;
+
+        totalEx += Ex;
+        totalEy += Ey;
+
+        const qSign = c.charge.val > 0 ? "+" : "";
+
+        html += "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+        html += "<h4 class='font-bold text-slate-900 text-sm'>Camp creat per " + mInline(c.name + " = " + qSign + c.charge.val + "\\text{ }" + unitTex(c.charge.unit) + " = " + formatTexSci(qC) + "\\text{ C}") + "</h4>";
+        html += "<p>" + mInline("\\vec{E}_" + c.id + " = 9 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{(" + rMag.toFixed(3) + ")^2} (" + ux.toFixed(3) + "\\hat{i} + " + uy.toFixed(3) + "\\hat{j})") + "</p>";
+        html += "<p class='font-medium text-indigo-700'>" + mInline("\\vec{E}_" + c.id + " = (" + formatTexSci(Ex) + ")\\hat{i} + (" + formatTexSci(Ey) + ")\\hat{j}\\text{ N/C}") + "</p>";
+        html += "</div>";
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+
+      html += "<div class='bg-indigo-50 p-4 rounded-xl border border-indigo-200 space-y-2 text-indigo-950'>";
+      html += "<h4 class='font-bold text-sm'>Camp Elèctric Total per Superposició (" + mInline("\\vec{E}_T = \\sum \\vec{E}_i") + ")</h4>";
+      html += "<p>" + mInline("\\vec{E}_T = (" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}\\text{ N/C}") + "</p>";
+      html += "<p>" + mInline("|\\vec{E}_T| = \\sqrt{(" + formatTexSci(totalEx) + ")^2 + (" + formatTexSci(totalEy) + ")^2} = " + formatTexSci(totalE_mag) + "\\text{ N/C}") + "</p>";
+      html += "</div>";
+
+      container.innerHTML = html;
+    }
+
+    // Render Stage 4
+    function renderStage4() {
+      const container = document.getElementById('stage4-content');
+      const charges = getChargePositions();
+      const K = 9e9;
+
+      let totalEx = 0;
+      let totalEy = 0;
+
+      charges.forEach(c => {
+        const rx = state.xA - c.x;
+        const ry = state.yA - c.y;
+        const rMag = Math.sqrt(rx * rx + ry * ry);
+        const ux = rx / rMag;
+        const uy = ry / rMag;
+        const qC = getValC(c.charge);
+
+        totalEx += (K * qC / (rMag * rMag)) * ux;
+        totalEy += (K * qC / (rMag * rMag)) * uy;
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+      const q4C = getValC(state.q4);
+
+      const totalFx = q4C * totalEx;
+      const totalFy = q4C * totalEy;
+      const totalF_mag = Math.abs(q4C) * totalE_mag;
+
+      const q4Sign = state.q4.val > 0 ? "+" : "";
+
+      let html = "<p>La força elèctrica que actua sobre una càrrega de prova " + mInline("q_4") + " situada en un camp " + mInline("\\vec{E}_T") + " és " + mInline("\\vec{F}_T = q_4 \\cdot \\vec{E}_T") + ".</p>";
+
+      html += "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3'>";
+      html += "<p>• Càrrega de prova: " + mInline("q_4 = " + q4Sign + state.q4.val + "\\text{ }" + unitTex(state.q4.unit) + " = " + formatTexSci(q4C) + "\\text{ C}") + "</p>";
+      html += "<p>• Vector Camp elèctric a A: " + mInline("\\vec{E}_T = (" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}\\text{ N/C}") + "</p>";
+      html += mBlock("\\vec{F}_T = (" + formatTexSci(q4C) + ") \\cdot [(" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}]");
+      html += "<p class='font-bold text-emerald-700 text-base'>" + mInline("\\vec{F}_T = (" + formatTexSci(totalFx) + ")\\hat{i} + (" + formatTexSci(totalFy) + ")\\hat{j}\\text{ N}") + "</p>";
+      html += "<p>• Mòdul de la força: " + mInline("|\\vec{F}_T| = |q_4| \\cdot |\\vec{E}_T| = " + formatTexSci(totalF_mag) + "\\text{ N}") + "</p>";
+      html += "</div>";
+
+      const alignText = state.q4.val > 0 
+        ? "Com que " + mInline("q_4 > 0") + ", el vector força " + mInline("\\vec{F}_T") + " té la <strong>mateixa direcció i sentit</strong> que el camp elèctric " + mInline("\\vec{E}_T") + "."
+        : "Com que " + mInline("q_4 < 0") + ", el vector força " + mInline("\\vec{F}_T") + " té la <strong>mateixa direcció però sentit oposat</strong> al camp elèctric " + mInline("\\vec{E}_T") + ".";
+
+      html += "<div class='bg-emerald-50 p-4 rounded-xl border border-emerald-200 text-emerald-950 text-xs sm:text-sm leading-relaxed'>";
+      html += "<p>💡 <strong>Interpretació Vectorial:</strong> " + alignText + "</p>";
+      html += "</div>";
+
+      container.innerHTML = html;
+    }
+
+    // Render Stage 5
+    function renderStage5() {
+      const container = document.getElementById('stage5-content');
+      const charges = getChargePositions();
+      const K = 9e9;
+
+      let VA = 0;
+      let VB = 0;
+
+      const ptATex = "A(" + state.xA + "," + state.yA + ")";
+      const ptBTex = "B(" + state.xB + "," + state.yB + ")";
+
+      let htmlVA = "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+      htmlVA += "<h4 class='font-bold text-slate-900 text-sm'>1. Potencial Elèctric al punt " + mInline(ptATex) + ": " + mInline("V_A = \\sum K \\frac{q_i}{r_{i,A}}") + "</h4>";
+
+      charges.forEach(c => {
+        const dx = state.xA - c.x;
+        const dy = state.yA - c.y;
+        const rA = Math.sqrt(dx * dx + dy * dy);
+        const qC = getValC(c.charge);
+        const Vi = K * qC / rA;
+        VA += Vi;
+
+        htmlVA += "<p>• " + mInline("V_{" + c.id + ",A} = 9 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{" + rA.toFixed(3) + "} = " + formatTexSci(Vi) + "\\text{ V}") + "</p>";
+      });
+
+      htmlVA += "<p class='font-bold text-indigo-700 pt-1'>" + mInline("V_A = " + formatTexSci(VA) + "\\text{ V}") + "</p>";
+      htmlVA += "</div>";
+
+      let htmlVB = "<div class='bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2'>";
+      htmlVB += "<h4 class='font-bold text-slate-900 text-sm'>2. Potencial Elèctric al punt " + mInline(ptBTex) + ": " + mInline("V_B = \\sum K \\frac{q_i}{r_{i,B}}") + "</h4>";
+
+      charges.forEach(c => {
+        const dx = state.xB - c.x;
+        const dy = state.yB - c.y;
+        const rB = Math.sqrt(dx * dx + dy * dy);
+        const qC = getValC(c.charge);
+        const Vi = K * qC / rB;
+        VB += Vi;
+
+        htmlVB += "<p>• Distància de " + mInline(c.name) + " a B: " + mInline("r_{" + c.id + ",B} = \\sqrt{(" + (state.xB - c.x) + ")^2 + (" + (state.yB - c.y) + ")^2} = " + rB.toFixed(3) + "\\text{ m}") + "</p>";
+        htmlVB += "<p>• " + mInline("V_{" + c.id + ",B} = 9 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{" + rB.toFixed(3) + "} = " + formatTexSci(Vi) + "\\text{ V}") + "</p>";
+      });
+
+      htmlVB += "<p class='font-bold text-indigo-700 pt-1'>" + mInline("V_B = " + formatTexSci(VB) + "\\text{ V}") + "</p>";
+      htmlVB += "</div>";
+
+      const q4C = getValC(state.q4);
+      const deltaV = VB - VA;
+      const W_AB = -q4C * deltaV;
+
+      let htmlW = "<div class='bg-indigo-50 p-4 rounded-xl border border-indigo-200 space-y-3 text-indigo-950'>";
+      htmlW += "<h4 class='font-bold text-sm'>3. Treball del Camp Elèctric " + mInline("W_{A \\to B}") + "</h4>";
+      htmlW += "<p>El treball realitzat per la força elèctrica del camp ve donat per:</p>";
+      htmlW += mBlock("W_{A \\to B} = -q_4 (V_B - V_A) = q_4 (V_A - V_B)");
+      htmlW += "<p>" + mInline("W_{A \\to B} = (" + formatTexSci(q4C) + "\\text{ C}) \\cdot (" + formatTexSci(VA) + " - " + formatTexSci(VB) + ")\\text{ V}") + "</p>";
+      htmlW += "<p class='font-bold text-indigo-900 text-base'>" + mInline("W_{A \\to B} = " + formatTexSci(W_AB) + "\\text{ J}") + "</p>";
+      htmlW += "</div>";
+
+      const isSpontaneous = W_AB > 0;
+      const interClass = isSpontaneous 
+        ? "bg-emerald-50 border-emerald-300 text-emerald-950" 
+        : "bg-amber-50 border-amber-300 text-amber-950";
+
+      let htmlInter = "<div class='p-4 rounded-xl border " + interClass + " space-y-2'>";
+      htmlInter += "<h4 class='font-bold text-sm flex items-center'><span class='mr-2'>" + (isSpontaneous ? "✅" : "⚠️") + "</span> Interpretació Física de la Espontaneïtat:</h4>";
+
+      if (isSpontaneous) {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} > 0") + ", el camp elèctric realitza un <strong>treball positiu</strong> en el desplaçament de la càrrega des de " + mInline("A") + " fins a " + mInline("B") + ".</p>";
+        htmlInter += "<p>Per tant, el procés és <strong>ESPONTANI</strong>. La càrrega " + mInline("q_4") + " es desplaça afavorida per les forces elèctriques del sistema, disminuint la seva energia potencial elèctrica (" + mInline("\\Delta U < 0") + ").</p>";
+      } else if (W_AB < 0) {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} < 0") + ", el camp elèctric realitza un <strong>treball negatiu</strong> en el desplaçament.</p>";
+        htmlInter += "<p>Per tant, el procés és <strong>NO ESPONTANI</strong>. Cal la intervenció d'un agent extern que apliqui una força contra el camp elèctric, augmentant l'energia potencial elèctrica (" + mInline("\\Delta U > 0") + ").</p>";
+      } else {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} = 0") + ", els punts " + mInline("A") + " i " + mInline("B") + " estan al mateix potencial elèctric (" + mInline("V_A = V_B") + "). No es requereix treball net.</p>";
+      }
+      htmlInter += "</div>";
+
+      container.innerHTML = htmlVA + htmlVB + htmlW + htmlInter;
+    }
+
+    // Render All Components
+    function renderAll() {
+      document.getElementById('statement-card').innerHTML = generateStatementHTML();
+      
+      if (state.solutionVisible) {
+        renderLayerDescription();
+        renderStage2();
+        renderStage3();
+        renderStage4();
+        renderStage5();
+        drawCanvas();
+      }
+    }
+
+    // Initialize on window load
+    window.onload = function() {
+      syncInputsFromState();
+      renderAll();
+
+      window.addEventListener('resize', () => {
+        if (state.solutionVisible && state.activeStage === 1) {
+          drawCanvas();
+        }
+      });
+    };
+  </script>
+
+</body></html>
