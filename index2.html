@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ca" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrostàtica: Camp, Potencial i Treball | IES Algarb</title>
+  
+  <!-- Favicon SVG Personalitzat -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- KaTeX CSS & JS via CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .katex-display { margin: 0.4em 0 !important; }
+    canvas { touch-action: none; }
+  </style>
+</head>
+<body class="min-h-full flex flex-col text-slate-800 bg-slate-50 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
+
+  <!-- Header Bar -->
+  <header class="bg-slate-900 text-white shadow-md border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 bg-indigo-600 rounded-xl shadow-md">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-bold tracking-wider uppercase text-indigo-400 bg-indigo-950/80 px-2 py-0.5 rounded border border-indigo-700/50">IES Algarb</span>
+            <span class="text-xs text-slate-400">| 2n de Batxillerat</span>
+          </div>
+          <h1 class="text-lg font-bold tracking-tight">Electrostàtica: Camp, Potencial i Treball</h1>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-3">
+        <!-- Dark Mode Toggle Button -->
+        <button id="btn-theme-toggle" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center space-x-1.5 text-xs font-medium" title="Commuta mode clar / fosc">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text" class="hidden sm:inline">Mode Fosc</span>
+        </button>
+
+        <div class="flex items-center space-x-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700/80">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-300">GitHub Pages Ready</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-1 space-y-6">
+
+    <!-- Classroom Registration Panel (Optional) -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-300">
+          <span class="text-base">🎓</span>
+          <span class="font-semibold">Registre de l'Alumnat (Opcional):</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <input type="text" id="student-name" placeholder="Nom i Llinatges de l'Alumne/a" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white flex-1 md:w-56 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <input type="text" id="classroom-code" placeholder="Codi d'Aula (ex: 2BAT-A)" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white w-32 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 1: Problem Statement & Controls -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-5 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded text-xs font-semibold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 mb-1">
+            IES Algarb • Pràctica d'Electrostàtica
+          </span>
+          <h2 class="text-lg font-semibold">Configuració de Càrregues i Punts en el Pla Cartesià</h2>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btn-random" class="px-3.5 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>🎲 Problema Aleatori</span>
+          </button>
+          <button id="btn-toggle-custom" class="px-3.5 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>⚙️ Personalitzar Dades</span>
+          </button>
+          <button id="toggle-solution-btn" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow flex items-center space-x-1.5">
+            <span>👁️ Mostrar Solució i Diagrama</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Problem Statement Rendered via JS KaTeX -->
+      <div id="statement-card" class="p-6 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-sm md:text-base leading-relaxed">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Customization Accordion Panel -->
+      <div id="custom-panel" class="hidden p-6 bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 space-y-4">
+        <div class="flex items-center justify-between border-b dark:border-slate-800 pb-2">
+          <h3 class="font-bold text-slate-900 dark:text-slate-100 text-sm flex items-center">
+            <span class="mr-2">⚙️</span> Personalització de Geometria Arbitrària i Càrregues
+          </h3>
+          <span class="text-xs bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 px-2.5 py-1 rounded-full font-medium">
+            💡 Accepta valors en metres o mil·límetres (ex: 0.001)
+          </span>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Source Charges Coordinates -->
+          <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 dark:text-slate-200 block border-b dark:border-slate-800 pb-1">📍 Coordenades Càrregues Font (m)</span>
+            
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">q1 (x, y):</span>
+              <div class="flex space-x-1">
+                <input type="number" id="input-x1" value="0" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                <input type="number" id="input-y1" value="4" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">q2 (x, y):</span>
+              <div class="flex space-x-1">
+                <input type="number" id="input-x2" value="5" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                <input type="number" id="input-y2" value="4" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+              </div>
+            </div>
+
+            <div id="q3-pos-row" class="flex items-center justify-between gap-1">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">q3 (x, y):</span>
+              <div class="flex space-x-1">
+                <input type="number" id="input-x3" value="5" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                <input type="number" id="input-y3" value="0" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+              </div>
+            </div>
+
+            <div class="pt-2 flex gap-1">
+              <button id="btn-preset-m" class="flex-1 py-1 text-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded transition font-medium">
+                Escala Metres (5m)
+              </button>
+              <button id="btn-preset-mm" class="flex-1 py-1 text-[11px] bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950 dark:hover:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded transition font-medium">
+                Escala mm (5mm)
+              </button>
+            </div>
+          </div>
+
+          <!-- Points A and B Coordinates -->
+          <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 dark:text-slate-200 block border-b dark:border-slate-800 pb-1">📍 Coordenades Punts A i B (m)</span>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <div>
+                <label class="block text-slate-500 dark:text-slate-400 font-semibold mb-1">Punt A (x, y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xA" value="0" step="any" class="w-full p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                  <input type="number" id="input-yA" value="0" step="any" class="w-full p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                </div>
+              </div>
+              <div>
+                <label class="block text-slate-500 dark:text-slate-400 font-semibold mb-1">Punt B (x, y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xB" value="-3" step="any" class="w-full p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                  <input type="number" id="input-yB" value="1" step="any" class="w-full p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                </div>
+              </div>
+            </div>
+            <div class="pt-1">
+              <span class="font-semibold text-slate-800 dark:text-slate-200 block mb-1">Nombre de Càrregues Font:</span>
+              <div class="flex space-x-3">
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="2" class="accent-indigo-600">
+                  <span>2 Càrregues</span>
+                </label>
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="3" checked class="accent-indigo-600">
+                  <span>3 Càrregues</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Source Charge Values -->
+          <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 dark:text-slate-200 block border-b dark:border-slate-800 pb-1">⚡ Valors Càrregues Font</span>
+            
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q1:</span>
+              <input type="number" id="input-q1-val" value="4" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+              <select id="input-q1-unit" class="p-1 border rounded bg-slate-50 dark:bg-slate-800 dark:border-slate-700 text-xs dark:text-white">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q2:</span>
+              <input type="number" id="input-q2-val" value="-3" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+              <select id="input-q2-unit" class="p-1 border rounded bg-slate-50 dark:bg-slate-800 dark:border-slate-700 text-xs dark:text-white">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div id="q3-control-row" class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q3:</span>
+              <input type="number" id="input-q3-val" value="2" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+              <select id="input-q3-unit" class="p-1 border rounded bg-slate-50 dark:bg-slate-800 dark:border-slate-700 text-xs dark:text-white">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Test Charge q4 & Apply Button -->
+          <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-800 dark:text-slate-200 block border-b dark:border-slate-800 pb-1">🧪 Càrrega de Prova q4 (a Punt A)</span>
+              <div class="flex items-center space-x-1 pt-2">
+                <span class="w-6 font-semibold">q4:</span>
+                <input type="number" id="input-q4-val" value="2" step="any" class="w-16 p-1 border rounded text-center dark:bg-slate-800 dark:border-slate-700 dark:text-white">
+                <select id="input-q4-unit" class="p-1 border rounded bg-slate-50 dark:bg-slate-800 dark:border-slate-700 text-xs dark:text-white">
+                  <option value="nC" selected>nC</option>
+                  <option value="uC">µC</option>
+                  <option value="pC">pC</option>
+                  <option value="mC">mC</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
+            </div>
+            <button id="btn-apply-custom" class="w-full mt-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition shadow-sm text-center">
+              Actualitzar Simulació
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Solution Container (Hidden by Default) -->
+    <div id="solution-container" class="hidden bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+      
+      <!-- Stage Tabs Bar -->
+      <div class="border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-950 px-4 pt-3 flex flex-wrap gap-2 text-xs sm:text-sm font-medium">
+        <button id="tab-stage-1" class="px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold transition flex items-center space-x-1">
+          <span>📐 1. Diagrama Vectorial & Zoom</span>
+        </button>
+        <button id="tab-stage-2" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>🎯 2. Vectors Posició</span>
+        </button>
+        <button id="tab-stage-3" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>⚡ 3. Camp Elèctric Total</span>
+        </button>
+        <button id="tab-stage-4" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>🧲 4. Força sobre q4</span>
+        </button>
+        <button id="tab-stage-5" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>🔋 5. Potencials i Treball</span>
+        </button>
+      </div>
+
+      <!-- Stage Panels Content -->
+      <div class="p-6">
+
+        <!-- Stage 1 Panel: Interactive Canvas Diagram with Auto-Fit & Multi-Scale Zoom -->
+        <div id="stage-panel-1" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-950 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Diagrama Vectorial Multiescala amb Zoom Interactiu</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Arrossega qualsevol càrrega o punt directament sobre el canvas:</p>
+            </div>
+            
+            <!-- Layer Selector Buttons -->
+            <div class="inline-flex rounded-lg shadow-sm p-1 bg-slate-200/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex-wrap gap-1">
+              <button id="btn-layer-1" class="px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm">
+                Capa 1: Punts
+              </button>
+              <button id="btn-layer-2" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                Capa 2: r_i
+              </button>
+              <button id="btn-layer-3" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                Capa 3: E_i
+              </button>
+              <button id="btn-layer-4" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                Capa 4: E_T i F_T
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas Display Area with Zoom & Drag Controls -->
+          <div class="relative w-full h-[540px] bg-slate-900/5 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-inner flex items-center justify-center">
+            <canvas id="physics-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+            
+            <!-- Active Layer Badge -->
+            <div id="layer-badge" class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-sm text-white px-3.5 py-1.5 rounded-full text-xs font-medium border border-slate-700 shadow">
+              Capa Actual: 1 (Només Càrregues i Punts)
+            </div>
+
+            <!-- Interactivity Help Badge -->
+            <div class="absolute bottom-3 left-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg text-xs border border-slate-200 dark:border-slate-800 shadow hidden sm:flex items-center space-x-1.5">
+              <span>🖱️ <strong>Arrossega càrregues/punts:</strong> Moure en el pla. <strong>Roda ratolí / Fons:</strong> Zoom i Panoràmica.</span>
+            </div>
+
+            <!-- Multi-Scale & Zoom Control Toolbar -->
+            <div class="absolute top-3 right-3 flex items-center space-x-1.5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md text-xs font-semibold text-slate-700 dark:text-slate-200">
+              <button id="btn-zoom-out" title="Reduir Zoom" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition">-</button>
+              <span id="zoom-val" class="px-2 text-indigo-600 dark:text-indigo-400 min-w-[55px] text-center font-bold">100%</span>
+              <button id="btn-zoom-in" title="Ampliar Zoom" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition">+</button>
+              <button id="btn-auto-fit" title="Ajustar Auto-Fit a l'Escala Actual" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm flex items-center space-x-1">
+                <span>🎯 Emmarcar</span>
+              </button>
+              <button id="btn-reset-view" title="Restablir Vista" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg transition">🔄</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Scale Information Panel -->
+          <div id="scale-info-bar" class="flex flex-wrap items-center justify-between text-xs px-4 py-2 bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 rounded-xl text-indigo-950 dark:text-indigo-200">
+            <div class="flex items-center space-x-2">
+              <span class="font-bold">📏 Escala Automàtica:</span>
+              <span id="scale-factor-text">1 m = 85 px</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="font-bold">📐 Mida de la Distribució:</span>
+              <span id="scale-span-text">5.000 m × 4.000 m</span>
+            </div>
+          </div>
+
+          <!-- Layer Explanation Card -->
+          <div id="layer-desc" class="bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4 text-xs text-indigo-950 dark:text-indigo-200 leading-relaxed">
+            <!-- Dynamic explanation via JS -->
+          </div>
+        </div>
+
+        <!-- Stage 2 Panel: Position & Unit Vectors -->
+        <div id="stage-panel-2" class="hidden space-y-6">
+          <div class="border-l-4 border-amber-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">Etapa 2: Càlculs Vectorials dels Vectors Posició i Unitaris</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Determinació dels vectors distància des de cada càrrega font cap al punt d'estudi A(xA, yA).</p>
+          </div>
+          <div id="stage2-content" class="space-y-4 text-sm"></div>
+        </div>
+
+        <!-- Stage 3 Panel: Total Electric Field -->
+        <div id="stage-panel-3" class="hidden space-y-6">
+          <div class="border-l-4 border-indigo-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">Etapa 3: Càlcul del Camp Elèctric Total (Principi de Superposició)</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Suma vectorial dels camps individuals creats al punt d'estudi.</p>
+          </div>
+          <div id="stage3-content" class="space-y-4 text-sm"></div>
+        </div>
+
+        <!-- Stage 4 Panel: Force on Test Charge -->
+        <div id="stage-panel-4" class="hidden space-y-6">
+          <div class="border-l-4 border-emerald-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">Etapa 4: Càlcul de la Força Elèctrica sobre la Càrrega de Prova q4</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Avaluació de la força vectorial exercida sobre la càrrega q4 situada al punt A.</p>
+          </div>
+          <div id="stage4-content" class="space-y-4 text-sm"></div>
+        </div>
+
+        <!-- Stage 5 Panel: Potentials & Work -->
+        <div id="stage-panel-5" class="hidden space-y-6">
+          <div class="border-l-4 border-purple-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">Etapa 5: Potencials Elèctrics i Treball del Camp</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Càlcul dels potencials escalars VA, VB, treball W_(A->B) i interpretació de l'espontaneïtat.</p>
+          </div>
+          <div id="stage5-content" class="space-y-4 text-sm"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-auto py-4 text-center text-xs text-slate-500 dark:text-slate-400">
+    <p>IES Algarb • Aplicació Educativa de Física | 2n de Batxillerat - Electrostàtica | Visualitzador Vectorial KaTeX & HTML5 Canvas</p>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script>
+    // State Management Object
+    const state = {
+      numCharges: 3,
+      q1: { val: 4, unit: 'uC', x: 0, y: 4 },
+      q2: { val: -3, unit: 'uC', x: 5, y: 4 },
+      q3: { val: 2, unit: 'uC', x: 5, y: 0 },
+      q4: { val: 2, unit: 'nC' },
+      A: { x: 0, y: 0 },
+      B: { x: -3, y: 1 },
+      activeLayer: 1,
+      currentStage: 1,
+      
+      // Auto-Fit & Multi-Scale Zoom & Drag Engine State
+      zoomLevel: 1.0,
+      panX: 0,
+      panY: 0,
+      dragTarget: null, // null | 'q1' | 'q2' | 'q3' | 'A' | 'B' | 'pan'
+      lastMouseX: 0,
+      lastMouseY: 0,
+      
+      // Computed scale parameters
+      autoScale: 85, // px per meter
+      centerX: 1.0,
+      centerY: 2.0
+    };
+
+    const K = 8.9875517923e9; // N·m²/C²
+
+    // Helper functions for KaTeX rendering
+    function mInline(latex) {
+      if (typeof katex !== 'undefined') {
+        return katex.renderToString(latex, { displayMode: false, throwOnError: false });
+      }
+      return latex;
+    }
+
+    function mBlock(latex) {
+      if (typeof katex !== 'undefined') {
+        return katex.renderToString(latex, { displayMode: true, throwOnError: false });
+      }
+      return latex;
+    }
+
+    // Convert value with prefix to Coulombs
+    function toCoulombs(val, unit) {
+      const multipliers = { 'C': 1, 'mC': 1e-3, 'uC': 1e-6, 'nC': 1e-9, 'pC': 1e-12 };
+      return val * (multipliers[unit] || 1);
+    }
+
+    // Scientific notation formatter for KaTeX
+    function toSci(num, sigDigits = 3) {
+      if (num === 0) return '0';
+      const absVal = Math.abs(num);
+      if (absVal >= 0.01 && absVal < 10000) {
+        return num.toFixed(sigDigits);
+      }
+      const expStr = num.toExponential(sigDigits);
+      const [mant, exp] = expStr.split('e');
+      const expInt = parseInt(exp, 10);
+      return `${mant} \\times 10^{${expInt}}`;
+    }
+
+    // Dark Mode Toggle Logic
+    const themeBtn = document.getElementById('btn-theme-toggle');
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      document.getElementById('theme-text').textContent = isDark ? 'Mode Clar' : 'Mode Fosc';
+      drawCanvas();
+    });
+
+    // Preset Buttons (Meters vs Millimeters)
+    document.getElementById('btn-preset-m').addEventListener('click', () => {
+      document.getElementById('input-x1').value = 0; document.getElementById('input-y1').value = 4;
+      document.getElementById('input-x2').value = 5; document.getElementById('input-y2').value = 4;
+      document.getElementById('input-x3').value = 5; document.getElementById('input-y3').value = 0;
+      document.getElementById('input-xA').value = 0; document.getElementById('input-yA').value = 0;
+      document.getElementById('input-xB').value = -3; document.getElementById('input-yB').value = 1;
+      readInputsAndUpdate();
+      autoFit();
+    });
+
+    document.getElementById('btn-preset-mm').addEventListener('click', () => {
+      document.getElementById('input-x1').value = 0.000; document.getElementById('input-y1').value = 0.004;
+      document.getElementById('input-x2').value = 0.005; document.getElementById('input-y2').value = 0.004;
+      document.getElementById('input-x3').value = 0.005; document.getElementById('input-y3').value = 0.000;
+      document.getElementById('input-xA').value = 0.000; document.getElementById('input-yA').value = 0.000;
+      document.getElementById('input-xB').value = -0.003; document.getElementById('input-yB').value = 0.001;
+      readInputsAndUpdate();
+      autoFit();
+    });
+
+    // Read inputs from Custom Panel
+    function readInputsAndUpdate() {
+      state.numCharges = parseInt(document.querySelector('input[name="num-charges"]:checked').value, 10);
+      state.q1.x = parseFloat(document.getElementById('input-x1').value) || 0;
+      state.q1.y = parseFloat(document.getElementById('input-y1').value) || 0;
+      state.q1.val = parseFloat(document.getElementById('input-q1-val').value) || 0;
+      state.q1.unit = document.getElementById('input-q1-unit').value;
+
+      state.q2.x = parseFloat(document.getElementById('input-x2').value) || 0;
+      state.q2.y = parseFloat(document.getElementById('input-y2').value) || 0;
+      state.q2.val = parseFloat(document.getElementById('input-q2-val').value) || 0;
+      state.q2.unit = document.getElementById('input-q2-unit').value;
+
+      if (state.numCharges === 3) {
+        state.q3.x = parseFloat(document.getElementById('input-x3').value) || 0;
+        state.q3.y = parseFloat(document.getElementById('input-y3').value) || 0;
+        state.q3.val = parseFloat(document.getElementById('input-q3-val').value) || 0;
+        state.q3.unit = document.getElementById('input-q3-unit').value;
+      }
+
+      state.q4.val = parseFloat(document.getElementById('input-q4-val').value) || 0;
+      state.q4.unit = document.getElementById('input-q4-unit').value;
+
+      state.A.x = parseFloat(document.getElementById('input-xA').value) || 0;
+      state.A.y = parseFloat(document.getElementById('input-yA').value) || 0;
+
+      state.B.x = parseFloat(document.getElementById('input-xB').value) || 0;
+      state.B.y = parseFloat(document.getElementById('input-yB').value) || 0;
+
+      updateProblemStatement();
+      recalculateAndRenderStages();
+      drawCanvas();
+    }
+
+    // Toggle 2/3 charges UI rows
+    document.querySelectorAll('input[name="num-charges"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const is3 = e.target.value === '3';
+        document.getElementById('q3-pos-row').style.display = is3 ? 'flex' : 'none';
+        document.getElementById('q3-control-row').style.display = is3 ? 'flex' : 'none';
+        readInputsAndUpdate();
+        autoFit();
+      });
+    });
+
+    document.getElementById('btn-apply-custom').addEventListener('click', () => {
+      readInputsAndUpdate();
+      autoFit();
+    });
+
+    // Auto-Fit Engine for Arbitrary Distances (Metres to Millimetres)
+    function autoFit() {
+      const points = [
+        [state.q1.x, state.q1.y],
+        [state.q2.x, state.q2.y],
+        [state.A.x, state.A.y],
+        [state.B.x, state.B.y]
+      ];
+      if (state.numCharges === 3) {
+        points.push([state.q3.x, state.q3.y]);
+      }
+
+      const xs = points.map(p => p[0]);
+      const ys = points.map(p => p[1]);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+
+      let spanX = maxX - minX;
+      let spanY = maxY - minY;
+      if (spanX < 1e-9) spanX = 1.0;
+      if (spanY < 1e-9) spanY = 1.0;
+
+      const canvas = document.getElementById('physics-canvas');
+      const padding = 70;
+      const availW = canvas.width - 2 * padding;
+      const availH = canvas.height - 2 * padding;
+
+      state.autoScale = Math.min(availW / spanX, availH / spanY);
+      state.centerX = (minX + maxX) / 2;
+      state.centerY = (minY + maxY) / 2;
+      state.zoomLevel = 1.0;
+      state.panX = 0;
+      state.panY = 0;
+
+      updateScaleInfoText(spanX, spanY);
+      drawCanvas();
+    }
+
+    function updateScaleInfoText(spanX, spanY) {
+      const currentScale = state.autoScale * state.zoomLevel;
+      const formatDist = (d) => {
+        if (Math.abs(d) < 0.01) return `${(d * 1000).toFixed(2)} mm`;
+        return `${d.toFixed(3)} m`;
+      };
+
+      document.getElementById('scale-factor-text').textContent = `1 m = ${currentScale.toFixed(1)} px (${(currentScale/1000).toFixed(3)} px/mm)`;
+      document.getElementById('scale-span-text').textContent = `${formatDist(spanX)} × ${formatDist(spanY)}`;
+      document.getElementById('zoom-val').textContent = `${Math.round(state.zoomLevel * 100)}%`;
+    }
+
+    // World to Screen Coordinate Converters
+    function toScreen(wx, wy) {
+      const canvas = document.getElementById('physics-canvas');
+      const effScale = state.autoScale * state.zoomLevel;
+      const sx = canvas.width / 2 + state.panX + (wx - state.centerX) * effScale;
+      const sy = canvas.height / 2 + state.panY - (wy - state.centerY) * effScale;
+      return { x: sx, y: sy };
+    }
+
+    function toWorld(sx, sy) {
+      const canvas = document.getElementById('physics-canvas');
+      const effScale = state.autoScale * state.zoomLevel;
+      const wx = state.centerX + (sx - canvas.width / 2 - state.panX) / effScale;
+      const wy = state.centerY - (sy - canvas.height / 2 - state.panY) / effScale;
+      return { x: wx, y: wy };
+    }
+
+    // Interactive Canvas Drawing Engine
+    function drawCanvas() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+
+      // Resize canvas to match display container
+      const rect = canvas.getBoundingClientRect();
+      if (canvas.width !== rect.width || canvas.height !== rect.height) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+
+      // Background
+      ctx.fillStyle = isDark ? '#0f172a' : '#f8fafc';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const effScale = state.autoScale * state.zoomLevel;
+
+      // Calculate grid step in meters dynamically
+      let gridStepMeters = 1.0;
+      if (effScale > 20000) gridStepMeters = 0.001; // 1mm
+      else if (effScale > 2000) gridStepMeters = 0.01; // 1cm
+      else if (effScale > 200) gridStepMeters = 0.1;
+      else if (effScale < 20) gridStepMeters = 5.0;
+
+      const origin = toScreen(0, 0);
+
+      // Grid lines
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = isDark ? '#1e293b' : '#e2e8f0';
+      
+      const startX = Math.floor((-canvas.width) / (gridStepMeters * effScale)) * gridStepMeters;
+      const endX = Math.ceil((canvas.width * 2) / (gridStepMeters * effScale)) * gridStepMeters;
+      
+      for (let x = startX; x <= endX; x += gridStepMeters) {
+        const pt = toScreen(x, 0);
+        ctx.beginPath();
+        ctx.moveTo(pt.x, 0);
+        ctx.lineTo(pt.x, canvas.height);
+        ctx.stroke();
+      }
+
+      for (let y = startX; y <= endX; y += gridStepMeters) {
+        const pt = toScreen(0, y);
+        ctx.beginPath();
+        ctx.moveTo(0, pt.y);
+        ctx.lineTo(canvas.width, pt.y);
+        ctx.stroke();
+      }
+
+      // Numerical Scale Labels on Grid Axes
+      ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+      ctx.font = '500 11px Inter, sans-serif';
+
+      const labelYPos = Math.max(18, Math.min(canvas.height - 18, origin.y + 14));
+      const labelXPos = Math.max(6, Math.min(canvas.width - 50, origin.x + 6));
+
+      const formatTickLabel = (val) => {
+        if (Math.abs(val) < 1e-9) return '0';
+        if (gridStepMeters < 0.01) return `${(val * 1000).toFixed(1)} mm`;
+        if (gridStepMeters < 1) return `${val.toFixed(2)} m`;
+        return `${val.toFixed(1)} m`;
+      };
+
+      // X-Axis Numerical Ticks
+      for (let x = startX; x <= endX; x += gridStepMeters) {
+        const pt = toScreen(x, 0);
+        if (pt.x >= 0 && pt.x <= canvas.width && Math.abs(x) > 1e-9) {
+          ctx.beginPath();
+          ctx.moveTo(pt.x, origin.y - 3);
+          ctx.lineTo(pt.x, origin.y + 3);
+          ctx.stroke();
+          ctx.fillText(formatTickLabel(x), pt.x - 12, labelYPos);
+        }
+      }
+
+      // Y-Axis Numerical Ticks
+      for (let y = startX; y <= endX; y += gridStepMeters) {
+        const pt = toScreen(0, y);
+        if (pt.y >= 0 && pt.y <= canvas.height && Math.abs(y) > 1e-9) {
+          ctx.beginPath();
+          ctx.moveTo(origin.x - 3, pt.y);
+          ctx.lineTo(origin.x + 3, pt.y);
+          ctx.stroke();
+          ctx.fillText(formatTickLabel(y), labelXPos, pt.y + 4);
+        }
+      }
+
+      // Main Axes X and Y
+      ctx.lineWidth = 1.8;
+      ctx.strokeStyle = isDark ? '#475569' : '#94a3b8';
+
+      // Axis X
+      ctx.beginPath();
+      ctx.moveTo(0, origin.y);
+      ctx.lineTo(canvas.width, origin.y);
+      ctx.stroke();
+
+      // Axis Y
+      ctx.beginPath();
+      ctx.moveTo(origin.x, 0);
+      ctx.lineTo(origin.x, canvas.height);
+      ctx.stroke();
+
+      // Physics Calculations for Vector Rendering
+      const calc = performPhysicsCalculations();
+
+      // Helper function to draw arrowheads
+      function drawArrow(fromX, fromY, toX, toY, color, label, width = 2.5) {
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = width;
+
+        ctx.beginPath();
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(toX, toY);
+        ctx.stroke();
+
+        const angle = Math.atan2(toY - fromY, toX - fromX);
+        const headLen = 10;
+        ctx.beginPath();
+        ctx.moveTo(toX, toY);
+        ctx.lineTo(toX - headLen * Math.cos(angle - Math.PI / 6), toY - headLen * Math.sin(angle - Math.PI / 6));
+        ctx.lineTo(toX - headLen * Math.cos(angle + Math.PI / 6), toY - headLen * Math.sin(angle + Math.PI / 6));
+        ctx.closePath();
+        ctx.fill();
+
+        if (label) {
+          ctx.font = '600 12px Inter, sans-serif';
+          ctx.fillText(label, toX + 8, toY - 4);
+        }
+      }
+
+      const screenA = toScreen(state.A.x, state.A.y);
+      const screenB = toScreen(state.B.x, state.B.y);
+      const screenQ1 = toScreen(state.q1.x, state.q1.y);
+      const screenQ2 = toScreen(state.q2.x, state.q2.y);
+      const screenQ3 = state.numCharges === 3 ? toScreen(state.q3.x, state.q3.y) : null;
+
+      // Layer 2: Distance / Position Vectors (r_i)
+      if (state.activeLayer >= 2) {
+        ctx.setLineDash([4, 4]);
+        drawArrow(screenQ1.x, screenQ1.y, screenA.x, screenA.y, '#f59e0b', 'r1');
+        drawArrow(screenQ2.x, screenQ2.y, screenA.x, screenA.y, '#f59e0b', 'r2');
+        if (screenQ3) drawArrow(screenQ3.x, screenQ3.y, screenA.x, screenA.y, '#f59e0b', 'r3');
+        ctx.setLineDash([]);
+      }
+
+      // Layer 3: Individual Electric Field Vectors (E_i)
+      if (state.activeLayer >= 3) {
+        const vecScale = 50 / (calc.maxMagE || 1);
+        drawArrow(screenA.x, screenA.y, screenA.x + calc.E1.x * vecScale, screenA.y - calc.E1.y * vecScale, '#ef4444', 'E1', 2);
+        drawArrow(screenA.x, screenA.y, screenA.x + calc.E2.x * vecScale, screenA.y - calc.E2.y * vecScale, '#3b82f6', 'E2', 2);
+        if (state.numCharges === 3) {
+          drawArrow(screenA.x, screenA.y, screenA.x + calc.E3.x * vecScale, screenA.y - calc.E3.y * vecScale, '#10b981', 'E3', 2);
+        }
+      }
+
+      // Layer 4: Total Field (E_T) & Total Force (F_T)
+      if (state.activeLayer >= 4) {
+        const vecScale = 60 / (calc.maxMagE || 1);
+        drawArrow(screenA.x, screenA.y, screenA.x + calc.ET.x * vecScale, screenA.y - calc.ET.y * vecScale, '#8b5cf6', 'E_T', 3.5);
+
+        const forceScale = 60 / (Math.hypot(calc.FT.x, calc.FT.y) || 1);
+        drawArrow(screenA.x, screenA.y, screenA.x + calc.FT.x * forceScale, screenA.y - calc.FT.y * forceScale, '#ec4899', 'F_T (q4)', 3.5);
+      }
+
+      // Always Draw Charge Circles & Point Labels (Layer 1 Base)
+      function drawChargeCircle(pt, label, val, unit, isPositive, isHovered = false) {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, isHovered ? 17 : 14, 0, Math.PI * 2);
+        ctx.fillStyle = isPositive ? '#ef4444' : '#3b82f6';
+        ctx.fill();
+        ctx.lineWidth = isHovered ? 3 : 2;
+        ctx.strokeStyle = isHovered ? '#fbbf24' : (isDark ? '#0f172a' : '#ffffff');
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 13px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(isPositive ? '+' : '−', pt.x, pt.y + 0.5);
+
+        ctx.fillStyle = isDark ? '#f1f5f9' : '#0f172a';
+        ctx.font = '600 12px Inter, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(`${label} (${val} ${unit})`, pt.x + 18, pt.y - 4);
+      }
+
+      drawChargeCircle(screenQ1, 'q1', state.q1.val, state.q1.unit, state.q1.val >= 0, state.dragTarget === 'q1');
+      drawChargeCircle(screenQ2, 'q2', state.q2.val, state.q2.unit, state.q2.val >= 0, state.dragTarget === 'q2');
+      if (screenQ3) drawChargeCircle(screenQ3, 'q3', state.q3.val, state.q3.unit, state.q3.val >= 0, state.dragTarget === 'q3');
+
+      // Draw Study Points A & B
+      function drawPointMarker(pt, label, color, isHovered = false) {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, isHovered ? 9 : 6, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = isHovered ? '#fbbf24' : '#ffffff';
+        ctx.stroke();
+
+        ctx.fillStyle = isDark ? '#f1f5f9' : '#0f172a';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(label, pt.x + 10, pt.y + 4);
+      }
+
+      drawPointMarker(screenA, 'A(x_A, y_A)', '#6366f1', state.dragTarget === 'A');
+      drawPointMarker(screenB, 'B(x_B, y_B)', '#a855f7', state.dragTarget === 'B');
+    }
+
+    // Mathematical & Physical Calculations Engine
+    function performPhysicsCalculations() {
+      const q1C = toCoulombs(state.q1.val, state.q1.unit);
+      const q2C = toCoulombs(state.q2.val, state.q2.unit);
+      const q3C = state.numCharges === 3 ? toCoulombs(state.q3.val, state.q3.unit) : 0;
+      const q4C = toCoulombs(state.q4.val, state.q4.unit);
+
+      // Distances & Unit Vectors to Point A
+      const r1 = { x: state.A.x - state.q1.x, y: state.A.y - state.q1.y };
+      const mod_r1 = Math.hypot(r1.x, r1.y) || 1e-9;
+      const u1 = { x: r1.x / mod_r1, y: r1.y / mod_r1 };
+
+      const r2 = { x: state.A.x - state.q2.x, y: state.A.y - state.q2.y };
+      const mod_r2 = Math.hypot(r2.x, r2.y) || 1e-9;
+      const u2 = { x: r2.x / mod_r2, y: r2.y / mod_r2 };
+
+      let r3 = { x: 0, y: 0 }, mod_r3 = 1e-9, u3 = { x: 0, y: 0 };
+      if (state.numCharges === 3) {
+        r3 = { x: state.A.x - state.q3.x, y: state.A.y - state.q3.y };
+        mod_r3 = Math.hypot(r3.x, r3.y) || 1e-9;
+        u3 = { x: r3.x / mod_r3, y: r3.y / mod_r3 };
+      }
+
+      // Electric Fields at A
+      const magE1 = (K * Math.abs(q1C)) / (mod_r1 * mod_r1);
+      const signE1 = Math.sign(q1C) || 1;
+      const E1 = { x: signE1 * magE1 * u1.x, y: signE1 * magE1 * u1.y };
+
+      const magE2 = (K * Math.abs(q2C)) / (mod_r2 * mod_r2);
+      const signE2 = Math.sign(q2C) || 1;
+      const E2 = { x: signE2 * magE2 * u2.x, y: signE2 * magE2 * u2.y };
+
+      let magE3 = 0, E3 = { x: 0, y: 0 };
+      if (state.numCharges === 3) {
+        magE3 = (K * Math.abs(q3C)) / (mod_r3 * mod_r3);
+        const signE3 = Math.sign(q3C) || 1;
+        E3 = { x: signE3 * magE3 * u3.x, y: signE3 * magE3 * u3.y };
+      }
+
+      const ET = { x: E1.x + E2.x + E3.x, y: E1.y + E2.y + E3.y };
+      const mod_ET = Math.hypot(ET.x, ET.y);
+      const maxMagE = Math.max(magE1, magE2, magE3, mod_ET) || 1;
+
+      // Electric Force on q4 at A
+      const FT = { x: q4C * ET.x, y: q4C * ET.y };
+
+      // Potentials at A
+      const VA1 = (K * q1C) / mod_r1;
+      const VA2 = (K * q2C) / mod_r2;
+      const VA3 = state.numCharges === 3 ? (K * q3C) / mod_r3 : 0;
+      const VA = VA1 + VA2 + VA3;
+
+      // Distances & Potentials at B
+      const r1B = Math.hypot(state.B.x - state.q1.x, state.B.y - state.q1.y) || 1e-9;
+      const r2B = Math.hypot(state.B.x - state.q2.x, state.B.y - state.q2.y) || 1e-9;
+      const r3B = state.numCharges === 3 ? Math.hypot(state.B.x - state.q3.x, state.B.y - state.q3.y) || 1e-9 : 1e-9;
+
+      const VB1 = (K * q1C) / r1B;
+      const VB2 = (K * q2C) / r2B;
+      const VB3 = state.numCharges === 3 ? (K * q3C) / r3B : 0;
+      const VB = VB1 + VB2 + VB3;
+
+      // Work W_(A -> B)
+      const W_AB = -q4C * (VB - VA);
+
+      return {
+        q1C, q2C, q3C, q4C,
+        r1, mod_r1, u1, r2, mod_r2, u2, r3, mod_r3, u3,
+        magE1, E1, magE2, E2, magE3, E3, ET, mod_ET, maxMagE,
+        FT, VA, VB, r1B, r2B, r3B, W_AB
+      };
+    }
+
+    // Update Problem Statement KaTeX
+    function updateProblemStatement() {
+      const q1Str = `${state.q1.val >= 0 ? '+' : ''}${state.q1.val}\\text{ }${state.q1.unit}`;
+      const q2Str = `${state.q2.val >= 0 ? '+' : ''}${state.q2.val}\\text{ }${state.q2.unit}`;
+      const q3Str = `${state.q3.val >= 0 ? '+' : ''}${state.q3.val}\\text{ }${state.q3.unit}`;
+      const q4Str = `${state.q4.val >= 0 ? '+' : ''}${state.q4.val}\\text{ }${state.q4.unit}`;
+
+      let chargesText = `les càrregues puntuals ${mInline('q_1 = ' + q1Str)} a ${mInline('P_1(' + state.q1.x + ', ' + state.q1.y + ')\\text{ m}')} i ${mInline('q_2 = ' + q2Str)} a ${mInline('P_2(' + state.q2.x + ', ' + state.q2.y + ')\\text{ m}')}`;
+      
+      if (state.numCharges === 3) {
+        chargesText = `tres càrregues puntuals ${mInline('q_1 = ' + q1Str)} a ${mInline('P_1(' + state.q1.x + ', ' + state.q1.y + ')\\text{ m}')}, ${mInline('q_2 = ' + q2Str)} a ${mInline('P_2(' + state.q2.x + ', ' + state.q2.y + ')\\text{ m}')} i ${mInline('q_3 = ' + q3Str)} a ${mInline('P_3(' + state.q3.x + ', ' + state.q3.y + ')\\text{ m}')}`;
+      }
+
+      const html = `
+        <p class="mb-3">S'ubiquen ${chargesText}. Totes les coordenades estan expressades en metres o mil·límetres.</p>
+        <div class="space-y-2 font-medium">
+          <p><strong>a)</strong> Dibuixeu l'esquema vectorial de les càrregues i determineu el vector camp elèctric total ${mInline('\\vec{E}_T')} al punt d'estudi ${mInline('A(' + state.A.x + ', ' + state.A.y + ')\\text{ m}')}.</p>
+          <p><strong>b)</strong> Si es col·loca una càrrega de prova ${mInline('q_4 = ' + q4Str)} al punt ${mInline('A(' + state.A.x + ', ' + state.A.y + ')\\text{ m}')}, calculeu la força elèctrica vectorial ${mInline('\\vec{F}_T')} que actua sobre ella.</p>
+          <p><strong>c)</strong> Calculeu el potencial elèctric creat pel sistema al punt ${mInline('A(' + state.A.x + ', ' + state.A.y + ')\\text{ m}')} i al punt ${mInline('B(' + state.B.x + ', ' + state.B.y + ')\\text{ m}')}.</p>
+          <p><strong>d)</strong> Calculeu el treball ${mInline('W_{A \\to B}')} realitzat pel camp elèctric per traslladar la càrrega ${mInline('q_4')} des de ${mInline('A')} fins a ${mInline('B')} i raoneu si el procés és espontani.</p>
+        </div>
+      `;
+      document.getElementById('statement-card').innerHTML = html;
+    }
+
+    // Render Solution Stages dynamically using KaTeX
+    function recalculateAndRenderStages() {
+      const c = performPhysicsCalculations();
+
+      // Stage 2 Content
+      let s2 = `
+        <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <p><strong>Vector distància des de q1 fins a A:</strong></p>
+          ${mBlock(`\\vec{r}_1 = A - P_1 = (${state.A.x} - ${state.q1.x})\\hat{i} + (${state.A.y} - ${state.q1.y})\\hat{j} = ${c.r1.x}\\hat{i} + ${c.r1.y}\\hat{j}\\text{ m}`)}
+          ${mBlock(`|\\vec{r}_1| = \\sqrt{(${c.r1.x})^2 + (${c.r1.y})^2} = ${c.mod_r1.toFixed(4)}\\text{ m}`)}
+          ${mBlock(`\\hat{u}_1 = \\frac{\\vec{r}_1}{|\\vec{r}_1|} = ${c.u1.x.toFixed(4)}\\hat{i} + ${c.u1.y.toFixed(4)}\\hat{j}`)}
+
+          <p class="pt-2"><strong>Vector distància des de q2 fins a A:</strong></p>
+          ${mBlock(`\\vec{r}_2 = A - P_2 = ${c.r2.x}\\hat{i} + ${c.r2.y}\\hat{j}\\text{ m}`)}
+          ${mBlock(`|\\vec{r}_2| = \\sqrt{(${c.r2.x})^2 + (${c.r2.y})^2} = ${c.mod_r2.toFixed(4)}\\text{ m}`)}
+          ${mBlock(`\\hat{u}_2 = ${c.u2.x.toFixed(4)}\\hat{i} + ${c.u2.y.toFixed(4)}\\hat{j}`)}
+      `;
+      if (state.numCharges === 3) {
+        s2 += `
+          <p class="pt-2"><strong>Vector distància des de q3 fins a A:</strong></p>
+          ${mBlock(`\\vec{r}_3 = A - P_3 = ${c.r3.x}\\hat{i} + ${c.r3.y}\\hat{j}\\text{ m}`)}
+          ${mBlock(`|\\vec{r}_3| = ${c.mod_r3.toFixed(4)}\\text{ m}, \\quad \\hat{u}_3 = ${c.u3.x.toFixed(4)}\\hat{i} + ${c.u3.y.toFixed(4)}\\hat{j}`)}
+        `;
+      }
+      s2 += `</div>`;
+      document.getElementById('stage2-content').innerHTML = s2;
+
+      // Stage 3 Content
+      let s3 = `
+        <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <p><strong>Camps individuals:</strong></p>
+          ${mBlock(`\\vec{E}_1 = K \\frac{q_1}{|\\vec{r}_1|^2} \\hat{u}_1 = (${toSci(c.E1.x)})\\hat{i} + (${toSci(c.E1.y)})\\hat{j}\\text{ N/C}`)}
+          ${mBlock(`\\vec{E}_2 = K \\frac{q_2}{|\\vec{r}_2|^2} \\hat{u}_2 = (${toSci(c.E2.x)})\\hat{i} + (${toSci(c.E2.y)})\\hat{j}\\text{ N/C}`)}
+      `;
+      if (state.numCharges === 3) {
+        s3 += `${mBlock(`\\vec{E}_3 = (${toSci(c.E3.x)})\\hat{i} + (${toSci(c.E3.y)})\\hat{j}\\text{ N/C}`)}`;
+      }
+      s3 += `
+          <p class="pt-2"><strong>Camp Elèctric Total a Punt A:</strong></p>
+          ${mBlock(`\\vec{E}_T = \\sum \\vec{E}_i = (${toSci(c.ET.x)})\\hat{i} + (${toSci(c.ET.y)})\\hat{j}\\text{ N/C}`)}
+          ${mBlock(`|\\vec{E}_T| = ${toSci(c.mod_ET)}\\text{ N/C}`)}
+        </div>
+      `;
+      document.getElementById('stage3-content').innerHTML = s3;
+
+      // Stage 4 Content
+      const s4 = `
+        <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <p><strong>Relació entre Força i Camp:</strong> ${mInline('\\vec{F}_T = q_4 \\cdot \\vec{E}_T')}</p>
+          ${mBlock(`\\vec{F}_T = (${toSci(c.q4C)}\\text{ C}) \\cdot \\left[(${toSci(c.ET.x)})\\hat{i} + (${toSci(c.ET.y)})\\hat{j}\\right]`)}
+          ${mBlock(`\\vec{F}_T = (${toSci(c.FT.x)})\\hat{i} + (${toSci(c.FT.y)})\\hat{j}\\text{ N}`)}
+          ${mBlock(`|\\vec{F}_T| = ${toSci(Math.hypot(c.FT.x, c.FT.y))}\\text{ N}`)}
+        </div>
+      `;
+      document.getElementById('stage4-content').innerHTML = s4;
+
+      // Stage 5 Content
+      const isSpontaneous = c.W_AB > 0;
+      const s5 = `
+        <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <p><strong>Potencial elèctric al punt A:</strong></p>
+          ${mBlock(`V_A = \\sum K \\frac{q_i}{r_i} = ${toSci(c.VA)}\\text{ V}`)}
+          
+          <p class="pt-2"><strong>Potencial elèctric al punt B:</strong></p>
+          ${mBlock(`V_B = \\sum K \\frac{q_i}{r_{iB}} = ${toSci(c.VB)}\\text{ V}`)}
+
+          <p class="pt-2"><strong>Treball realitzat pel camp elèctric:</strong></p>
+          ${mBlock(`W_{A \\to B} = -q_4 (V_B - V_A) = -(${toSci(c.q4C)}) \\cdot (${toSci(c.VB - c.VA)}) = ${toSci(c.W_AB)}\\text{ J}`)}
+
+          <div class="p-3 rounded-lg border ${isSpontaneous ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900 text-emerald-900 dark:text-emerald-200' : 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900 text-amber-900 dark:text-amber-200'} font-medium">
+            <p><strong>Raonament d'Espontaneïtat:</strong></p>
+            <p class="mt-1">
+              Atès que ${mInline('W_{A \\to B} = ' + toSci(c.W_AB) + '\\text{ J}')} ${isSpontaneous ? '> 0' : '< 0'}, el camp elèctric realitza un treball <strong>${isSpontaneous ? 'POSITIU (espontani)' : 'NEGATIU (no espontani)'}</strong>. ${isSpontaneous ? 'La càrrega es desplaça de manera natural disminuint la seva energia potencial electrostàtica.' : 'Es requereix un agent extern per realitzar el trasllat.'}
+            </p>
+          </div>
+        </div>
+      `;
+      document.getElementById('stage5-content').innerHTML = s5;
+    }
+
+    // Hit Testing for Object Dragging
+    function getHitTarget(screenX, screenY) {
+      const targets = [
+        { id: 'q1', x: state.q1.x, y: state.q1.y },
+        { id: 'q2', x: state.q2.x, y: state.q2.y },
+        { id: 'A', x: state.A.x, y: state.A.y },
+        { id: 'B', x: state.B.x, y: state.B.y }
+      ];
+      if (state.numCharges === 3) {
+        targets.push({ id: 'q3', x: state.q3.x, y: state.q3.y });
+      }
+
+      for (let t of targets) {
+        const pt = toScreen(t.x, t.y);
+        const dist = Math.hypot(screenX - pt.x, screenY - pt.y);
+        if (dist <= 22) return t.id; // 22px hit radius
+      }
+      return null;
+    }
+
+    // Interactive Dragging & Zoom Canvas Handlers
+    const canvas = document.getElementById('physics-canvas');
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+
+      const hit = getHitTarget(mx, my);
+      if (hit) {
+        state.dragTarget = hit;
+      } else {
+        state.dragTarget = 'pan';
+      }
+      state.lastMouseX = e.clientX;
+      state.lastMouseY = e.clientY;
+      drawCanvas();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!state.dragTarget) return;
+
+      if (state.dragTarget === 'pan') {
+        const dx = e.clientX - state.lastMouseX;
+        const dy = e.clientY - state.lastMouseY;
+        state.panX += dx;
+        state.panY += dy;
+      } else {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        const wPt = toWorld(mx, my);
+
+        const roundedX = parseFloat(wPt.x.toFixed(4));
+        const roundedY = parseFloat(wPt.y.toFixed(4));
+
+        if (state.dragTarget === 'q1') {
+          state.q1.x = roundedX; state.q1.y = roundedY;
+          document.getElementById('input-x1').value = roundedX;
+          document.getElementById('input-y1').value = roundedY;
+        } else if (state.dragTarget === 'q2') {
+          state.q2.x = roundedX; state.q2.y = roundedY;
+          document.getElementById('input-x2').value = roundedX;
+          document.getElementById('input-y2').value = roundedY;
+        } else if (state.dragTarget === 'q3') {
+          state.q3.x = roundedX; state.q3.y = roundedY;
+          document.getElementById('input-x3').value = roundedX;
+          document.getElementById('input-y3').value = roundedY;
+        } else if (state.dragTarget === 'A') {
+          state.A.x = roundedX; state.A.y = roundedY;
+          document.getElementById('input-xA').value = roundedX;
+          document.getElementById('input-yA').value = roundedY;
+        } else if (state.dragTarget === 'B') {
+          state.B.x = roundedX; state.B.y = roundedY;
+          document.getElementById('input-xB').value = roundedX;
+          document.getElementById('input-yB').value = roundedY;
+        }
+
+        updateProblemStatement();
+        recalculateAndRenderStages();
+      }
+
+      state.lastMouseX = e.clientX;
+      state.lastMouseY = e.clientY;
+      drawCanvas();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (state.dragTarget) {
+        state.dragTarget = null;
+        drawCanvas();
+      }
+    });
+
+    // Wheel Zoom handler
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
+      state.zoomLevel *= zoomFactor;
+      state.zoomLevel = Math.max(0.05, Math.min(state.zoomLevel, 500));
+      updateScaleInfoText(state.centerX * 2, state.centerY * 2);
+      drawCanvas();
+    }, { passive: false });
+
+    // Toolbar Zoom Buttons
+    document.getElementById('btn-zoom-in').addEventListener('click', () => {
+      state.zoomLevel *= 1.25;
+      updateScaleInfoText(state.centerX * 2, state.centerY * 2);
+      drawCanvas();
+    });
+
+    document.getElementById('btn-zoom-out').addEventListener('click', () => {
+      state.zoomLevel /= 1.25;
+      updateScaleInfoText(state.centerX * 2, state.centerY * 2);
+      drawCanvas();
+    });
+
+    document.getElementById('btn-auto-fit').addEventListener('click', autoFit);
+    document.getElementById('btn-reset-view').addEventListener('click', autoFit);
+
+    // Accordion & Toggle Buttons
+    document.getElementById('btn-toggle-custom').addEventListener('click', () => {
+      const panel = document.getElementById('custom-panel');
+      panel.classList.toggle('hidden');
+    });
+
+    document.getElementById('toggle-solution-btn').addEventListener('click', () => {
+      const container = document.getElementById('solution-container');
+      container.classList.toggle('hidden');
+      if (!container.classList.contains('hidden')) {
+        drawCanvas();
+      }
+    });
+
+    // Layer Buttons Handler
+    const layerDescs = {
+      1: "<strong>Capa 1:</strong> Es mostren la distribució de càrregues font (q1, q2, q3) i els punts d'estudi A i B.",
+      2: "<strong>Capa 2:</strong> Es representen els vectors posició relativa r_1, r_2, r_3 des de les càrregues cap al punt A.",
+      3: "<strong>Capa 3:</strong> S'afegeixen els vectors camp elèctric individual E_1, E_2, E_3 generats a A.",
+      4: "<strong>Capa 4:</strong> Es dibuixa el camp elèctric total E_T i la força neta F_T que actua sobre q_4."
+    };
+
+    [1, 2, 3, 4].forEach(layerNum => {
+      document.getElementById(`btn-layer-${layerNum}`).addEventListener('click', () => {
+        state.activeLayer = layerNum;
+        [1, 2, 3, 4].forEach(n => {
+          const btn = document.getElementById(`btn-layer-${n}`);
+          if (n === layerNum) {
+            btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm";
+          } else {
+            btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900";
+          }
+        });
+        document.getElementById('layer-badge').textContent = `Capa Actual: ${layerNum} (${['Punts', 'Vectors r_i', 'Camps E_i', 'E_T i F_T'][layerNum - 1]})`;
+        document.getElementById('layer-desc').innerHTML = layerDescs[layerNum];
+        drawCanvas();
+      });
+    });
+
+    // Stage Tabs Handler
+    [1, 2, 3, 4, 5].forEach(stageNum => {
+      document.getElementById(`tab-stage-${stageNum}`).addEventListener('click', () => {
+        state.currentStage = stageNum;
+        [1, 2, 3, 4, 5].forEach(n => {
+          const tab = document.getElementById(`tab-stage-${n}`);
+          const panel = document.getElementById(`stage-panel-${n}`);
+          if (n === stageNum) {
+            tab.className = "px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold transition flex items-center space-x-1";
+            panel.classList.remove('hidden');
+          } else {
+            tab.className = "px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1";
+            panel.classList.add('hidden');
+          }
+        });
+        if (stageNum === 1) drawCanvas();
+      });
+    });
+
+    // Problem Generator
+    document.getElementById('btn-random').addEventListener('click', () => {
+      const isMM = Math.random() < 0.5;
+      const factor = isMM ? 0.001 : 1.0;
+
+      document.getElementById('input-x1').value = (0 * factor).toFixed(3);
+      document.getElementById('input-y1').value = ((Math.floor(Math.random() * 6) + 1) * factor).toFixed(3);
+      document.getElementById('input-x2').value = ((Math.floor(Math.random() * 6) + 1) * factor).toFixed(3);
+      document.getElementById('input-y2').value = ((Math.floor(Math.random() * 6) + 1) * factor).toFixed(3);
+      document.getElementById('input-x3').value = ((Math.floor(Math.random() * 6) + 1) * factor).toFixed(3);
+      document.getElementById('input-y3').value = (0 * factor).toFixed(3);
+
+      document.getElementById('input-q1-val').value = Math.floor(Math.random() * 10) - 5 || 3;
+      document.getElementById('input-q2-val').value = Math.floor(Math.random() * 10) - 5 || -2;
+      document.getElementById('input-q3-val').value = Math.floor(Math.random() * 10) - 5 || 4;
+
+      readInputsAndUpdate();
+      autoFit();
+    });
+
+    // Window Resize Handler
+    window.addEventListener('resize', () => {
+      drawCanvas();
+    });
+
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('layer-desc').innerHTML = layerDescs[1];
+      readInputsAndUpdate();
+      setTimeout(autoFit, 100);
+    });
+  </script>
+</body>
+</html>
