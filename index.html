@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ca" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IES Algarb | Electrostàtica: Camp, Potencial i Treball</title>
+  
+  <!-- Favicon SVG Personalitzat -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- KaTeX CSS & JS via CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .katex-display { margin: 0.4em 0 !important; }
+    canvas { touch-action: none; }
+  </style>
+</head>
+<body class="min-h-full flex flex-col text-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-200">
+
+  <!-- Header Bar amb Nom del Centre IES Algarb -->
+  <header class="bg-slate-900 text-white shadow-md border-b border-slate-800 dark:bg-slate-950">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 bg-indigo-600 rounded-xl shadow-md">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 tracking-wide uppercase">IES Algarb</span>
+            <span class="text-xs text-slate-400">Física 2n Batxillerat</span>
+          </div>
+          <h1 class="text-lg font-bold tracking-tight">Electrostàtica: Camp, Potencial i Treball Vectorial</h1>
+        </div>
+      </div>
+
+      <!-- Controls de Capçalera: Mode Fosc/Lluminós -->
+      <div class="flex items-center space-x-3">
+        <button id="theme-toggle-btn" onclick="toggleDarkMode()" class="px-3 py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+          <span id="mode-icon">🌙</span>
+          <span id="mode-text">Mode Fosc</span>
+        </button>
+        <div class="hidden sm:flex items-center space-x-1.5 text-xs bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-300">GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contingut Principal -->
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-1 space-y-6">
+
+    <!-- Card 1: Enunciat del Problema i Controls -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-5 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded text-xs font-semibold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 mb-1">
+            Simulador Didàctic per a Graella Encaixada
+          </span>
+          <h2 class="text-lg font-semibold">Configuració de Càrregues i Escala de Graella</h2>
+        </div>
+        
+        <!-- Botons d'Acció -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btn-random" onclick="generateRandomProblem()" class="px-3 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>🎲 Aleatori</span>
+          </button>
+          <button id="btn-toggle-custom" onclick="toggleCustomPanel()" class="px-3 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg transition border border-slate-700 flex items-center space-x-1.5 shadow-sm">
+            <span>⚙️ Configurar Paràmetres</span>
+          </button>
+          <button id="toggle-solution-btn" onclick="toggleSolution()" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow flex items-center space-x-1.5">
+            <span>👁️ Mostrar Solució i Diagrama</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Enunciat Renderitzat Dinàmicament -->
+      <div id="statement-card" class="p-6 bg-slate-50/60 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 text-sm md:text-base leading-relaxed">
+        <!-- Generat via JS amb KaTeX -->
+      </div>
+
+      <!-- Panell Desplegable de Personalització i Escala -->
+      <div id="custom-panel" class="hidden p-6 bg-slate-100 dark:bg-slate-850 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-700 pb-3">
+          <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center">
+            <span class="mr-2">⚙️</span> Selecció d'Escala i Coordenades Exactes
+          </h3>
+          
+          <!-- Selector d'unitats de distància per quadrat de graella -->
+          <div class="flex items-center space-x-2 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-600 shadow-sm">
+            <label for="select-grid-unit" class="font-semibold text-slate-800 dark:text-slate-200">Mida d'1 quadrat de la graella:</label>
+            <select id="select-grid-unit" onchange="applyCustomData()" class="p-1 font-bold text-indigo-600 dark:text-indigo-400 bg-transparent focus:outline-none">
+              <option value="mm">1 mil·límetre (mm)</option>
+              <option value="cm">1 centímetre (cm)</option>
+              <option value="dm">1 decímetre (dm)</option>
+              <option value="m" selected>1 metre (m)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Coordenades Càrregues Font (Interseccions de Graella) -->
+          <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 dark:text-slate-100 block border-b dark:border-slate-700 pb-1">📍 Càrregues (Nodes Graella)</span>
+            
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">q1 (x, y):</span>
+              <div class="flex space-x-1">
+                <input type="number" id="input-x1" value="0" step="1" onchange="applyCustomData()" class="w-12 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                <input type="number" id="input-y1" value="4" step="1" onchange="applyCustomData()" class="w-12 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">q2 (x, y):</span>
+              <div class="flex space-x-1">
+                <input type="number" id="input-x2" value="5" step="1" onchange="applyCustomData()" class="w-12 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                <input type="number" id="input-y2" value="4" step="1" onchange="applyCustomData()" class="w-12 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+              </div>
+            </div>
+
+            <div id="q3-pos-row" class="flex items-center justify-between gap-1">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">q3 (x, y):</span>
+              <div class="flex space-x-1">
+                <input type="number" id="input-x3" value="5" step="1" onchange="applyCustomData()" class="w-12 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                <input type="number" id="input-y3" value="0" step="1" onchange="applyCustomData()" class="w-12 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+              </div>
+            </div>
+
+            <div class="pt-1 border-t dark:border-slate-700">
+              <button onclick="presetRectangular()" class="w-full py-1 text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded transition font-medium">
+                📐 Rectangle Estàndard (5x4)
+              </button>
+            </div>
+          </div>
+
+          <!-- Coordenades Punts A i B -->
+          <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 dark:text-slate-100 block border-b dark:border-slate-700 pb-1">📍 Punts d'Estudi A i B</span>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <div>
+                <label class="block text-slate-500 dark:text-slate-400 font-semibold mb-1">Punt A (x,y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xA" value="0" step="1" onchange="applyCustomData()" class="w-full p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                  <input type="number" id="input-yA" value="0" step="1" onchange="applyCustomData()" class="w-full p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                </div>
+              </div>
+              <div>
+                <label class="block text-slate-500 dark:text-slate-400 font-semibold mb-1">Punt B (x,y):</label>
+                <div class="flex space-x-1">
+                  <input type="number" id="input-xB" value="-3" step="1" onchange="applyCustomData()" class="w-full p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                  <input type="number" id="input-yB" value="1" step="1" onchange="applyCustomData()" class="w-full p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                </div>
+              </div>
+            </div>
+            <div class="pt-1">
+              <span class="font-semibold text-slate-800 dark:text-slate-200 block mb-1">Nombre de Càrregues Font:</span>
+              <div class="flex space-x-3">
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="2" onchange="applyCustomData()" class="accent-indigo-600">
+                  <span>2 Càrregues</span>
+                </label>
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="num-charges" value="3" checked onchange="applyCustomData()" class="accent-indigo-600">
+                  <span>3 Càrregues</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Valors de les Càrregues Font -->
+          <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
+            <span class="font-bold text-slate-800 dark:text-slate-100 block border-b dark:border-slate-700 pb-1">⚡ Magnitud Càrregues Font</span>
+            
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q1:</span>
+              <input type="number" id="input-q1-val" value="4" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+              <select id="input-q1-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 dark:bg-slate-700 dark:border-slate-600 text-xs">
+                <option value="uC">µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q2:</span>
+              <input type="number" id="input-q2-val" value="-3" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+              <select id="input-q2-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 dark:bg-slate-700 dark:border-slate-600 text-xs">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div id="q3-control-row" class="flex items-center space-x-1">
+              <span class="w-6 font-semibold">q3:</span>
+              <input type="number" id="input-q3-val" value="2" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+              <select id="input-q3-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 dark:bg-slate-700 dark:border-slate-600 text-xs">
+                <option value="uC" selected>µC</option>
+                <option value="nC">nC</option>
+                <option value="pC">pC</option>
+                <option value="mC">mC</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Càrrega de Prova q4 i Botó d'Aplicar -->
+          <div class="bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-2 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-800 dark:text-slate-100 block border-b dark:border-slate-700 pb-1">🧪 Càrrega de Prova q4</span>
+              <div class="flex items-center space-x-1 pt-2">
+                <span class="w-6 font-semibold">q4:</span>
+                <input type="number" id="input-q4-val" value="2" onchange="applyCustomData()" class="w-16 p-1 border rounded text-center dark:bg-slate-700 dark:border-slate-600">
+                <select id="input-q4-unit" onchange="applyCustomData()" class="p-1 border rounded bg-slate-50 dark:bg-slate-700 dark:border-slate-600 text-xs">
+                  <option value="nC" selected>nC</option>
+                  <option value="uC">µC</option>
+                  <option value="pC">pC</option>
+                  <option value="mC">mC</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="applyCustomData()" class="w-full mt-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition shadow-sm text-center">
+              Actualitzar Simulació
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Contenidor de Solució Pas a Pas -->
+    <div id="solution-container" class="hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+      
+      <!-- Pestanyes de les Etapes -->
+      <div class="border-b border-slate-200 dark:border-slate-700 bg-slate-100/90 dark:bg-slate-850 px-4 pt-3 flex flex-wrap gap-2 text-xs sm:text-sm font-medium">
+        <button id="tab-stage-1" onclick="switchStage(1)" class="px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold transition flex items-center space-x-1">
+          <span>📐 1. Diagrama i Graella</span>
+        </button>
+        <button id="tab-stage-2" onclick="switchStage(2)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>🎯 2. Vectors Posició</span>
+        </button>
+        <button id="tab-stage-3" onclick="switchStage(3)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>⚡ 3. Camp Elèctric Total</span>
+        </button>
+        <button id="tab-stage-4" onclick="switchStage(4)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>🧲 4. Força sobre q4</span>
+        </button>
+        <button id="tab-stage-5" onclick="switchStage(5)" class="px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1">
+          <span>🔋 5. Potencials i Treball</span>
+        </button>
+      </div>
+
+      <!-- Contingut de les Etapes -->
+      <div class="p-6">
+
+        <!-- Etapa 1: Canvas Interactiu amb Encaix a la Graella -->
+        <div id="stage-panel-1" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm">Diagrama Vectorial amb Ajust Magnètic a Interseccions</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Les càrregues s'enganxen exactament als creus de la graella (pas exacte):</p>
+            </div>
+            
+            <!-- Selecció de Capes Vectorials -->
+            <div class="inline-flex rounded-lg shadow-sm p-1 bg-slate-200/80 dark:bg-slate-750 border border-slate-300 dark:border-slate-600 flex-wrap gap-1">
+              <button id="btn-layer-1" onclick="setLayer(1)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm">
+                Capa 1: Punts
+              </button>
+              <button id="btn-layer-2" onclick="setLayer(2)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                Capa 2: r_i
+              </button>
+              <button id="btn-layer-3" onclick="setLayer(3)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                Capa 3: E_i
+              </button>
+              <button id="btn-layer-4" onclick="setLayer(4)" class="px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900">
+                Capa 4: E_T i F_T
+              </button>
+            </div>
+          </div>
+
+          <!-- Àrea de Dibuix Canvas -->
+          <div class="relative w-full h-[520px] bg-slate-900/5 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-inner flex items-center justify-center">
+            <canvas id="physics-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+            
+            <!-- Badge de Capa Activa -->
+            <div id="layer-badge" class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-sm text-white px-3.5 py-1.5 rounded-full text-xs font-medium border border-slate-700 shadow">
+              Capa Actual: 1 (Només Càrregues i Punts)
+            </div>
+
+            <!-- Indicador d'Interactivitat -->
+            <div class="absolute bottom-3 left-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-slate-700 dark:text-slate-200 px-3 py-1 rounded-lg text-xs border border-slate-200 dark:border-slate-700 shadow hidden sm:flex items-center space-x-1">
+              <span>🧲 <strong>Encaix Magnètic:</strong> Les càrregues s'enganxen a les interseccions de la graella.</span>
+            </div>
+
+            <!-- Controls de Zoom i Emmarcat -->
+            <div class="absolute top-3 right-3 flex items-center space-x-1.5 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-md text-xs font-semibold text-slate-700 dark:text-slate-200">
+              <button onclick="changeZoom(-0.2)" title="Reduir Zoom" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg transition">-</button>
+              <span id="zoom-val" class="px-1.5 text-indigo-600 dark:text-indigo-400 min-w-[45px] text-center">100%</span>
+              <button onclick="changeZoom(0.2)" title="Ampliar Zoom" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg transition">+</button>
+              <button onclick="autoFitView()" title="Centrar Automàticament" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm flex items-center space-x-1">
+                <span>🎯 Emmarcar</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Targeta Explicativa de la Capa -->
+          <div id="layer-desc" class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-4 text-xs text-indigo-950 dark:text-indigo-200 leading-relaxed">
+            <!-- Contengut dinàmic -->
+          </div>
+        </div>
+
+        <!-- Etapa 2: Vectors Posició i Unitaris -->
+        <div id="stage-panel-2" class="hidden space-y-6">
+          <div class="border-l-4 border-amber-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Etapa 2: Vectors Posició i Unitaris</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Càlcul dels vectors distància des de cada càrrega font cap al punt d'estudi A(xA, yA).</p>
+          </div>
+          <div id="stage2-content" class="space-y-4 text-sm">
+            <!-- Renderitzat via JS -->
+          </div>
+        </div>
+
+        <!-- Etapa 3: Camp Elèctric Total -->
+        <div id="stage-panel-3" class="hidden space-y-6">
+          <div class="border-l-4 border-indigo-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Etapa 3: Càlcul del Camp Elèctric Total</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Suma vectorial dels camps individuals creats al punt A(xA, yA).</p>
+          </div>
+          <div id="stage3-content" class="space-y-4 text-sm">
+            <!-- Renderitzat via JS -->
+          </div>
+        </div>
+
+        <!-- Etapa 4: Força Elèctrica -->
+        <div id="stage-panel-4" class="hidden space-y-6">
+          <div class="border-l-4 border-emerald-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Etapa 4: Força Elèctrica sobre q4</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Avaluació de la força vectorial que actua sobre la càrrega q4 al punt A(xA, yA).</p>
+          </div>
+          <div id="stage4-content" class="space-y-4 text-sm">
+            <!-- Renderitzat via JS -->
+          </div>
+        </div>
+
+        <!-- Etapa 5: Potencials i Treball -->
+        <div id="stage-panel-5" class="hidden space-y-6">
+          <div class="border-l-4 border-purple-500 pl-4 py-1">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Etapa 5: Potencials Elèctrics i Treball del Camp</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Càlcul dels potencials escalars VA, VB, treball W_(A->B) i espontaneïtat.</p>
+          </div>
+          <div id="stage5-content" class="space-y-4 text-sm">
+            <!-- Renderitzat via JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Peu de Pàgina amb Nom del Centre -->
+  <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 mt-auto py-4 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors">
+    <p>© IES Algarb | Departament de Física i Química | Generador d'Exercicis Vectorials de Camp Elèctric</p>
+  </footer>
+
+  <!-- Lògica de l'Aplicació JavaScript -->
+  <script>
+    // Estat Global de l'Aplicació
+    const state = {
+      q1Pos: { x: 0, y: 4 },
+      q2Pos: { x: 5, y: 4 },
+      q3Pos: { x: 5, y: 0 },
+      xA: 0,
+      yA: 0,
+      xB: -3,
+      yB: 1,
+      gridUnit: 'm', // 'm', 'dm', 'cm', 'mm'
+      numCharges: 3,
+      q1: { val: 4, unit: 'uC' },
+      q2: { val: -3, unit: 'uC' },
+      q3: { val: 2, unit: 'uC' },
+      q4: { val: 2, unit: 'nC' },
+      solutionVisible: false,
+      activeLayer: 1,
+      activeStage: 1,
+      darkMode: false,
+      // Estat del Viewport
+      scale: 45, // píxels per quadrat de la graella
+      panX: 0,
+      panY: 0,
+      userZoomFactor: 1.0,
+      // Estat del Ratolí
+      draggedItem: null,
+      isPanning: false,
+      panStartMouse: { x: 0, y: 0 },
+      panStartOffset: { x: 0, y: 0 }
+    };
+
+    // Constant Física K en SI (N m^2 / C^2)
+    const K_CONST = 8.98755e9;
+
+    // Obté el factor de conversió a metres segons la unitat triada per a la graella
+    function getUnitScaleMeters() {
+      const map = { 'm': 1.0, 'dm': 0.1, 'cm': 0.01, 'mm': 0.001 };
+      return map[state.gridUnit] || 1.0;
+    }
+
+    // Funcions Auxiliars per KaTeX
+    function mInline(tex) {
+      if (typeof katex === 'undefined') return tex;
+      return katex.renderToString(tex, { displayMode: false, throwOnError: false });
+    }
+
+    function mBlock(tex) {
+      if (typeof katex === 'undefined') return tex;
+      return katex.renderToString(tex, { displayMode: true, throwOnError: false });
+    }
+
+    // Commutador Mode Fosc / Lluminós
+    function toggleDarkMode() {
+      state.darkMode = !state.darkMode;
+      const htmlEl = document.documentElement;
+      const modeIcon = document.getElementById('mode-icon');
+      const modeText = document.getElementById('mode-text');
+
+      if (state.darkMode) {
+        htmlEl.classList.add('dark');
+        if (modeIcon) modeIcon.textContent = '☀️';
+        if (modeText) modeText.textContent = 'Mode Lluminós';
+      } else {
+        htmlEl.classList.remove('dark');
+        if (modeIcon) modeIcon.textContent = '🌙';
+        if (modeText) modeText.textContent = 'Mode Fosc';
+      }
+      drawCanvas();
+    }
+
+    // Conversió de valors de càrrega a Coulombs
+    function getValC(chargeObj) {
+      const mults = { 'C': 1, 'mC': 1e-3, 'uC': 1e-6, 'nC': 1e-9, 'pC': 1e-12 };
+      return chargeObj.val * (mults[chargeObj.unit] || 1e-6);
+    }
+
+    function unitTex(unit) {
+      const map = {
+        'C': '\\text{C}',
+        'mC': '\\text{mC}',
+        'uC': '\\mu\\text{C}',
+        'nC': '\\text{nC}',
+        'pC': '\\text{pC}'
+      };
+      return map[unit] || '\\text{C}';
+    }
+
+    function formatTexSci(n, digits = 3) {
+      if (Math.abs(n) === 0) return '0';
+      const exp = Math.floor(Math.log10(Math.abs(n)));
+      if (Math.abs(exp) <= 2) {
+        return Number(n.toFixed(digits)).toString();
+      }
+      const mant = n / Math.pow(10, exp);
+      return mant.toFixed(digits) + ' \\times 10^{' + exp + '}';
+    }
+
+    function getChargePositions() {
+      const pos = [
+        { id: 1, name: 'q_1', key: 'q1Pos', x: state.q1Pos.x, y: state.q1Pos.y, label: 'P_1(' + state.q1Pos.x + ', ' + state.q1Pos.y + ')', charge: state.q1 },
+        { id: 2, name: 'q_2', key: 'q2Pos', x: state.q2Pos.x, y: state.q2Pos.y, label: 'P_2(' + state.q2Pos.x + ', ' + state.q2Pos.y + ')', charge: state.q2 }
+      ];
+      if (state.numCharges === 3) {
+        pos.push({ id: 3, name: 'q_3', key: 'q3Pos', x: state.q3Pos.x, y: state.q3Pos.y, label: 'P_3(' + state.q3Pos.x + ', ' + state.q3Pos.y + ')', charge: state.q3 });
+      }
+      return pos;
+    }
+
+    // Genera l'enunciat dinàmic
+    function generateStatementHTML() {
+      const charges = getChargePositions();
+      const numWord = charges.length === 3 ? "tres" : "dues";
+      const unitLabel = state.gridUnit;
+      
+      let coordStr = "";
+      charges.forEach((c, idx) => {
+        coordStr += mInline(c.label + "\\text{ " + unitLabel + "}");
+        if (idx < charges.length - 2) coordStr += ", ";
+        else if (idx === charges.length - 2) coordStr += " i ";
+      });
+
+      let valStr = "";
+      charges.forEach((c, idx) => {
+        const signStr = c.charge.val > 0 ? "+" : "";
+        valStr += mInline(c.name + " = " + signStr + c.charge.val + "\\text{ }" + unitTex(c.charge.unit));
+        if (idx < charges.length - 2) valStr += ", ";
+        else if (idx === charges.length - 2) valStr += " i ";
+      });
+
+      const q4Sign = state.q4.val > 0 ? "+" : "";
+      const q4Tex = "q_4 = " + q4Sign + state.q4.val + "\\text{ }" + unitTex(state.q4.unit);
+      const ptATex = "A(" + state.xA + ", " + state.yA + ")\\text{ " + unitLabel + "}";
+      const ptBTex = "B(" + state.xB + ", " + state.yB + ")\\text{ " + unitLabel + "}";
+
+      let html = "<p class='mb-3 text-slate-800 dark:text-slate-200 leading-relaxed font-normal'>";
+      html += "En un pla cartesià on cada quadrat de la graella mesura exactament <strong>1 " + unitLabel + "</strong> de costat, s'ubiquen " + numWord + " càrregues puntuals als punts " + coordStr + ", amb valors " + valStr + " respectivament.</p>";
+
+      html += "<div class='space-y-2 text-slate-700 dark:text-slate-300 font-medium text-sm md:text-base'>";
+      html += "<p><strong>a)</strong> Dibuixeu l'esquema vectorial de les càrregues sobre la graella i determineu el vector camp elèctric total " + mInline("\\vec{E}_T") + " al punt d'estudi " + mInline(ptATex) + " en el SI.</p>";
+      html += "<p><strong>b)</strong> Si es col·loca una càrrega de prova " + mInline(q4Tex) + " al punt " + mInline(ptATex) + ", calculeu la força elèctrica vectorial " + mInline("\\vec{F}_T") + " que actua sobre ella.</p>";
+      html += "<p><strong>c)</strong> Calculeu el potencial elèctric creat pel sistema de càrregues als punts " + mInline(ptATex) + " i " + mInline(ptBTex) + ".</p>";
+      html += "<p><strong>d)</strong> Calculeu el treball " + mInline("W_{A \\to B}") + " realitzat pel camp elèctric per traslladar la càrrega " + mInline("q_4") + " des de " + mInline("A") + " fins a " + mInline("B") + " i indiqueu si el procés és espontani.</p>";
+      html += "</div>";
+
+      return html;
+    }
+
+    // Commutació de Solució
+    function toggleSolution() {
+      state.solutionVisible = !state.solutionVisible;
+      const solEl = document.getElementById('solution-container');
+      const btnEl = document.getElementById('toggle-solution-btn');
+
+      if (state.solutionVisible) {
+        solEl.classList.remove('hidden');
+        btnEl.innerHTML = '<span>🙈 Ocultar Solució</span>';
+        btnEl.classList.replace('bg-indigo-600', 'bg-slate-700');
+        
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        
+        updateStageTabs();
+        updateLayerButtons();
+        renderAll();
+        setTimeout(() => autoFitView(), 50);
+
+        solEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        solEl.classList.add('hidden');
+        btnEl.innerHTML = '<span>👁️ Mostrar Solució i Diagrama</span>';
+        btnEl.classList.replace('bg-slate-700', 'bg-indigo-600');
+      }
+    }
+
+    function generateRandomProblem() {
+      const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+      const getRandomNonZero = (min, max) => {
+        let v = 0;
+        while (v === 0) v = getRandomInt(min, max);
+        return v;
+      };
+
+      const unitsPool = ['uC', 'nC', 'mC', 'pC'];
+      const gridUnits = ['mm', 'cm', 'dm', 'm'];
+
+      state.gridUnit = gridUnits[getRandomInt(0, 3)];
+      state.q1Pos = { x: getRandomInt(-4, 4), y: getRandomInt(1, 5) };
+      state.q2Pos = { x: getRandomInt(1, 5), y: getRandomInt(-4, 4) };
+      state.q3Pos = { x: getRandomInt(-5, 2), y: getRandomInt(-5, -1) };
+
+      state.xA = getRandomInt(-2, 2);
+      state.yA = getRandomInt(-2, 2);
+
+      do {
+        state.xB = getRandomInt(-4, 4);
+        state.yB = getRandomInt(-4, 4);
+      } while (state.xB === state.xA && state.yB === state.yA);
+
+      state.numCharges = Math.random() > 0.3 ? 3 : 2;
+
+      state.q1 = { val: getRandomNonZero(-8, 8), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q2 = { val: getRandomNonZero(-8, 8), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q3 = { val: getRandomNonZero(-8, 8), unit: unitsPool[getRandomInt(0, 3)] };
+      state.q4 = { val: getRandomNonZero(-5, 5), unit: ['nC', 'uC', 'pC'][getRandomInt(0, 2)] };
+
+      syncInputsFromState();
+
+      if (state.solutionVisible) {
+        state.activeLayer = 1;
+        state.activeStage = 1;
+        updateStageTabs();
+        updateLayerButtons();
+      }
+
+      renderAll();
+      setTimeout(() => autoFitView(), 50);
+    }
+
+    function toggleCustomPanel() {
+      document.getElementById('custom-panel').classList.toggle('hidden');
+    }
+
+    function presetRectangular() {
+      state.q1Pos = { x: 0, y: 4 };
+      state.q2Pos = { x: 5, y: 4 };
+      state.q3Pos = { x: 5, y: 0 };
+      syncInputsFromState();
+      renderAll();
+      autoFitView();
+    }
+
+    function syncInputsFromState() {
+      document.getElementById('select-grid-unit').value = state.gridUnit;
+
+      document.getElementById('input-x1').value = state.q1Pos.x;
+      document.getElementById('input-y1').value = state.q1Pos.y;
+      document.getElementById('input-x2').value = state.q2Pos.x;
+      document.getElementById('input-y2').value = state.q2Pos.y;
+      document.getElementById('input-x3').value = state.q3Pos.x;
+      document.getElementById('input-y3').value = state.q3Pos.y;
+
+      document.getElementById('input-xA').value = state.xA;
+      document.getElementById('input-yA').value = state.yA;
+      document.getElementById('input-xB').value = state.xB;
+      document.getElementById('input-yB').value = state.yB;
+
+      const numRadio = document.querySelector('input[name="num-charges"][value="' + state.numCharges + '"]');
+      if (numRadio) numRadio.checked = true;
+
+      document.getElementById('input-q1-val').value = state.q1.val;
+      document.getElementById('input-q1-unit').value = state.q1.unit;
+      document.getElementById('input-q2-val').value = state.q2.val;
+      document.getElementById('input-q2-unit').value = state.q2.unit;
+      document.getElementById('input-q3-val').value = state.q3.val;
+      document.getElementById('input-q3-unit').value = state.q3.unit;
+      document.getElementById('input-q4-val').value = state.q4.val;
+      document.getElementById('input-q4-unit').value = state.q4.unit;
+
+      const q3PosRow = document.getElementById('q3-pos-row');
+      const q3Row = document.getElementById('q3-control-row');
+      if (state.numCharges === 2) {
+        q3PosRow.classList.add('opacity-40', 'pointer-events-none');
+        q3Row.classList.add('opacity-40', 'pointer-events-none');
+      } else {
+        q3PosRow.classList.remove('opacity-40', 'pointer-events-none');
+        q3Row.classList.remove('opacity-40', 'pointer-events-none');
+      }
+    }
+
+    function applyCustomData() {
+      state.gridUnit = document.getElementById('select-grid-unit').value;
+      state.numCharges = parseInt(document.querySelector('input[name="num-charges"]:checked').value);
+
+      state.q1Pos.x = Math.round(parseFloat(document.getElementById('input-x1').value) || 0);
+      state.q1Pos.y = Math.round(parseFloat(document.getElementById('input-y1').value) || 0);
+      state.q2Pos.x = Math.round(parseFloat(document.getElementById('input-x2').value) || 0);
+      state.q2Pos.y = Math.round(parseFloat(document.getElementById('input-y2').value) || 0);
+      state.q3Pos.x = Math.round(parseFloat(document.getElementById('input-x3').value) || 0);
+      state.q3Pos.y = Math.round(parseFloat(document.getElementById('input-y3').value) || 0);
+
+      state.xA = Math.round(parseFloat(document.getElementById('input-xA').value) || 0);
+      state.yA = Math.round(parseFloat(document.getElementById('input-yA').value) || 0);
+      state.xB = Math.round(parseFloat(document.getElementById('input-xB').value) || 0);
+      state.yB = Math.round(parseFloat(document.getElementById('input-yB').value) || 0);
+
+      state.q1 = { val: parseFloat(document.getElementById('input-q1-val').value) || 1, unit: document.getElementById('input-q1-unit').value };
+      state.q2 = { val: parseFloat(document.getElementById('input-q2-val').value) || -1, unit: document.getElementById('input-q2-unit').value };
+      state.q3 = { val: parseFloat(document.getElementById('input-q3-val').value) || 1, unit: document.getElementById('input-q3-unit').value };
+      state.q4 = { val: parseFloat(document.getElementById('input-q4-val').value) || 1, unit: document.getElementById('input-q4-unit').value };
+
+      syncInputsFromState();
+      renderAll();
+      autoFitView();
+    }
+
+    // Càlculs Vectorials
+    function getFieldVectors() {
+      const scaleM = getUnitScaleMeters();
+      const charges = getChargePositions();
+      const fields = [];
+
+      charges.forEach(c => {
+        const dxGrid = state.xA - c.x;
+        const dyGrid = state.yA - c.y;
+        const rxMeters = dxGrid * scaleM;
+        const ryMeters = dyGrid * scaleM;
+        const rMagMeters = Math.sqrt(rxMeters * rxMeters + ryMeters * ryMeters);
+
+        const ux = rMagMeters > 0 ? rxMeters / rMagMeters : 0;
+        const uy = rMagMeters > 0 ? ryMeters / rMagMeters : 0;
+        const qC = getValC(c.charge);
+
+        const Ex = rMagMeters > 0 ? (K_CONST * qC / (rMagMeters * rMagMeters)) * ux : 0;
+        const Ey = rMagMeters > 0 ? (K_CONST * qC / (rMagMeters * rMagMeters)) * uy : 0;
+        const E_mag = Math.sqrt(Ex * Ex + Ey * Ey);
+
+        fields.push({ id: c.id, name: c.name, Ex, Ey, E_mag, dxGrid, dyGrid, rMagMeters });
+      });
+
+      return fields;
+    }
+
+    function getTotalFieldAndForce() {
+      const fields = getFieldVectors();
+      let totalEx = 0;
+      let totalEy = 0;
+
+      fields.forEach(f => {
+        totalEx += f.Ex;
+        totalEy += f.Ey;
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+      const q4C = getValC(state.q4);
+      const totalFx = q4C * totalEx;
+      const totalFy = q4C * totalEy;
+      const totalF_mag = Math.sqrt(totalFx * totalFx + totalFy * totalFy);
+
+      return { totalEx, totalEy, totalE_mag, totalFx, totalFy, totalF_mag };
+    }
+
+    function getActiveBoundingBox() {
+      const points = [
+        { x: state.q1Pos.x, y: state.q1Pos.y },
+        { x: state.q2Pos.x, y: state.q2Pos.y },
+        { x: state.xA, y: state.yA },
+        { x: state.xB, y: state.yB }
+      ];
+      if (state.numCharges === 3) points.push({ x: state.q3Pos.x, y: state.q3Pos.y });
+
+      const padding = 2.5;
+      let minX = Math.min(...points.map(p => p.x));
+      let maxX = Math.max(...points.map(p => p.x));
+      let minY = Math.min(...points.map(p => p.y));
+      let maxY = Math.max(...points.map(p => p.y));
+
+      return {
+        minX: minX - padding,
+        maxX: maxX + padding,
+        minY: minY - padding,
+        maxY: maxY + padding
+      };
+    }
+
+    function autoFitView() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      if (width === 0 || height === 0) return;
+
+      const bbox = getActiveBoundingBox();
+      const worldW = bbox.maxX - bbox.minX;
+      const worldH = bbox.maxY - bbox.minY;
+
+      const scaleX = width / worldW;
+      const scaleY = height / worldH;
+
+      state.scale = Math.min(scaleX, scaleY);
+      state.userZoomFactor = 1.0;
+
+      state.panX = width / 2 - ((bbox.minX + bbox.maxX) / 2) * state.scale;
+      state.panY = height / 2 + ((bbox.minY + bbox.maxY) / 2) * state.scale;
+
+      updateZoomLabel();
+      drawCanvas();
+    }
+
+    function changeZoom(delta) {
+      const oldZoom = state.userZoomFactor;
+      state.userZoomFactor = Math.max(0.4, Math.min(3.5, state.userZoomFactor + delta));
+      const ratio = state.userZoomFactor / oldZoom;
+
+      const canvas = document.getElementById('physics-canvas');
+      if (canvas) {
+        const rect = canvas.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        state.panX = centerX + (state.panX - centerX) * ratio;
+        state.panY = centerY + (state.panY - centerY) * ratio;
+        state.scale *= ratio;
+      }
+
+      updateZoomLabel();
+      drawCanvas();
+    }
+
+    function updateZoomLabel() {
+      const zoomEl = document.getElementById('zoom-val');
+      if (zoomEl) zoomEl.innerText = Math.round(state.userZoomFactor * 100) + '%';
+    }
+
+    function setLayer(layerNum) {
+      state.activeLayer = layerNum;
+      updateLayerButtons();
+      renderLayerDescription();
+      autoFitView();
+    }
+
+    function updateLayerButtons() {
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById('btn-layer-' + i);
+        if (btn) {
+          if (i === state.activeLayer) {
+            btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition bg-indigo-600 text-white shadow-sm";
+          } else {
+            btn.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition text-slate-700 dark:text-slate-300 hover:text-slate-900";
+          }
+        }
+      }
+
+      const badge = document.getElementById('layer-badge');
+      const titles = [
+        "Capa 1: Només Càrregues i Punts",
+        "Capa 2: Només Vectors Posició (r_i)",
+        "Capa 3: Només Camps Elèctrics Individuals (E_i)",
+        "Capa 4: Només Camp Total (E_T) i Força (F_T)"
+      ];
+      if (badge) badge.innerText = titles[state.activeLayer - 1];
+    }
+
+    function switchStage(stageNum) {
+      state.activeStage = stageNum;
+      updateStageTabs();
+
+      for (let i = 1; i <= 5; i++) {
+        const panel = document.getElementById('stage-panel-' + i);
+        if (panel) {
+          if (i === stageNum) panel.classList.remove('hidden');
+          else panel.classList.add('hidden');
+        }
+      }
+
+      if (stageNum === 1) setTimeout(() => autoFitView(), 50);
+    }
+
+    function updateStageTabs() {
+      for (let i = 1; i <= 5; i++) {
+        const tab = document.getElementById('tab-stage-' + i);
+        if (tab) {
+          if (i === state.activeStage) {
+            tab.className = "px-4 py-2.5 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold transition flex items-center space-x-1";
+          } else {
+            tab.className = "px-4 py-2.5 border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center space-x-1";
+          }
+        }
+      }
+    }
+
+    function drawArrow(ctx, x1, y1, x2, y2, color, width = 2.5, headLen = 11, label = "", dash = [], sourceRadius = 0, targetRadius = 0) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 1e-3) return;
+
+      const angle = Math.atan2(dy, dx);
+      const startX = x1 + sourceRadius * Math.cos(angle);
+      const startY = y1 + sourceRadius * Math.sin(angle);
+      const endX = x2 - targetRadius * Math.cos(angle);
+      const endY = y2 - targetRadius * Math.sin(angle);
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      if (dash.length) ctx.setLineDash(dash);
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX - headLen * Math.cos(angle - Math.PI / 6), endY - headLen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(endX - headLen * Math.cos(angle + Math.PI / 6), endY - headLen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+
+      if (label) {
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const midX = (startX + endX) / 2;
+        const midY = (startY + endY) / 2;
+        const offX = 14 * Math.cos(angle - Math.PI / 2);
+        const offY = 14 * Math.sin(angle - Math.PI / 2);
+        
+        ctx.fillStyle = state.darkMode ? 'rgba(15, 23, 42, 0.85)' : 'rgba(255, 255, 255, 0.85)';
+        const textWidth = ctx.measureText(label).width;
+        ctx.fillRect(midX + offX - 3, midY + offY - 11, textWidth + 6, 14);
+
+        ctx.fillStyle = color;
+        ctx.fillText(label, midX + offX, midY + offY);
+      }
+      ctx.restore();
+    }
+
+    function toScreenX(x) { return state.panX + x * state.scale; }
+    function toScreenY(y) { return state.panY - y * state.scale; }
+    function toWorldX(sx) { return (sx - state.panX) / state.scale; }
+    function toWorldY(sy) { return (state.panY - sy) / state.scale; }
+
+    function drawCanvas() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const isDark = state.darkMode;
+      const gridColor = isDark ? '#1e293b' : '#e2e8f0';
+      const axisColor = isDark ? '#64748b' : '#94a3b8';
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+
+      const minWX = toWorldX(0);
+      const maxWX = toWorldX(width);
+      const maxWY = toWorldY(0);
+      const minWY = toWorldY(height);
+
+      // Graella Principal (1 línia per quadrat d'unitat)
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      for (let x = Math.floor(minWX - 1); x <= Math.ceil(maxWX + 1); x++) {
+        ctx.beginPath();
+        ctx.moveTo(toScreenX(x), 0);
+        ctx.lineTo(toScreenX(x), height);
+        ctx.stroke();
+      }
+      for (let y = Math.floor(minWY - 1); y <= Math.ceil(maxWY + 1); y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, toScreenY(y));
+        ctx.lineTo(width, toScreenY(y));
+        ctx.stroke();
+      }
+
+      // Eixos Cartesians
+      const originX = toScreenX(0);
+      const originY = toScreenY(0);
+
+      ctx.strokeStyle = axisColor;
+      ctx.lineWidth = 1.8;
+      
+      ctx.beginPath();
+      ctx.moveTo(0, originY);
+      ctx.lineTo(width, originY);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(originX, 0);
+      ctx.lineTo(originX, height);
+      ctx.stroke();
+
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.fillText('x (' + state.gridUnit + ')', Math.min(width - 45, Math.max(10, originX + 10)), Math.min(height - 10, Math.max(20, originY - 8)));
+      ctx.fillText('y (' + state.gridUnit + ')', Math.min(width - 45, Math.max(10, originX + 8)), 15);
+
+      // Marques numèriques exactes
+      for (let x = Math.floor(minWX); x <= Math.ceil(maxWX); x++) {
+        if (x === 0) continue;
+        const sx = toScreenX(x);
+        ctx.beginPath();
+        ctx.moveTo(sx, originY - 3);
+        ctx.lineTo(sx, originY + 3);
+        ctx.stroke();
+        ctx.fillText(x.toString(), sx - 4, Math.min(height - 5, Math.max(15, originY + 16)));
+      }
+      for (let y = Math.floor(minWY); y <= Math.ceil(maxWY); y++) {
+        if (y === 0) continue;
+        const sy = toScreenY(y);
+        ctx.beginPath();
+        ctx.moveTo(originX - 3, sy);
+        ctx.lineTo(originX + 3, sy);
+        ctx.stroke();
+        ctx.fillText(y.toString(), Math.max(5, originX - 18), sy + 4);
+      }
+
+      const charges = getChargePositions();
+
+      // Geometria d'unió
+      ctx.strokeStyle = isDark ? '#475569' : '#cbd5e1';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      charges.forEach((c, idx) => {
+        if (idx === 0) ctx.moveTo(toScreenX(c.x), toScreenY(c.y));
+        else ctx.lineTo(toScreenX(c.x), toScreenY(c.y));
+      });
+      if (charges.length > 2) ctx.closePath();
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Nodes Punts A i B
+      const nodeRadiusA = 7;
+      const sXA = toScreenX(state.xA);
+      const sYA = toScreenY(state.yA);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(sXA, sYA, nodeRadiusA, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.fillStyle = isDark ? '#fbbf24' : '#b45309';
+      ctx.fillText('A(' + state.xA + ',' + state.yA + ')', sXA + 10, sYA + 16);
+
+      const nodeRadiusB = 7;
+      const sXB = toScreenX(state.xB);
+      const sYB = toScreenY(state.yB);
+
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.arc(sXB, sYB, nodeRadiusB, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#047857';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? '#34d399' : '#047857';
+      ctx.fillText('B(' + state.xB + ',' + state.yB + ')', sXB + 10, sYB + 16);
+
+      // Càrregues Font
+      const chargeRadius = 13;
+      charges.forEach(c => {
+        const cx = toScreenX(c.x);
+        const cy = toScreenY(c.y);
+        const isPos = c.charge.val > 0;
+        const color = isPos ? '#ef4444' : '#3b82f6';
+        const sign = isPos ? '+' : '−';
+
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(cx, cy, chargeRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = isPos ? '#991b1b' : '#1e40af';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 13px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(sign, cx, cy);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+
+        ctx.fillStyle = isDark ? '#f1f5f9' : '#1e293b';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        const valSign = isPos ? '+' : '';
+        ctx.fillText(c.name + ' (' + valSign + c.charge.val + ' ' + c.charge.unit + ')', cx + 16, cy + 4);
+      });
+
+      // CAPA 2: Vectors Posició
+      if (state.activeLayer === 2) {
+        charges.forEach(c => {
+          const fromX = toScreenX(c.x);
+          const fromY = toScreenY(c.y);
+          drawArrow(ctx, fromX, fromY, sXA, sYA, '#d97706', 2.5, 10, 'r_' + c.id, [], chargeRadius, nodeRadiusA);
+        });
+      }
+
+      // CAPA 3: Camps Individuals
+      if (state.activeLayer === 3) {
+        const fields = getFieldVectors();
+        const maxE = Math.max(...fields.map(f => f.E_mag), 1e-9);
+        const maxPixelLen = state.scale * 2.2;
+
+        fields.forEach((f, idx) => {
+          const len = Math.max(30, (f.E_mag / maxE) * maxPixelLen);
+          const angle = Math.atan2(-f.Ey, f.Ex);
+          const endX = sXA + len * Math.cos(angle);
+          const endY = sYA + len * Math.sin(angle);
+
+          const colors = ['#0284c7', '#7c3aed', '#db2777'];
+          drawArrow(ctx, sXA, sYA, endX, endY, colors[idx % colors.length], 3, 10, 'E_' + f.id, [], nodeRadiusA, 0);
+        });
+      }
+
+      // CAPA 4: Camp Total i Força
+      if (state.activeLayer === 4) {
+        const { totalEx, totalEy, totalE_mag, totalFx, totalFy, totalF_mag } = getTotalFieldAndForce();
+
+        const vecE = {
+          mag: totalE_mag,
+          angle: Math.atan2(-totalEy, totalEx),
+          len: state.scale * 2.4,
+          color: '#4f46e5',
+          label: 'E_T',
+          width: 4
+        };
+
+        const vecF = {
+          mag: totalF_mag,
+          angle: Math.atan2(-totalFy, totalFx),
+          len: state.scale * 1.5,
+          color: '#059669',
+          label: 'F_T',
+          width: 3.5
+        };
+
+        const drawVec = (v) => {
+          if (v.mag > 0) {
+            const endX = sXA + v.len * Math.cos(v.angle);
+            const endY = sYA + v.len * Math.sin(v.angle);
+            drawArrow(ctx, sXA, sYA, endX, endY, v.color, v.width, 12, v.label, [], nodeRadiusA, 0);
+          }
+        };
+
+        if (vecE.len >= vecF.len) {
+          drawVec(vecE);
+          drawVec(vecF);
+        } else {
+          drawVec(vecF);
+          drawVec(vecE);
+        }
+      }
+    }
+
+    // Interactivitat amb Ratolí i Encaix a la Graella (Snapping Magnètic)
+    function setupCanvasInteractivity() {
+      const canvas = document.getElementById('physics-canvas');
+      if (!canvas) return;
+
+      const getDraggableAt = (worldX, worldY) => {
+        const tolerance = 25 / state.scale;
+        const charges = getChargePositions();
+
+        for (let c of charges) {
+          if (Math.sqrt((worldX - c.x)**2 + (worldY - c.y)**2) <= tolerance) {
+            return { type: 'charge', key: c.key, name: c.name };
+          }
+        }
+        if (Math.sqrt((worldX - state.xA)**2 + (worldY - state.yA)**2) <= tolerance) return { type: 'pointA' };
+        if (Math.sqrt((worldX - state.xB)**2 + (worldY - state.yB)**2) <= tolerance) return { type: 'pointB' };
+
+        return null;
+      };
+
+      const handlePointerDown = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const wX = toWorldX(mouseX);
+        const wY = toWorldY(mouseY);
+
+        const hit = getDraggableAt(wX, wY);
+        if (hit) {
+          state.draggedItem = hit;
+        } else {
+          state.isPanning = true;
+          state.panStartMouse = { x: e.clientX, y: e.clientY };
+          state.panStartOffset = { x: state.panX, y: state.panY };
+        }
+      };
+
+      const handlePointerMove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const wX = toWorldX(mouseX);
+        const wY = toWorldY(mouseY);
+
+        if (!state.draggedItem && !state.isPanning) {
+          const hit = getDraggableAt(wX, wY);
+          canvas.style.cursor = hit ? 'pointer' : 'grab';
+        }
+
+        // Arrossegar amb Snapping Magnètic a la Graella (Coordenades Senteres Exactes)
+        if (state.draggedItem) {
+          const snappedX = Math.round(wX);
+          const snappedY = Math.round(wY);
+
+          if (state.draggedItem.type === 'charge') {
+            state[state.draggedItem.key].x = snappedX;
+            state[state.draggedItem.key].y = snappedY;
+          } else if (state.draggedItem.type === 'pointA') {
+            state.xA = snappedX;
+            state.yA = snappedY;
+          } else if (state.draggedItem.type === 'pointB') {
+            state.xB = snappedX;
+            state.yB = snappedY;
+          }
+
+          syncInputsFromState();
+          renderAll();
+          return;
+        }
+
+        if (state.isPanning) {
+          canvas.style.cursor = 'grabbing';
+          state.panX = state.panStartOffset.x + (e.clientX - state.panStartMouse.x);
+          state.panY = state.panStartOffset.y + (e.clientY - state.panStartMouse.y);
+          drawCanvas();
+        }
+      };
+
+      const handlePointerUp = () => {
+        state.draggedItem = null;
+        state.isPanning = false;
+        canvas.style.cursor = 'grab';
+      };
+
+      canvas.addEventListener('mousedown', handlePointerDown);
+      window.addEventListener('mousemove', handlePointerMove);
+      window.addEventListener('mouseup', handlePointerUp);
+
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) handlePointerDown(e.touches[0]);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1 && (state.draggedItem || state.isPanning)) {
+          handlePointerMove(e.touches[0]);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', handlePointerUp);
+
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        changeZoom(e.deltaY < 0 ? 0.15 : -0.15);
+      }, { passive: false });
+    }
+
+    function renderLayerDescription() {
+      const el = document.getElementById('layer-desc');
+      if (!el) return;
+      const unit = state.gridUnit;
+      const ptA = "A(" + state.xA + "," + state.yA + ")\\text{ " + unit + "}";
+      const ptB = "B(" + state.xB + "," + state.yB + ")\\text{ " + unit + "}";
+
+      const descriptions = [
+        "<strong>Capa 1 (Punts i Càrregues):</strong> Graella amb escala de <strong>1 " + unit + "</strong> per quadrat. Les càrregues " + mInline("q_1, q_2" + (state.numCharges === 3 ? ", q_3" : "")) + " i els punts " + mInline(ptA) + " i " + mInline(ptB) + " s'ajusten magnèticament a les interseccions exactes.",
+        "<strong>Capa 2 (Vectors Posició):</strong> Mostra <em>únicament</em> els vectors posició " + mInline("\\vec{r}_1, \\vec{r}_2" + (state.numCharges === 3 ? ", \\vec{r}_3" : "")) + " des de cada càrrega cap al punt " + mInline(ptA) + ".",
+        "<strong>Capa 3 (Camps Individuals):</strong> Visualitza <em>únicament</em> els vectors camp elèctric " + mInline("\\vec{E}_1, \\vec{E}_2" + (state.numCharges === 3 ? ", \\vec{E}_3" : "")) + " creats per cada càrrega al punt " + mInline(ptA) + ".",
+        "<strong>Capa 4 (Camp Total i Força):</strong> Mostra <em>únicament</em> el vector camp total " + mInline("\\vec{E}_T") + " i la força elèctrica " + mInline("\\vec{F}_T = q_4 \\vec{E}_T") + " exercida sobre la càrrega de prova."
+      ];
+      el.innerHTML = descriptions[state.activeLayer - 1];
+    }
+
+    function renderStage2() {
+      const container = document.getElementById('stage2-content');
+      if (!container) return;
+      const charges = getChargePositions();
+      const unit = state.gridUnit;
+      const scaleM = getUnitScaleMeters();
+      const ptATex = "A(" + state.xA + "," + state.yA + ")\\text{ " + unit + "}";
+
+      let html = "<p>Els vectors posició " + mInline("\\vec{r}_i") + " es defineixen en la graella d'unitats (" + unit + ") des de " + mInline("P_i") + " fins al punt " + mInline(ptATex) + ". Posteriorment es converteixen al Sistema Internacional (metres):</p>";
+      html += mBlock("\\vec{r}_i = (" + state.xA + " - x_i)\\hat{i} + (" + state.yA + " - y_i)\\hat{j}\\text{ (" + unit + ")}");
+
+      charges.forEach(c => {
+        const dxGrid = state.xA - c.x;
+        const dyGrid = state.yA - c.y;
+        const rGridMag = Math.sqrt(dxGrid * dxGrid + dyGrid * dyGrid);
+        const rMeters = rGridMag * scaleM;
+
+        const ux = rGridMag > 0 ? dxGrid / rGridMag : 0;
+        const uy = rGridMag > 0 ? dyGrid / rGridMag : 0;
+
+        html += "<div class='bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2'>";
+        html += "<h4 class='font-bold text-slate-900 dark:text-white text-sm'>Càrrega " + mInline(c.name) + " a " + mInline(c.label + "\\text{ " + unit + "}") + "</h4>";
+        html += "<p>• Vector posició: " + mInline("\\vec{r}_" + c.id + " = (" + dxGrid + ")\\hat{i} + (" + dyGrid + ")\\hat{j}\\text{ " + unit + "} = (" + formatTexSci(dxGrid * scaleM) + ")\\hat{i} + (" + formatTexSci(dyGrid * scaleM) + ")\\hat{j}\\text{ m}") + "</p>";
+        html += "<p>• Distància en SI (m): " + mInline("r_" + c.id + " = \\sqrt{(" + formatTexSci(dxGrid * scaleM) + ")^2 + (" + formatTexSci(dyGrid * scaleM) + ")^2} = " + formatTexSci(rMeters) + "\\text{ m}") + "</p>";
+        html += "<p>• Vector unitari: " + mInline("\\vec{u}_" + c.id + " = " + ux.toFixed(3) + "\\hat{i} + (" + uy.toFixed(3) + ")\\hat{j}") + "</p>";
+        html += "</div>";
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderStage3() {
+      const container = document.getElementById('stage3-content');
+      if (!container) return;
+      const fields = getFieldVectors();
+
+      let html = "<p>El camp elèctric creat per cada càrrega en el SI és " + mInline("\\vec{E}_i = K \\frac{q_i}{r_i^2} \\vec{u}_i") + " on " + mInline("K = 8{,}99 \\times 10^9\\text{ N}\\cdot\\text{m}^2/\\text{C}^2") + ".</p>";
+
+      let totalEx = 0;
+      let totalEy = 0;
+
+      fields.forEach(f => {
+        totalEx += f.Ex;
+        totalEy += f.Ey;
+        const c = getChargePositions().find(ch => ch.id === f.id);
+        const qC = getValC(c.charge);
+        const qSign = c.charge.val > 0 ? "+" : "";
+
+        html += "<div class='bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2'>";
+        html += "<h4 class='font-bold text-slate-900 dark:text-white text-sm'>Camp creat per " + mInline(f.name + " = " + qSign + c.charge.val + "\\text{ }" + unitTex(c.charge.unit) + " = " + formatTexSci(qC) + "\\text{ C}") + "</h4>";
+        html += "<p>" + mInline("\\vec{E}_" + f.id + " = 8{,}99 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{(" + formatTexSci(f.rMagMeters) + ")^2} \\vec{u}_" + f.id + ")") + "</p>";
+        html += "<p class='font-medium text-indigo-600 dark:text-indigo-400'>" + mInline("\\vec{E}_" + f.id + " = (" + formatTexSci(f.Ex) + ")\\hat{i} + (" + formatTexSci(f.Ey) + ")\\hat{j}\\text{ N/C}") + "</p>";
+        html += "</div>";
+      });
+
+      const totalE_mag = Math.sqrt(totalEx * totalEx + totalEy * totalEy);
+
+      html += "<div class='bg-indigo-50 dark:bg-indigo-950/50 p-4 rounded-xl border border-indigo-200 dark:border-indigo-900 text-indigo-950 dark:text-indigo-200 space-y-2'>";
+      html += "<h4 class='font-bold text-sm'>Camp Elèctric Total (" + mInline("\\vec{E}_T = \\sum \\vec{E}_i") + ")</h4>";
+      html += "<p>" + mInline("\\vec{E}_T = (" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}\\text{ N/C}") + "</p>";
+      html += "<p>" + mInline("|\\vec{E}_T| = " + formatTexSci(totalE_mag) + "\\text{ N/C}") + "</p>";
+      html += "</div>";
+
+      container.innerHTML = html;
+    }
+
+    function renderStage4() {
+      const container = document.getElementById('stage4-content');
+      if (!container) return;
+      const { totalEx, totalEy, totalE_mag, totalFx, totalFy, totalF_mag } = getTotalFieldAndForce();
+      const q4C = getValC(state.q4);
+      const q4Sign = state.q4.val > 0 ? "+" : "";
+
+      let html = "<p>La força elèctrica sobre la càrrega de prova és " + mInline("\\vec{F}_T = q_4 \\cdot \\vec{E}_T") + ".</p>";
+
+      html += "<div class='bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3'>";
+      html += "<p>• Càrrega de prova: " + mInline("q_4 = " + q4Sign + state.q4.val + "\\text{ }" + unitTex(state.q4.unit) + " = " + formatTexSci(q4C) + "\\text{ C}") + "</p>";
+      html += mBlock("\\vec{F}_T = (" + formatTexSci(q4C) + ") \\cdot [(" + formatTexSci(totalEx) + ")\\hat{i} + (" + formatTexSci(totalEy) + ")\\hat{j}]");
+      html += "<p class='font-bold text-emerald-600 dark:text-emerald-400 text-base'>" + mInline("\\vec{F}_T = (" + formatTexSci(totalFx) + ")\\hat{i} + (" + formatTexSci(totalFy) + ")\\hat{j}\\text{ N}") + "</p>";
+      html += "<p>• Mòdul de la força: " + mInline("|\\vec{F}_T| = " + formatTexSci(totalF_mag) + "\\text{ N}") + "</p>";
+      html += "</div>";
+
+      container.innerHTML = html;
+    }
+
+    function renderStage5() {
+      const container = document.getElementById('stage5-content');
+      if (!container) return;
+      const charges = getChargePositions();
+      const scaleM = getUnitScaleMeters();
+      const unit = state.gridUnit;
+
+      let VA = 0;
+      let VB = 0;
+
+      const ptATex = "A(" + state.xA + "," + state.yA + ")\\text{ " + unit + "}";
+      const ptBTex = "B(" + state.xB + "," + state.yB + ")\\text{ " + unit + "}";
+
+      let htmlVA = "<div class='bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2'>";
+      htmlVA += "<h4 class='font-bold text-slate-900 dark:text-white text-sm'>1. Potencial Elèctric al punt " + mInline(ptATex) + ": " + mInline("V_A = \\sum K \\frac{q_i}{r_{i,A}}") + "</h4>";
+
+      charges.forEach(c => {
+        const dxGrid = state.xA - c.x;
+        const dyGrid = state.yA - c.y;
+        const rAMeters = Math.sqrt(dxGrid * dxGrid + dyGrid * dyGrid) * scaleM;
+        const qC = getValC(c.charge);
+        const Vi = rAMeters > 0 ? K_CONST * qC / rAMeters : 0;
+        VA += Vi;
+
+        htmlVA += "<p>• " + mInline("V_{" + c.id + ",A} = 8{,}99 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{" + formatTexSci(rAMeters) + "} = " + formatTexSci(Vi) + "\\text{ V}") + "</p>";
+      });
+
+      htmlVA += "<p class='font-bold text-indigo-600 dark:text-indigo-400 pt-1'>" + mInline("V_A = " + formatTexSci(VA) + "\\text{ V}") + "</p>";
+      htmlVA += "</div>";
+
+      let htmlVB = "<div class='bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2'>";
+      htmlVB += "<h4 class='font-bold text-slate-900 dark:text-white text-sm'>2. Potencial Elèctric al punt " + mInline(ptBTex) + ": " + mInline("V_B = \\sum K \\frac{q_i}{r_{i,B}}") + "</h4>";
+
+      charges.forEach(c => {
+        const dxGrid = state.xB - c.x;
+        const dyGrid = state.yB - c.y;
+        const rBMeters = Math.sqrt(dxGrid * dxGrid + dyGrid * dyGrid) * scaleM;
+        const qC = getValC(c.charge);
+        const Vi = rBMeters > 0 ? K_CONST * qC / rBMeters : 0;
+        VB += Vi;
+
+        htmlVB += "<p>• " + mInline("V_{" + c.id + ",B} = 8{,}99 \\times 10^9 \\cdot \\frac{" + formatTexSci(qC) + "}{" + formatTexSci(rBMeters) + "} = " + formatTexSci(Vi) + "\\text{ V}") + "</p>";
+      });
+
+      htmlVB += "<p class='font-bold text-indigo-600 dark:text-indigo-400 pt-1'>" + mInline("V_B = " + formatTexSci(VB) + "\\text{ V}") + "</p>";
+      htmlVB += "</div>";
+
+      const q4C = getValC(state.q4);
+      const deltaV = VB - VA;
+      const W_AB = -q4C * deltaV;
+
+      let htmlW = "<div class='bg-indigo-50 dark:bg-indigo-950/50 p-4 rounded-xl border border-indigo-200 dark:border-indigo-900 space-y-3 text-indigo-950 dark:text-indigo-200'>";
+      htmlW += "<h4 class='font-bold text-sm'>3. Treball del Camp Elèctric " + mInline("W_{A \\to B}") + "</h4>";
+      htmlW += mBlock("W_{A \\to B} = -q_4 (V_B - V_A) = q_4 (V_A - V_B)");
+      htmlW += "<p class='font-bold text-indigo-900 dark:text-indigo-300 text-base'>" + mInline("W_{A \\to B} = " + formatTexSci(W_AB) + "\\text{ J}") + "</p>";
+      htmlW += "</div>";
+
+      const isSpontaneous = W_AB > 0;
+      const interClass = isSpontaneous 
+        ? "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-950 dark:text-emerald-200" 
+        : "bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-950 dark:text-amber-200";
+
+      let htmlInter = "<div class='p-4 rounded-xl border " + interClass + " space-y-2'>";
+      htmlInter += "<h4 class='font-bold text-sm flex items-center'><span class='mr-2'>" + (isSpontaneous ? "✅" : "⚠️") + "</span> Espontaneïtat del Procés:</h4>";
+
+      if (isSpontaneous) {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} > 0") + ", el camp realitza un <strong>treball positiu</strong>. El procés és <strong>ESPONTANI</strong> i l'energia potencial disminueix (" + mInline("\\Delta U < 0") + ").</p>";
+      } else if (W_AB < 0) {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} < 0") + ", el treball del camp és negatiu. El procés és <strong>NO ESPONTANI</strong> (requereix treball extern) i l'energia potencial augmenta (" + mInline("\\Delta U > 0") + ").</p>";
+      } else {
+        htmlInter += "<p>Com que " + mInline("W_{A \\to B} = 0") + ", els punts estan al mateix potencial. No es fa treball net.</p>";
+      }
+      htmlInter += "</div>";
+
+      container.innerHTML = htmlVA + htmlVB + htmlW + htmlInter;
+    }
+
+    function renderAll() {
+      const stmt = document.getElementById('statement-card');
+      if (stmt) stmt.innerHTML = generateStatementHTML();
+      
+      if (state.solutionVisible) {
+        renderLayerDescription();
+        renderStage2();
+        renderStage3();
+        renderStage4();
+        renderStage5();
+        drawCanvas();
+      }
+    }
+
+    window.onload = function() {
+      syncInputsFromState();
+      renderAll();
+      setupCanvasInteractivity();
+
+      window.addEventListener('resize', () => {
+        if (state.solutionVisible && state.activeStage === 1) {
+          autoFitView();
+        }
+      });
+    };
+  </script>
+
+</body>
+</html>
